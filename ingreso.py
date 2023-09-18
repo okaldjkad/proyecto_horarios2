@@ -23,7 +23,49 @@ BG1color="#212121"
 BG2color="#6D9EEB"
 
 class ingreso1():
-    #def __init__(self):
+    def __init__(self,tk,sql,cursor):
+
+        try: #crea el procedimiento para actualizar el curso de un alumno en todas las tablas de materias
+            cursor.execute("""
+            DELIMITER //
+
+            CREATE PROCEDURE actualizarCurso(
+                IN table_name VARCHAR(255),
+                IN curso VARCHAR(255),
+                IN ID VARCHAR(255)
+            )
+            BEGIN
+                SET @query_update = CONCAT(
+                    "UPDATE ", table_name,
+                    " SET CURSO = '", curso, "'",
+                    " WHERE ID = ", ID
+                );
+
+                -- Prepare and execute the dynamic SQL statement
+                PREPARE stmt FROM @query_update;
+                EXECUTE stmt;
+
+                -- Check if any rows were affected by the update
+                IF ROW_COUNT() = 0 THEN
+                    -- No rows were updated, so insert a new row
+                    SET @query_insert = CONCAT("INSERT IGNORE INTO ", table_name,"(ID,CURSO)
+                                            VALUES ('",ID,"','",curso,"')");
+                    
+                    -- Prepare and execute the dynamic insert SQL statement
+                    PREPARE insert_stmt FROM @query_insert;
+                    EXECUTE insert_stmt;
+                END IF;
+
+                -- Deallocate prepared statements
+                DEALLOCATE PREPARE stmt;
+                DEALLOCATE PREPARE insert_stmt;
+            END;
+            //
+
+            DELIMITER ;
+            """)
+        except:
+            pass
 
     def crear(self,tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,alumnosFunc,valores=[False]):
 
@@ -37,9 +79,6 @@ class ingreso1():
 
         def validar_telefono(tel):
            return tel.startswith('11') and tel.isdigit() and len(tel) ==10
-            
-        def validar_dni(dni):
-            return dni.isdigit() and len(dni) == 8
 
         def cargar():
             cursor.reset()
@@ -84,12 +123,12 @@ class ingreso1():
             cursor.execute("SELECT CURSO FROM cursos")
             fetchCursos=cursor.fetchall()
             
-            if not validar_dni(Cdni) or Cdni == DNIdefault:
+            if Cdni != DNIdefault and Cdni.isdigit() is True and len(Cdni) == 8:
                 ErrorLabel.config(text = "Ingrese un DNI válido (8 números).", bg=BGcolor)
                 tk.bell()
             else:
                 for curso in fetchCursos:
-                    cursor.execute(f"SELECT CURSO FROM alumnos WHERE DNI = '{Cdni}'")
+                    cursor.execute(f"SELECT CURSO FROM alumnos WHERE nro_de_documento = '{Cdni}'")
                     fetchDNI=cursor.fetchone()
                     
                     if (fetchDNI is not None) and (valores[0] is False):
@@ -107,35 +146,46 @@ class ingreso1():
                     return
                 
                 #en el caso de que se modifique el curso o division, el mismo tambien debe ser modificado en
-                #todas las tablas de materias para evitar que se pierdan las notas del alumno, esta funcion
-                #genera todos los "UPDATE" nesesarios para eso en 1 solo query para menor consumo de recursos
+                #todas las tablas de materias para evitar que se pierdan las notas del alumno
                 def actualizarCurso():
                     print("!! Se cambio el curso o division !!")
 
                     #obtener lista de materias del curso
                     cursor.execute(f"SELECT MATERIA FROM materias WHERE CURSOS LIKE '%{SQLcurso}%' ")
                     materiasFetch = cursor.fetchall()
+                    for i in materiasFetch:
+                        materiasFetch[materiasFetch.index(i)] = str(i[0]).replace(" ","_")
                     print(materiasFetch)
 
 
-                    query=[]
+                    queryMaterias=[]
+                    Lquery=[]
                     Iquery=[]
                     for materia in materiasFetch:
-                        materia = materia[0]
-                        query.append(f"UPDATE boletines__{materia} SET ID={valores[9]} WHERE CURSO='{SQLcurso}' ")
-                    query = ";".join(query)
+                        #llama un procedimiento (lo equivalente a funciones en mysql) que automaticamente
+                        #inserta o actualiza dependiendo de 
+                        Lquery.append(f"CALL actualizarCurso('boletines__{materia}','{SQLcurso}','{valores[9]}')")
+                        queryMaterias.append(materia.replace(" ","_"))
+                    query = "; ".join(Lquery)
+
+
                     print(query)
-                    for i in cursor.execute(query,multi=True):
-                        if cursor.rowcount==0:
-                            Iquery.append(f"INSERT IGNORE INTO boletines__{materia}(ID,CURSO) VALUES('{valores[9]}','{SQLcurso}') ")
-                    for i in Iquery:
-                        cursor.execute(i)
+                    if query is None or query==[] or query=="":
+                        print(f"no se encontraron materias en {SQLcurso}, ninguna tabla de boletines modificada")
+                        return
+                    else:
+                        print("se modificaran los boletines de:"+str(queryMaterias))
+                    
+                    print(Lquery)
+                    print(queryMaterias)
+                    for resultado in cursor.execute(query,multi=True):
+                        pass
 
                         
                 
                 #Codigo que se encarga de Insertar o Actualizar la base de datos
                 if valores[0]==True:
-                    cursor.execute("UPDATE alumnos SET NOMBRE=%s,APELLIDO=%s,GRUPO=%s,NACIMIENTO=%s,TELEFONO=%s,DNI=%s,CURSO=%s WHERE ID=%s",(Cnombre, Capellido, Cgrupo, Cfecha, Ctelefono, Cdni, SQLcurso, valores[9]))
+                    cursor.execute("UPDATE alumnos SET NOMBRE=%s,APELLIDO=%s,GRUPO=%s,NACIMIENTO=%s,TELEFONO=%s,nro_de_documento=%s,CURSO=%s WHERE ID=%s",(Cnombre, Capellido, Cgrupo, Cfecha, Ctelefono, Cdni, SQLcurso, valores[9]))
                     print(f"Alumno {Cnombre} Actualizado Exitosamente")
                     ErrorLabel.config(text = "", bg=BGcolor)
                     if SQLcurso.lower() != str(valores[3]+"_"+valores[4]).lower():
@@ -143,7 +193,7 @@ class ingreso1():
                     volver()
                     return
                 else:
-                    cursor.execute("INSERT INTO alumnos (NOMBRE,APELLIDO,GRUPO,NACIMIENTO,TELEFONO,DNI,CURSO) VALUES (%s,%s,%s,%s,%s,%s,%s)",(Cnombre, Capellido, Cgrupo, Cfecha, Ctelefono, Cdni, SQLcurso))
+                    cursor.execute("INSERT INTO alumnos (NOMBRE,APELLIDO,GRUPO,NACIMIENTO,TELEFONO,nro_de_documento,CURSO) VALUES (%s,%s,%s,%s,%s,%s,%s)",(Cnombre, Capellido, Cgrupo, Cfecha, Ctelefono, Cdni, SQLcurso))
                     print(f"Alumno {Cnombre} Cargado Exitosamente")
                     ErrorLabel.config(text = f"Alumno {Cnombre} Cargado Exitosamente", bg=BGcolor)
                     return
