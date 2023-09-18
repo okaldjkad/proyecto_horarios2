@@ -4,6 +4,7 @@ from tkinter import messagebox
 from CompletarAU import AutocompleteEntry
 from tkinter import ttk
 from tkcalendar import DateEntry
+from PIL import Image, ImageTk
 from datetime import datetime, timedelta
 import Parte_principal
 import re

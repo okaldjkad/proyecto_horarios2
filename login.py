@@ -5,6 +5,7 @@ from tkinter import ttk
 #from PIL import ImageTk, Image
 #from tkcalendar import Calendar
 import mysql.connector
+from PIL import Image, ImageTk
 from datetime import datetime
 
 # ---TIPO DE CUENTAS---
@@ -21,6 +22,7 @@ class login1:
             
         BGcolor="#c9daf8"
         tk.configure(bg=BGcolor)
+        tk.geometry("1200x680")
         BG1color="#212121" #Negro
         BG2color="#6D9EEB" #Celeste
         
@@ -45,7 +47,7 @@ class login1:
 
         #logo
 
-        image = Image.open("logo.png")  
+        image = Image.open("Imagenes/logo.png.jpg")  
         photo = ImageTk.PhotoImage(image)
         image_label = Label(BG1, image=photo,borderwidth=0, highlightthickness=0)
         image_label.image = photo  
