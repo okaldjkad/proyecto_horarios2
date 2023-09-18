@@ -28,7 +28,7 @@ class login1:
         fuente_mediana = ('Arial', 16)
         fuente_chica = ('Arial', 12)
 
-        logoPNG = PhotoImage(file="logo.png")
+        
 
         textoDefault1 = 'Introdusca su Usuario'
         textoDefaul = 'Introdusca su Email'
@@ -43,9 +43,29 @@ class login1:
         etiqueta_derecha = Label(BG2, text="©5to1ra Grupo A - 2023", bg=BG2color,font=("Helvetica", 16))
         etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
 
-        logo = Canvas(BG1, bg='#212121', width=64, height=64)
-        logo.pack()
-        logo.create_image(0,0,image=logoPNG)
+        #logo
+
+        image = Image.open("logo.png")  
+        photo = ImageTk.PhotoImage(image)
+        image_label = Label(BG1, image=photo,borderwidth=0, highlightthickness=0)
+        image_label.image = photo  
+        image_label.pack()
+        image_label.grid(row=0, column=0)  # Grid para la imagen
+
+       
+
+
+        text_label1 = Label(BG1, text="Escuela de", fg="white", bg='black', font=fuente_grande)
+        text_label2 = Label(BG1, text="Educacion", fg="white", bg='black', font=fuente_grande)
+        text_label3 = Label(BG1, text="Secundaria", fg="white", bg='black', font=fuente_grande)
+        text_label4 = Label(BG1, text="Tecnica", fg="white", bg='black', font=fuente_grande)
+        text_label5 = Label(BG1, text="Nº1", fg="white", bg='black', font=fuente_grande)
+
+        text_label1.grid(row=10, column=0, sticky='w',pady=20)
+        text_label2.grid(row=11, column=0, sticky='w',pady=20)
+        text_label3.grid(row=12, column=0, sticky='w',pady=20)
+        text_label4.grid(row=13, column=0, sticky='w',pady=20)
+        text_label5.grid(row=14, column=0, sticky='w',pady=20)
         
 
 
