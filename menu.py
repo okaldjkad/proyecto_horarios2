@@ -2,15 +2,19 @@
 
 from tkinter import *
 from tkinter import ttk
-import boletines as boletines
-import Profesores
+from PIL import ImageTk, Image
+
+from boletines import boletines1
 from alumnos import alumnos1
 from inasistencias import inasistencias1
 from cuentas import cuentas1
-from PIL import ImageTk, Image
+
+import Profesores
+
 
 class menu1:
     def __init__(self,tk,sql,cursor):
+        self.boletines = boletines1(tk,sql,cursor)
         self.alumnos = alumnos1(tk,sql,cursor)
         self.inasistencias = inasistencias1(tk,sql,cursor)
         self.cuentas = cuentas1(tk,sql,cursor)

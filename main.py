@@ -49,8 +49,8 @@ except:
 
 
 #Auto Crear Base de datos y tabla
-#cursor.execute("create database if not exists tec_boletines")
-#sql.database = "tec_boletines"
+#cursor.execute("create database if not exists tecnica_2023")
+#sql.database = "tecnica_2023"
 
 
 

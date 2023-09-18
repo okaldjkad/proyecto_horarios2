@@ -32,14 +32,14 @@ class cuentas1:
     def __init__(self, tk, sql, cursor):
         #self.registrar=registrar1(tk,sql,cursor)
         self.registrar=registrar1()
-        cursor.execute("create table if not exists usuarios( ID INT AUTO_INCREMENT PRIMARY key, usuario varchar (50) not null, email varchar (50) not null, contraseña varchar (50) not null, tipo INT, MATERIAS mediumtext not null);")
+        #cursor.execute("create table if not exists usuarios( ID INT AUTO_INCREMENT PRIMARY key, usuario varchar (50) not null, email varchar (50) not null, contraseña varchar (50) not null, tipo INT, MATERIAS mediumtext not null);")
 
         #cursor.execute("SELECT CURSO FROM `cursos`")
         #databasesPrefix = cursor.fetchall() #Obtiene la lista de todos los cursos
         #print(databasesPrefix)
         #for prefix in databasesPrefix:
         #    prefix = str(prefix[0])
-        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tec_boletines' and table_name LIKE '{prefix}__%'")
+        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{prefix}__%'")
         #    materias1 = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
         #    print(materias1)
 
@@ -251,7 +251,7 @@ class cuentas1:
             global UltimoTipo
             UltimoTipo=tipo
             ocultar = OcultarContraseña.get()
-            #cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tec_boletines' and table_name LIKE '{SQLcurso}__%' ")
+            #cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{SQLcurso}__%' ")
             #SQLmaterias = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
             #print(SQLmaterias)
             lista.delete(*lista.get_children()) #Limpiar lista antes de insertar nuevos elementos
@@ -367,8 +367,8 @@ if __name__=="__main__":
     background=fixed_map('background'))
 
     #Auto Crear Base de datos
-    cursor.execute("create database if not exists tec_boletines")
-    sql.database = "tec_boletines"
+    #cursor.execute("create database if not exists tecnica_2023")
+    sql.database = "tecnica_2023"
 
     for columna in range(10):
         tk.grid_columnconfigure(columna,weight=1)
