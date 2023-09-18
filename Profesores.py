@@ -40,7 +40,7 @@ def botones_docentes(ventana3):
     imagen_volver = ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20)))
     imagen_materia_añadir = ImageTk.PhotoImage(Image.open("imagenes/agregar_materia.png").resize((20, 20)))
     imagen_profesor_añadir = ImageTk.PhotoImage(Image.open("imagenes/agregar_profesor.png").resize((20, 20)))
-    imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.ANTIALIAS))
+    imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.LANCZOS))
 
     tk.Label(ventana3,text="Materia y Profesores",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=5,columnspan=2,padx=2,pady=2)
     tk.Button(ventana3, text="Volver",image=imagen_volver,compound="left",height=49,width=100, command=lambda: volver_al_menu(ventana3)).grid(row=8, column=9, sticky="e")
@@ -105,10 +105,12 @@ def arroba(event):
     contenido = entry_correo.get()
     # Utilizamos una expresión regular para verificar el formato del correo
     if contenido.count('.') > 3 or contenido.count('.') == 0 or contenido.count('@') != 1 or not re.match(r'^[\w-]+@', contenido):
-        # Si el correo no cumple con el formato o tiene más de una "@", mostramos un mensaje de error
-        tk.messagebox.showerror("Error", "Dirección de correo inválida su correo debe verse asi example@gmail.com")
-        entry_correo.delete(0, tk.END)  # Borramos el contenido del Entry
-        return False  
+        if len(contenido) >0: #no mostrar error si el email se deja vacio
+            
+            # Si el correo no cumple con el formato o tiene más de una "@", mostramos un mensaje de error
+            tk.messagebox.showerror("Error", "Dirección de correo inválida su correo debe verse asi example@gmail.com")
+            entry_correo.delete(0, tk.END)  # Borramos el contenido del Entry
+            return False
 def limite(event):
     contenido = entry_dni.get()
     contenido2 = entry_telefono2.get()
@@ -178,8 +180,9 @@ def validar_prefijo(event, entry_widget,ver_Profesores):
             return
         entrada = entry_widget.get()
         if not entrada in prefijos:
-            messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
-            entry_widget.delete(0, tk.END)
+            if len(entrada) > 0: #no mostrar error si campo se deja vacio
+                messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
+                entry_widget.delete(0, tk.END)
 
 
 def toggle_entry_state():

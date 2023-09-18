@@ -23,8 +23,6 @@ class login1:
         BGcolor="#c9daf8"
         tk.configure(bg=BGcolor)
         BG1color="black" #Negro
-        tk.geometry("1200x680")
-        BG1color="Black" #Negro
         BG2color="#6D9EEB" #Celeste
  
         fuente_grande = ('Arial', 30, "bold")

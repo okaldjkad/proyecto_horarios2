@@ -308,9 +308,9 @@ class boletines1():
         FrameBotones.rowconfigure((0,1), weight=1)
 
         #Iconos de botones
-        self.imagen_volver =ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20), Image.ANTIALIAS))
-        self.imagen_editar =ImageTk.PhotoImage(Image.open("imagenes/editar.png").resize((15, 15), Image.ANTIALIAS))
-        self.imagen_imprimir = ImageTk.PhotoImage(Image.open("imagenes/imprimir.png").resize((20, 20), Image.ANTIALIAS))
+        self.imagen_volver =ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20), Image.LANCZOS))
+        self.imagen_editar =ImageTk.PhotoImage(Image.open("imagenes/editar.png").resize((15, 15), Image.LANCZOS))
+        self.imagen_imprimir = ImageTk.PhotoImage(Image.open("imagenes/imprimir.png").resize((20, 20), Image.LANCZOS))
 
         #BotonPeticion = Button(FrameBotones, text ="Enviar Peticion",width=20)#, command = lambda: accion.actualizar(0,lista))
         BotonImprimir = Button(FrameBotones, text ="Imprimir",image=self.imagen_imprimir,compound="left",width=10)#, command = lambda: accion.actualizar(0,lista))
