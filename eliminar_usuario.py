@@ -8,7 +8,7 @@ def conectar_base_de_datos():
         host='localhost',
         user='root',
         password='',
-        database='proyecto_colegio2'
+        database='tecnica_2023'
     )
     cursor = cnx.cursor()
 

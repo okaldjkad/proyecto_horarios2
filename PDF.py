@@ -23,7 +23,7 @@ class PDF(FPDF):
                 host='localhost',
                 user='root',
                 password='',
-                database='proyecto_colegio2'
+                database='tecnica_2023'
             )
             self.cursor = self.cnx.cursor()
             self.cursor.execute("""SELECT * FROM horarios WHERE Numero_aula=%s AND tipo_de_aula=%s ORDER BY Horario_e""",
@@ -140,7 +140,7 @@ class PDF_filtro(FPDF):
                 host='localhost',
                 user='root',
                 password='',
-                database='proyecto_colegio2'
+                database='tecnica_2023'
             )
             self.cursor = self.cnx.cursor()
             self.cursor.execute(self.query)

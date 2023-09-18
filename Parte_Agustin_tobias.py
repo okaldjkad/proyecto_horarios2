@@ -25,7 +25,7 @@ class pantalla_de_administrador(tk.Toplevel):
                 host='localhost',
                 user='root',
                 password='',
-                database='proyecto_colegio2'
+                database='tecnica_2023'
             )
             self.cursor = self.cnx.cursor()
             try:

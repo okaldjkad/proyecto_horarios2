@@ -5,9 +5,8 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import Parte_principal
 #Hecho por Javier Correa Y contribuciones de Tobias Bonanno
-def botones_aulas():
-    global ventana,imagen_eliminar,imagen_aula_ver,imagen_lab_ver,imagen_taller_ver,imagen_volver,imagen_taller_añadir,imagen_aula_añadir,imagen_lab_añadir
-    ventana = tk.Tk()
+def botones_aulas(ventana):
+    global imagen_eliminar,imagen_aula_ver,imagen_lab_ver,imagen_taller_ver,imagen_volver,imagen_taller_añadir,imagen_aula_añadir,imagen_lab_añadir
     ventana.geometry("800x600")
     ventana.title("Pantalla Principal")
     ventana.iconbitmap("Imagenes/Colegio_logo.ico")
@@ -75,9 +74,9 @@ def validar50(P):
    
 
 def agregar_aulas(columnas_aula,query,Tipo_aula):
-        global clicked, clicked2, laboratorio_numero, arriba, tree_aula, spinbox    
-        ventana.destroy()
-        ver_aula = tk.Tk()
+        global clicked, clicked2, laboratorio_numero, arriba, tree_aula, spinbox
+        #ventana.destroy()
+        ver_aula = tk.Toplevel()
         conectar_base_de_datos()
         cursor = cnx.cursor()
         treeview_aula=ttk.Labelframe(ver_aula, text="Aulas")
@@ -97,7 +96,6 @@ def agregar_aulas(columnas_aula,query,Tipo_aula):
             tree_aula.heading(columna, text=columna)
         cursor.execute(query)
         data = cursor.fetchall()
-        print(data)
         for index, values in enumerate(data):
             tree_aula.insert(parent='', index='end', iid=index, values=values)
         tree_aula.pack()
@@ -127,8 +125,6 @@ def agregar_aulas(columnas_aula,query,Tipo_aula):
         spinbox=ttk.Spinbox(arriba, width=10, textvariable=laboratorio_numero,from_=1,to=100,increment=1,validate="key", state="readonly")
         spinbox.grid(column=2, row=1, padx=5, pady=5)
         spinbox.set(1)
-        
-
 
         
         entry_numero_texto= ttk.Label(arriba, text="Numero:")
@@ -275,7 +271,7 @@ def conectar_base_de_datos():
     host='localhost',
     user='root',
     password='',
-    database='proyecto_colegio2'
+    database='tecnica_2023'
     )
     # Crear un cursor para ejecutar consultas
     cursor = cnx.cursor()
@@ -289,3 +285,8 @@ def volver_al_menu(ventana):
 def volver_aulas(ventana):
     ventana.destroy()
     Parte_principal.aulas()  
+
+if __name__ == "__main__":
+    tkw=tk.Tk()
+    botones_aulas(tkw)
+    tkw.mainloop()

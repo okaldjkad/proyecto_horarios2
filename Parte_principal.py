@@ -440,10 +440,10 @@ def conectar_base_de_datos():
     global cursor
     global cnx
     cnx = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='',
-    database='proyecto_colegio2'
+        host='localhost',
+        user='root',
+        password='',
+        database='tecnica_2023'
     )
     # Crear un cursor para ejecutar consultas
     cursor = cnx.cursor()

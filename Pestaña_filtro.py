@@ -292,7 +292,7 @@ class Pestaña_filtro():
                     host='localhost',
                     user='root',
                     password='',
-                    database='proyecto_colegio2'
+                    database='tecnica_2023'
                 )
                 self.cursor = self.cnx.cursor()
         except Exception as e:

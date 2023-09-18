@@ -66,7 +66,7 @@ class reset_button():
         self.new1=self.very.get()
         y = 0
         try:
-            self.cnx = mysql.connector.connect(user="root", password="", host="localhost", database="proyecto_colegio2")
+            self.cnx = mysql.connector.connect(user="root", password="", host="localhost", database="tecnica_2023")
             self.cursor = self.cnx.cursor()
         except mysql.connector.Error as err:
             print("Error al conectarse a MySQL: {}".format(err))

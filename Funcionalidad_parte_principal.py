@@ -8,19 +8,25 @@ from tkinter import messagebox
 from PIL import ImageTk, Image
 #Hecho por Tobias Bonanno
 class menu_horarios():
+    def eliminar(self):
+        for elemento in self.ventana4.winfo_children():
+            elemento.destroy()
     def horarios(self,ventana4):
         self.ventana4=ventana4
         self.ventana4.title("Pantalla Principal")
         self.ventana4.iconbitmap("Imagenes/Colegio_logo.ico")
-        self.ventana4.columnconfigure(0, weight=1)
-        self.ventana4.rowconfigure((0,1,2), weight=1)
-        self.frame_horarios = ttk.LabelFrame(self.ventana4, text="Horarios")
+        self.ventana4.geometry("800x600")
+        self.frame_pe = ttk.Frame(ventana4)
+        self.frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
+        self.frame_pe.columnconfigure(0, weight=1)
+        self.frame_pe.rowconfigure((0,1,2), weight=1)
+        self.frame_horarios = ttk.LabelFrame(self.frame_pe, text="Horarios")
         self.frame_horarios.grid(sticky="news", pady=2, padx=2,column=0,row=3)
         self.imagen_PDF = ImageTk.PhotoImage(Image.open("Imagenes/PDF.png").resize((20,20)))
         self.imagen_agregar =ImageTk.PhotoImage(Image.open("Imagenes/añadir.png").resize((20,20)))
         self.frame_horarios.columnconfigure((0,1,2), weight=1)
         self.frame_horarios.rowconfigure((0,1,2), weight=1)
-        ttk.Button(self.ventana4, text="Volver", command=lambda: self.volver_al_menu(self.ventana4)).grid(row=0, column=0, padx=2, pady=2)
+        ttk.Button(self.frame_pe, text="Volver", command=lambda: self.volver_al_menu(self.ventana4)).grid(row=0, column=0, padx=2, pady=2)
         ttk.Button(self.frame_horarios, text="Ver horarios Laboratorios", command=lambda:self.opcion_ver_horarios("Laboratorio",self.ver_horarios)).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
         
         ttk.Button(self.frame_horarios, text="Añadir Horarios Laboratorios",image=self.imagen_agregar,compound="left",command=lambda:self.opcion_ver_horarios("Laboratorio",self.añadir_aula)).grid(row=0, column=1, padx=2, pady=2,sticky="ew")
@@ -55,7 +61,7 @@ class menu_horarios():
             host='localhost',
             user='root',
             password='',
-            database='proyecto_colegio2'
+            database='tecnica_2023'
         )
         # Crear un cursor para ejecutar consultas
         self.cursor = self.cnx.cursor()
@@ -63,11 +69,10 @@ class menu_horarios():
         self.cursor.close()
         self.cnx.close()
     def opcion_ver_horarios(self,tipo_aula,segunda_funcion):
-        global aula_ver_horarios
-        aula_ver_horarios= tk.Toplevel()
-        aula_ver_horarios.title("Pantalla Principal")
-        aula_ver_horarios.iconbitmap("Imagenes/Colegio_logo.ico")
-        botones_frame = ttk.LabelFrame(aula_ver_horarios, text="Horarios")
+        self.aula_ver_horarios= tk.Toplevel()
+        self.aula_ver_horarios.title("Pantalla Principal")
+        self.aula_ver_horarios.iconbitmap("Imagenes/Colegio_logo.ico")
+        botones_frame = ttk.LabelFrame(self.aula_ver_horarios, text="Horarios")
         botones_frame.pack(padx=10, pady=10)
         self.conectar_base_de_datos()
         self.cursor.execute('SELECT Tipo_de_aula, Numero FROM Aulas WHERE Tipo_de_aula = %s ORDER BY Numero ', (tipo_aula,))
@@ -77,14 +82,16 @@ class menu_horarios():
             boton.grid(row=i // 3, column=i % 3, padx=10, pady=10)
         
     def ver_horarios(self,numero,tipo_aula):
-        self.ventana_horario3 = tk.Toplevel()
-        self.ventana_horario2= añadir_horario(self.ventana_horario3,tipo_aula,numero)
+        self.eliminar()
+        self.aula_ver_horarios.destroy()
+        self.ventana_horario2= añadir_horario(self.ventana4,tipo_aula,numero)
         self.ventana_horario2.treeview(True)
         self.ventana_horario2.ejecutar()
 
     def añadir_aula(self,numero,tipo_aula):
-        self.ventana_horario = tk.Toplevel()
-        ventana_horario2= añadir_horario(self.ventana_horario,tipo_aula,numero)
+        self.eliminar()
+        self.aula_ver_horarios.destroy()
+        ventana_horario2= añadir_horario(self.ventana4,tipo_aula,numero)
         ventana_horario2.widgets()
         ventana_horario2.botones()
         ventana_horario2.ejecutar()
@@ -96,6 +103,8 @@ class añadir_horario():
         self.numero_de_aula=numero_de_aula
         self.tipo_de_aula=tipo_de_aula
         self.ventana_horario=ventana_horario
+        self.frame_pe = ttk.Frame(self.ventana_horario)
+        self.frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
         self.volver_imagen=ImageTk.PhotoImage(Image.open("Imagenes/volver.png").resize((15,15)))
         self.opciones_division=[]
         self.ventana_horario.title("Añadir horario")
@@ -104,13 +113,13 @@ class añadir_horario():
         self.configuracion_widgets()
 
     def configuracion_widgets(self):
-        self.frame_superior=ttk.LabelFrame(self.ventana_horario)
-        self.frame_inferior=ttk.LabelFrame(self.ventana_horario)
+        self.frame_superior=ttk.LabelFrame(self.frame_pe)
+        self.frame_inferior=ttk.LabelFrame(self.frame_pe)
         self.frame_superior.grid(row=0, column=0, sticky="nsew")
         self.frame_inferior.grid(row=1, column=0,sticky="nsew")
-        self.ventana_horario.columnconfigure(0, weight=1)
-        self.ventana_horario.rowconfigure(0, weight=2)
-        self.ventana_horario.rowconfigure(1, weight=6)
+        self.frame_pe.columnconfigure(0, weight=1)
+        self.frame_pe.rowconfigure(0, weight=2)
+        self.frame_pe.rowconfigure(1, weight=6)
         
     def variables(self):
         self.variable_hora_llegada = tk.StringVar()
@@ -421,17 +430,18 @@ class añadir_horario():
         self.dia_get = self.dias_a_numeros.get(self.dia_get.capitalize(), 0)
     
     def volver(self):
-        self.ventana_horario.destroy()
-        ventana_horario1=tk.Tk()
-        ventana_horario2.horarios(ventana_horario1)
-
+        self.eliminar()
+        ventana_horario2.horarios(self.ventana_horario)
+    def eliminar(self):
+        for elemento in self.ventana_horario.winfo_children():
+            elemento.destroy()
     def conectar_a_mysql(self):
         try:
                 self.cnx = mysql.connector.connect(
                     host='localhost',
                     user='root',
                     password='',
-                    database='proyecto_colegio2'
+                    database='tecnica_2023'
                 )
                 self.cursor = self.cnx.cursor()
         except Exception as e:
