@@ -5,6 +5,7 @@ from tkinter import ttk
 #from PIL import ImageTk, Image
 #from tkcalendar import Calendar
 import mysql.connector
+from PIL import Image, ImageTk
 from datetime import datetime
 
 # ---TIPO DE CUENTAS---
@@ -22,8 +23,10 @@ class login1:
         BGcolor="#c9daf8"
         tk.configure(bg=BGcolor)
         BG1color="black" #Negro
+        tk.geometry("1200x680")
+        BG1color="Black" #Negro
         BG2color="#6D9EEB" #Celeste
-        
+ 
         fuente_grande = ('Arial', 30, "bold")
         fuente_mediana = ('Arial', 16)
         fuente_chica = ('Arial', 12)
@@ -36,7 +39,7 @@ class login1:
 
 
         BG2 = Frame(tk, bg='#6D9EEB',width=512,height=32)
-        BG1 = Frame(tk, bg='#212121',width=80,height=256)
+        BG1 = Frame(tk, bg='black',width=80,height=256)
         BG1.place(relx = 0.0, rely = 1.0, anchor ='sw', relwidth=0.18, relheight=1.0)
         BG2.place(relx = 0.0, rely = 1.0, anchor ='sw', relwidth=1.0, relheight=0.07)
 
@@ -45,7 +48,7 @@ class login1:
 
         #logo
 
-        image = Image.open("logo.png")  
+        image = Image.open("Imagenes/logo.png.jpg")  
         photo = ImageTk.PhotoImage(image)
         image_label = Label(BG1, image=photo,borderwidth=0, highlightthickness=0)
         image_label.image = photo  
