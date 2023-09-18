@@ -108,8 +108,8 @@ for curso in cursos:
 class boletines1():
     def __init__(self, tk, sql, cursor):
         #Auto Crear Base de datos
-        cursor.execute("create database if not exists tec_boletines")
-        sql.database = "tec_boletines"
+        #cursor.execute("create database if not exists tecnica_2023")
+        sql.database = "tecnica_2023"
 
         #Tabla de maestrias para materias(por default, 1 = Programacion, 2 = Informatica, 3 = Maestro mayor)
         #removido ya que no le veo la utilidad por que los cursos de cada materia por ahora definidos manualmente
@@ -120,11 +120,11 @@ class boletines1():
         
 
         #Tabla de materias para cursos
-        cursor.execute("""CREATE TABLE if not exists MATERIAS(
-                       ID int AUTO_INCREMENT PRIMARY KEY,
-                       MATERIA varchar(25) UNIQUE,
-                       CURSOS text
-                       )""")
+        #cursor.execute("""CREATE TABLE if not exists MATERIAS(
+        #               ID int AUTO_INCREMENT PRIMARY KEY,
+        #               MATERIA varchar(25) UNIQUE,
+        #               CURSOS text
+        #               )""")
 
         #Tabla de materias para cursos (con maestrias)
 #        cursor.execute("""CREATE TABLE if not exists MATERIAS(
@@ -137,11 +137,11 @@ class boletines1():
 
 
         #Tabla de cursos
-        cursor.execute("""create table if not exists cursos(
-                       ID INT AUTO_INCREMENT PRIMARY KEY,
-                       CURSO varchar(10) UNIQUE not null,
-                       MATERIAS mediumtext
-                       );""")
+        #cursor.execute("""create table if not exists cursos(
+        #               ID INT AUTO_INCREMENT PRIMARY KEY,
+        #               CURSO varchar(10) UNIQUE not null,
+        #               MATERIAS mediumtext
+        #               );""")
         
         for materiaEj in materiasEjemplo:
             materiaEj[1] = materiaEj[1].lower()
@@ -204,7 +204,7 @@ class boletines1():
         #print(databasesPrefix)
         #for prefix in databasesPrefix:
         #    prefix = str(prefix[0])
-        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tec_boletines' and table_name LIKE '{prefix}__%'")
+        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{prefix}__%'")
         #    materias1 = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
         #    print(materias1)
 
@@ -519,7 +519,7 @@ class boletines1():
             SQLcurso = str(strAÑO+"_"+div["text"]).lower()
             print(SQLcurso)
 
-            #cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tec_boletines' and table_name LIKE '{SQLcurso}__%' ")
+            #cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{SQLcurso}__%' ")
             #SQLmaterias = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
             #print(SQLmaterias)
 
@@ -821,5 +821,8 @@ if __name__ == "__main__":
 
     def funcExit(a,b):
         exit()
+
+    boletines = boletines1(tk,sql,cursor)
+    boletines.crear(tk,sql,cursor,3,"test",funcExit)
 
     tk.mainloop()

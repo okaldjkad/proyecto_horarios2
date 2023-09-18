@@ -39,17 +39,19 @@ class inasistencias1():
         cursor.execute("SELECT CURSO FROM cursos")
         fetchCursos = cursor.fetchall()
         print(fetchCursos)
-        for fetch in fetchCursos:
-            database = str("inasistencias__"+fetch[0])
-            print(fetch[0])
-            cursor.execute(f"create table if not exists {database}(ID INT AUTO_INCREMENT PRIMARY key, NOMBRE varchar(50) not null, APELLIDO varchar(50) not null, FECHA date not null, TIPO INT not null);")
+        
+        #for fetch in fetchCursos:
+        #    database = str("inasistencias__"+fetch[0])
+        #    print(fetch[0])
+        #    cursor.execute(f"create table if not exists {database}(ID INT AUTO_INCREMENT PRIMARY key, NOMBRE varchar(50) not null, APELLIDO varchar(50) not null, FECHA date not null, TIPO INT not null);")
+        
         #print("[MATERIAS] se han creado las siguientes tablas")
         #cursor.execute("SELECT CURSO FROM `cursos`")
         #databasesPrefix = cursor.fetchall() #Obtiene la lista de todos los cursos
         #print(databasesPrefix)
         #for prefix in databasesPrefix:
         #    prefix = str(prefix[0])
-        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tec_boletines' and table_name LIKE '{prefix}__%'")
+        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{prefix}__%'")
         #    materias1 = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
         #    print(materias1)
 
@@ -149,7 +151,7 @@ class inasistencias1():
         #eliminar.pack(side='left', expand=False)
 
         lista = ttk.Treeview(tk, columns=("c0","c1","c2","c3","c4")#,"c5","c6")
-                             , show='headings', selectmode='browse')
+                             , show='headings', selectmode='extended')
 
         #aprobados = Button(botones, text ="Mostrar Aprobados",width=17 , command = lambda: accion.actualizar(1,lista))
         #desaprobados = Button(botones, text ="Mostrar Desaprobados",width=17 , command = lambda: accion.actualizar(2,lista))
@@ -194,17 +196,18 @@ class inasistencias1():
 
         def eliminarInasistencia():
             filaSeleccion = lista.selection()
-            listaSeleccion = lista.item(filaSeleccion)
             print(filaSeleccion)
-            
             if len(filaSeleccion)<=0:
                 messagebox.showinfo(message="No se ha seleccionado\nninguna Inasistencia", title="Error")
             else:
                 opcion = messagebox.askyesno(message="esta usted seguro?\nse eliminara la inasistencia seleccionada", title="Advertencia",icon='warning')
                 if opcion==True:
-                    alumnoID = cursor.fetchone()
-                    print(alumnoID)
-                    cursor.execute(f"DELETE FROM `inasistencias__{ultimoCurso[1]}_{ultimoCurso[0]['text']}` WHERE ID={listaSeleccion['tags'][0]}")
+                    for i in filaSeleccion:
+                        listaSeleccion = lista.item(i)
+                        print(listaSeleccion)
+                        alumnoID = cursor.fetchone()
+                        print(alumnoID)
+                        cursor.execute(f"DELETE FROM `inasistencias__{ultimoCurso[1]}_{ultimoCurso[0]['text']}` WHERE ID={listaSeleccion['tags'][0]}")
                 ObtenerLista(ultimoCurso[0],ultimoCurso[1],True)
 
 
@@ -213,6 +216,8 @@ class inasistencias1():
             print(filaSeleccion)
             if len(filaSeleccion)<=0 and nuevo==False:
                 messagebox.showinfo(message="No se ha seleccionado\nninguna Inasistencia", title="Error")
+            elif len(filaSeleccion)>1 and nuevo==False:
+                messagebox.showinfo(message="Selecciona solo 1 Inasistencia", title="Error")
             else:
                 FrameEditar = Frame(FrameTOP,bg=BG3color)
                 FrameEditar.place(relx = 0.0, rely = 0.5, anchor ='w', relwidth=1.0, relheight=0.8)
@@ -234,6 +239,8 @@ class inasistencias1():
                 BotonFecha = Button(FrameFecha,width=10, text="📅",font=("arial",18),command=lambda: BotonCalendario())
                 BotonFecha.place(relx=0.75,rely=0.0,relheigh=1.0,relwidth=0.25)
                 
+                if nuevo is True:
+                    EntryFecha.insert(0,str(datetime.now().date()))
                 
                 LabelTipo = Label(FrameEditar,text="Falta o llegada tarde", font=fuenteEdit, bg=BG3color, anchor="e")
                 LabelTipo.grid(row=0,column=4,columnspan=1,padx=(16,0),pady=2,sticky="e")
@@ -367,6 +374,8 @@ class inasistencias1():
 
                 cursor.execute(f"SELECT FECHA, TIPO, ID FROM inasistencias__{SQLcurso} WHERE NOMBRE='{alumno[0]}' AND APELLIDO='{alumno[1]}' ")
                 ausencias = cursor.fetchall()
+
+                TOTALausencia = float(0)
                 for ausencia in ausencias:
                     if ausencia is not None:
                         ausencia = list(ausencia)
@@ -376,15 +385,17 @@ class inasistencias1():
                         print(ausencia)
                         print(type(ausencia))
                         
-                        if ausencia[1]==0:
-                            TIPOausencia=0
-                            ausencia[1]="Llegada Tarde"
-                        else:
-                            TIPOausencia=1
-                            ausencia[1]="Inasistencia"
+                        StrAusencia = ["Llegada Tarde", "Inasistencia"]
+                        ValoresAusencia = [0.5, 1]
+
+                        TIPOausencia = ausencia[1]
+
+                        VALORausencia = ValoresAusencia[TIPOausencia]
+                        ausencia[1] = StrAusencia[TIPOausencia]
                         
-                                
-                        valoresInsert=[ausencia[0],ausencia[1]]
+                        TOTALausencia = TOTALausencia + VALORausencia
+                        
+                        valoresInsert=[ausencia[0],ausencia[1],VALORausencia,TOTALausencia]
                         for valor in valoresInsert:
                             if valor is None:
                                 valoresInsert[valoresInsert.index(valor)] = ""

@@ -241,7 +241,7 @@ class registrar1():
         
         seleccionM = []
         print(valores)
-        if valores[0]==True and valores[5]=="Maestro":
+        if valores[0]==True and valores[5]=="Maestro" and valores[7] is not None:
             listaM = list(valores[7].split(";"))
             for materia in listaM:
                 materia = tuple(materia.split(","))

@@ -30,37 +30,40 @@ BG5color="#9E9E9E" #gris claro
 
 class alumnos1:
     def __init__(self, tk, sql, cursor):
-        self.ingreso=ingreso1()
+        self.ingreso=ingreso1(tk,sql,cursor)
+
+
+        # -- CODIGO PARA CREAR BASE DE DATOS AUTOMATICAMENTE --
 
         #cursor.execute("create table if not exists DNI_alumnos( DNI varchar(10) PRIMARY KEY, AÑO varchar(10) not null, DIVISION varchar(10) not null, CURSO varchar(10) UNIQUE not null, MATERIAS mediumtext not null);")
         #cursor.execute("create table if not exists UID_alumnos( UID INT AUTO_INCREMENT PRIMARY KEY, DNI varchar(10) not null, CURSO varchar(10) not null);")
         
         #Tabla de cursos
-        cursor.execute("""create table if not exists cursos(
-                       ID INT AUTO_INCREMENT PRIMARY KEY,
-                       CURSO varchar(10) UNIQUE not null,
-                       MATERIAS mediumtext
-                       );""")
+        #cursor.execute("""create table if not exists cursos(
+        #               ID INT AUTO_INCREMENT PRIMARY KEY,
+        #               CURSO varchar(10) UNIQUE not null,
+        #               MATERIAS mediumtext
+        #               );""")
         
         #Crear tabla de alumnos
-        cursor.execute("""CREATE TABLE if not exists `alumnos` (
-                        `ID` int AUTO_INCREMENT PRIMARY KEY,
-                        `NOMBRE` varchar(50) NOT NULL,
-                        `APELLIDO` varchar(50) NOT NULL,
-                        `CURSO` varchar(10) NOT NULL,
-                        `GRUPO` varchar(10) NOT NULL,
-                        `NACIMIENTO` date NOT NULL,
-                        `TELEFONO` varchar(20),
-                        `nro_de_documento` varchar(10) NOT NULL,
-                        FOREIGN KEY (CURSO) REFERENCES cursos(CURSO)
-                       )""")
+        #cursor.execute("""CREATE TABLE if not exists `alumnos` (
+        #                `ID` int AUTO_INCREMENT PRIMARY KEY,
+        #                `NOMBRE` varchar(50) NOT NULL,
+        #                `APELLIDO` varchar(50) NOT NULL,
+        #                `CURSO` varchar(10) NOT NULL,
+        #                `GRUPO` varchar(10) NOT NULL,
+        #                `NACIMIENTO` date NOT NULL,
+        #                `TELEFONO` varchar(20),
+        #                `nro_de_documento` varchar(10) NOT NULL,
+        #                FOREIGN KEY (CURSO) REFERENCES cursos(CURSO)
+        #               )""")
 
         #cursor.execute("SELECT CURSO FROM `cursos`")
         #databasesPrefix = cursor.fetchall() #Obtiene la lista de todos los cursos
         #print(databasesPrefix)
         #for prefix in databasesPrefix:
         #    prefix = str(prefix[0])
-        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tec_boletines' and table_name LIKE '{prefix}__%'")
+        #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{prefix}__%'")
         #    materias1 = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
         #    print(materias1)
 
@@ -247,7 +250,7 @@ class alumnos1:
             SQLcurso = str((strAÑO+"_"+div["text"]).lower())
             print(SQLcurso)
             BotonEliminar.config(command = lambda: eliminarAlumno(lista,div,strAÑO))
-            #cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tec_boletines' and table_name LIKE '{SQLcurso}__%' ")
+            #cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{SQLcurso}__%' ")
             #SQLmaterias = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
             #print(SQLmaterias)
             lista.delete(*lista.get_children()) #Limpiar lista antes de insertar nuevos elementos
@@ -356,8 +359,8 @@ if __name__=="__main__":
     background=fixed_map('background'))
 
     #Auto Crear Base de datos
-    cursor.execute("create database if not exists tec_boletines")
-    sql.database = "tec_boletines"
+    #cursor.execute("create database if not exists tecnica_2023")
+    #sql.database = "tecnica_2023"
 
     def funcExit(a,b):
         exit()
