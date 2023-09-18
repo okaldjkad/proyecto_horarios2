@@ -236,16 +236,19 @@ class ingreso1():
                 nuevo_contenido = contenido[:0]
                 NombreInput.delete(0, END)
                 NombreInput.insert(0, nuevo_contenido)
+                messagebox.showerror("Error", "Solo se permiten 30 caracteres")
             elif len(contenido2) > 30:
                 # Limitar el contenido a 11 caracteres
                 nuevo_contenido2 = contenido2[:0]
                 ApellidoInput.delete(0, END)
                 ApellidoInput.insert(0, nuevo_contenido2)
+                messagebox.showerror("Error", "Solo se permiten 30 caracteres")
             elif len(contenido3) > 11:
                 # Limitar el contenido a 11 caracteres
                 nuevo_contenido3 = contenido3[:11]
                 entry_telefono2.delete(0, END)
                 entry_telefono2.insert(0, nuevo_contenido3)
+                messagebox.showerror("Error", "Solo se permiten 11 caracteres")
             elif len(contenido4) > 10:
                 # Limitar el contenido a 11 caracteres
                 nuevo_contenido4 = contenido4[:10]

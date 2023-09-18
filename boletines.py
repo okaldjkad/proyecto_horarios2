@@ -207,7 +207,7 @@ class boletines1():
         #    cursor.execute(f"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'tecnica_2023' and table_name LIKE '{prefix}__%'")
         #    materias1 = cursor.fetchall() #Obtiene la lista de todas las tablas de todas las materia del curso en cuestion
         #    print(materias1)
-
+    
     def crear(self,tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc):
 
         #cursor.reset()
@@ -219,8 +219,51 @@ class boletines1():
                 elemento.destroy()
             menuFunc(tipoCuenta,nombreCuenta)
             return
-
-
+        def validar_numeros(P):
+    # Función de validación para permitir solo caracteres numéricos
+            if all(c.isdigit() for c in P):
+                return True
+            else:
+                messagebox.showerror("Error", "Solo se permiten números")
+                return False
+        def limite(event):
+            contenido = EntryNota1.get() 
+            contenido2 = EntryNota2.get()
+            contenido3=EntryFebre.get()
+            contenido4=EntryMarzo.get()
+            contenido5= EntryDicie.get()
+            contenido6=EntryCalifDef.get()
+            
+            if len(contenido) > 2:
+                nuevo_contenido = contenido[:2]
+                EntryNota1.delete(0, END)
+                EntryNota1.insert(0, nuevo_contenido)
+                messagebox.showerror("Error", "Solo se permiten 2 caracteres")
+            elif len(contenido2) > 2:    
+                nuevo_contenido1 = contenido2[:2]
+                EntryNota2.delete(0, END)
+                EntryNota2.insert(0, nuevo_contenido1)
+                messagebox.showerror("Error", "Solo se permiten 2 caracteres")
+            elif len(contenido3) > 2:
+                nuevo_contenido2 = contenido3[:2]
+                EntryFebre.delete(0, END)
+                EntryFebre.insert(0, nuevo_contenido2)
+                messagebox.showerror("Error", "Solo se permiten 2 caracteres")
+            elif len(contenido4) > 2:
+                nuevo_contenido3 = contenido4[:2]
+                EntryMarzo.delete(0, END)
+                EntryMarzo.insert(0, nuevo_contenido3)
+                messagebox.showerror("Error", "Solo se permiten 2 caracteres")
+            elif len(contenido5) > 2:
+                nuevo_contenido4 = contenido5[:2]
+                EntryDicie.delete(0, END)
+                EntryDicie.insert(0, nuevo_contenido4)
+                messagebox.showerror("Error", "Solo se permiten 2 caracteres")
+            elif len(contenido6) > 2:
+                nuevo_contenido5 = contenido6[:2]
+                EntryCalifDef.delete(0, END)
+                EntryCalifDef.insert(0, nuevo_contenido5)
+                messagebox.showerror("Error", "Solo se permiten 2 caracteres")
 
         #tk.grid_columnconfigure(0, weight=1)
 
@@ -370,6 +413,7 @@ class boletines1():
      
         
         def EditarLista():
+            global EntryNota1, EntryNota2, EntryCalifDef, EntryMarzo, EntryFebre, EntryDicie
             print("Func EditarLista")
 
             filaSeleccion = lista.selection()
@@ -397,33 +441,46 @@ class boletines1():
 
                 LabelNota1 = Label(FrameEditar,text="1ra Nota", font=fuenteEdit, bg=BG3color)
                 LabelNota1.grid(row=0,column=0,columnspan=1,padx=(0,0),pady=2,sticky="e")
-                EntryNota1 = Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryNota1 = ttk.Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryNota1.bind("<KeyRelease>", limite)
+                EntryNota1.config(validate="key",validatecommand=(FrameEditar.register(validar_numeros), "%P"))
 
                 EntryNota1.grid(row=0,column=1,columnspan=1,pady=2,sticky="ns")
                 
                 LabelNota2 = Label(FrameEditar,text="2da Nota", font=fuenteEdit, bg=BG3color)
                 LabelNota2.grid(row=0,column=2,columnspan=1,padx=(16,0),pady=2,sticky="e")
-                EntryNota2 = Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryNota2 = ttk.Entry(FrameEditar,width=4, font=fuenteEdit)
                 EntryNota2.grid(row=0,column=3,columnspan=1,pady=2,sticky="ns")
+                EntryNota2.config(validate="key",validatecommand=(FrameEditar.register(validar_numeros), "%P"))
+                EntryNota2.bind("<KeyRelease>", limite)
 
                 LabelCalifDef = Label(FrameEditar,text="Calif. Def.", font=fuenteEdit, bg=BG3color)
                 LabelCalifDef.grid(row=0,column=4,columnspan=1,padx=(16,0),pady=2,sticky="e")
-                EntryCalifDef = Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryCalifDef = ttk.Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryCalifDef.config(validate="key",validatecommand=(FrameEditar.register(validar_numeros), "%P"))
+                EntryCalifDef.bind("<KeyRelease>", limite)
                 EntryCalifDef.grid(row=0,column=5,columnspan=1,pady=2,sticky="ns")
 
                 LabelDicie = Label(FrameEditar,text="Diciembre", font=fuenteEdit, bg=BG3color)
                 LabelDicie.grid(row=1,column=0,columnspan=1,padx=(16,0),pady=2,sticky="e")
-                EntryDicie = Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryDicie = ttk.Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryDicie.config(validate="key",validatecommand=(FrameEditar.register(validar_numeros), "%P"))
+                EntryDicie.bind("<KeyRelease>", limite)
                 EntryDicie.grid(row=1,column=1,columnspan=1,pady=2,sticky="ns")
 
                 LabelFebre = Label(FrameEditar,text="Febrero", font=fuenteEdit, bg=BG3color)
                 LabelFebre.grid(row=1,column=2,columnspan=1,padx=(16,0),pady=2,sticky="e")
-                EntryFebre = Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryFebre = ttk.Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryFebre.config(validate="key",validatecommand=(FrameEditar.register(validar_numeros), "%P"))
+                EntryFebre.bind("<KeyRelease>", limite)
                 EntryFebre.grid(row=1,column=3,columnspan=1,pady=2,sticky="ns")
 
                 LabelMarzo = Label(FrameEditar,text="Marzo", font=fuenteEdit, bg=BG3color)
                 LabelMarzo.grid(row=1,column=4,columnspan=1,padx=(0,0),pady=2,sticky="e")
-                EntryMarzo = Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryMarzo = ttk.Entry(FrameEditar,width=4, font=fuenteEdit)
+                EntryMarzo.config(validate="key",validatecommand=(FrameEditar.register(validar_numeros), "%P"))
+                EntryMarzo.bind("<KeyRelease>", limite)
+                
                 EntryMarzo.grid(row=1,column=5,columnspan=1,pady=2,sticky="ns")
 
                 ErrorLabel = Label(FrameEditar,text='', font=("Arial",10), bg=BG3color, width=20)
