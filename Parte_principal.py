@@ -232,7 +232,7 @@ def horarios():
     ttk.Button(frame_horarios, text="Ver horarios talleres", command=lambda:opcion_ver_horarios("Taller",ver_horarios)).grid(row=2, column=0, padx=2, pady=2,sticky="ew")
         
         
-    ttk.Button(frame_horarios, text="       Añadir horarios talleres",image=imagen_agregar,compound="left",command=lambda:opcion_ver_horarios("Taller",añadir_aula)).grid(row=2, column=1, padx=2, pady=2,sticky="ew")
+    ttk.Button(frame_horarios, text="Añadir horarios talleres",image=imagen_agregar,compound="left",command=lambda:opcion_ver_horarios("Taller",añadir_aula)).grid(row=2, column=1, padx=2, pady=2,sticky="ew")
         
     # Asignar la función cerrar_ventana al evento de cerrar la ventana principal
     ttk.Button(frame_horarios,text="Exportar taller a PDF",image=imagen_PDF,compound="left", command=lambda:opcion_ver_horarios("Taller",exportar_pdf)).grid(row=2, column=3, padx=2, pady=2,sticky="ew")

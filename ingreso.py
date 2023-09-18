@@ -6,11 +6,13 @@
 
 try:
     from tkinter import *
+    import tkinter as tk
     from tkinter import ttk
     from tkcalendar import Calendar
-
+    from tkinter import messagebox
     import mysql.connector
     from datetime import datetime
+    from CompletarAU import AutocompleteEntry
 
 except ImportError as e:
     print("No se encuentran librerías necesarias:", e)
@@ -71,11 +73,6 @@ class ingreso1():
                 tk.bell()
                 return
             
-            Ctelefono= TELEInput.get()
-            if not validar_telefono(Ctelefono) or Ctelefono == TELEdefault:
-                ErrorLabel.config(text = "Ingrese un numero de telefono válido(10 números) y verifique que los dos primeros números comienzen con 11.", bg=BGcolor)
-                tk.bell()
-                return
 
             SQLcurso = str(Ccurso+"_"+Cdivision).lower()
             print(SQLcurso)
@@ -151,7 +148,34 @@ class ingreso1():
                     ErrorLabel.config(text = f"Alumno {Cnombre} Cargado Exitosamente", bg=BGcolor)
                     return
                 
-            
+        def capitalize_first_letter(entry_widget):
+        # Obtenemos el contenido actual del Entry
+                current_text = entry_widget.get()
+                # Capitalizamos la primera letra de cada palabra si el contenido no está vacío
+                if current_text:
+                    capitalized_words = [word.capitalize() for word in current_text.split()]
+                    capitalized_text = " ".join(capitalized_words)
+                    entry_widget.delete(0, END)  # Borramos el contenido actual
+                    entry_widget.insert(0, capitalized_text) 
+                    return True
+                messagebox.showerror("Error", "No tiene mayuscula el inicio de los nombres")
+                return False 
+        def validar_numeros(P):
+    # Función de validación para permitir solo caracteres numéricos
+            if all(c.isdigit() for c in P):
+                return True
+            else:
+                messagebox.showerror("Error", "Solo se permiten números")
+                return False
+        def validar_letras(P):
+        
+            # Esta función permite solo letras y números
+            if all(c.isalpha() or c.isspace() for c in P):
+                return True
+            else:
+                messagebox.showerror("Error", "Solo se permiten letras")
+                return False 
+        
 
         BG2 = Frame(tk, bg=BG2color,width=512,height=32)
         BG1 = Frame(tk, bg=BG1color,width=80,height=256)
@@ -176,15 +200,20 @@ class ingreso1():
         Titulo = Label(tk, text="Cargar Alumno",font=("arial", 16, "bold"), bg=BGcolor)
         Titulo.place(relx=0.55, rely=0.0, anchor='n')
 
-        NombreLabel = Label(tk, text="Introduce el Nombre del Alumno",font=("arial", 8), bg=BGcolor)
-        NombreInput = Entry(tk, width=25)
+        NombreLabel = Label(tk, text="Introduce el Nombre del alumno",font=("arial", 8), bg=BGcolor)
+        NombreInput = ttk.Entry(tk, width=25)
         NombreLabel.place(relx = 0.2, rely = 0.1, anchor ='sw')
         NombreInput.place(relx = 0.2, rely = 0.15, anchor ='sw')
+        NombreInput.bind("<FocusOut>", lambda event: capitalize_first_letter(NombreInput))
+        NombreInput.config(validate="key",validatecommand=(tk.register(validar_letras), "%P"))
 
-        ApellidoLabel = Label(tk, text="Introduce el Apellido del Alumno",font=("arial", 8), bg=BGcolor)
-        ApellidoInput = Entry(tk, width=25)
+        ApellidoLabel = Label(tk, text="Introduce el Apellido del alumno",font=("arial", 8), bg=BGcolor)
+        ApellidoInput = ttk.Entry(tk, width=25)
         ApellidoLabel.place(relx = 0.2, rely = 0.2, anchor ='sw')
         ApellidoInput.place(relx = 0.2, rely = 0.25, anchor ='sw')
+        ApellidoInput.bind("<FocusOut>", lambda event: capitalize_first_letter(ApellidoInput))
+        ApellidoInput.config(validate="key",validatecommand=(tk.register(validar_letras), "%P"))
+
 
         
 
@@ -239,19 +268,45 @@ class ingreso1():
 
         on_course_selected()
 
+        valor_predeterminado = "+54 9"
 
+    # Crea una instancia de StringVar y establece el valor predeterminado
+        string_var = StringVar()
+        string_var.set(valor_predeterminado)
+
+        # Crea el Entry y enlaza su textvariabl
+        ttk.Label(tk, text="Codigo de area:").grid(column=2, row=0)
+        c_a = Entry(tk, textvariable=string_var, state=DISABLED, width=len(valor_predeterminado))
+        c_a.place(relx = 0.2, rely = 0.65, anchor ='sw')
+        
+        ttk.Label(tk, text="Prefijos:").grid(column=3, row=0)
+        global prefijos
+        prefijos=[]
+        with open('numero_codigo.txt', 'r') as archivo:
+            for linea in archivo:
+                numero = linea.strip()
+                prefijos.append(numero)
+        TELEInput = AutocompleteEntry(prefijos,tk)
+        TELEInput.grid(row=1, column=3)
+        TELEInput.bind("<FocusOut>", lambda event: validar_prefijo(event, TELEInput,tk))
+        
+        ttk.Label(tk, text="Numero de telefono").grid(column=4, row=0)
+        entry_telefono2 = ttk.Entry(tk, validate="key")
+        entry_telefono2.config(validatecommand=(tk.register(validar_numeros), "%P"))
+        entry_telefono2.place(relx = 0.5, rely = 0.65, anchor ='sw')
 
         TELELabel = Label(tk, text="Introduzca el Telefono de un Tutor",font=("arial", 8), bg=BGcolor)
-        TELEInput = Entry(tk, width=25)
         TELELabel.place(relx = 0.2, rely = 0.6, anchor ='sw')
-        TELEInput.place(relx = 0.2, rely = 0.65, anchor ='sw')
+        TELEInput.place(relx = 0.3, rely = 0.65, anchor ='sw')
 
         DNILabel = Label(tk, text="Introduce el DNI del Alumno",font=("arial", 8), bg=BGcolor)
         DNIInput = Entry(tk, width=25)
         DNILabel.place(relx = 0.66, rely = 0.1, anchor ='sw')
         DNIInput.place(relx = 0.66, rely = 0.15, anchor ='sw')
 
-
+        opciones_documento =  ["DU","DNI","Libreta de enrolamiento", "Libreta civica", "Pasaporte", "Cedula de identidad"]
+        division = ttk.Combobox(tk,  values=opciones_documento, state="readonly")
+        division.place(relx = 0.66, rely = 0.7, anchor ='sw')
         def focus(event, entry, textoDefault):
             event = str(event)
             print(event)
@@ -269,11 +324,8 @@ class ingreso1():
                 entry.insert(0,textoDefault)
                 entry.config(fg="gray")
         
-        TELEdefault = "+54 11 1234-5678"
-        TELEInput.bind('<FocusIn>', lambda ev: focus(ev,TELEInput,TELEdefault))
-        TELEInput.bind('<FocusOut>', lambda ev: focus(ev,TELEInput,TELEdefault))
 
-        DNIdefault = "00.000.000"
+        DNIdefault = "00000000"
         DNIInput.bind('<FocusIn>', lambda ev: focus(ev,DNIInput,DNIdefault))
         DNIInput.bind('<FocusOut>', lambda ev: focus(ev,DNIInput,DNIdefault))
 
@@ -314,7 +366,6 @@ class ingreso1():
             on_course_selected()
             divisionInput.current(divisionInput["values"].index(valores[2]))
         
-        focus('<FocusOut event>',TELEInput,TELEdefault)
         focus('<FocusOut event>',DNIInput,DNIdefault)
         focus('<FocusOut event>',FechaInput,Fechadefault)
 
@@ -326,3 +377,13 @@ class ingreso1():
 
         VolverBoton = Button(tk, text ="Volver", width=12, command = volver)
         VolverBoton.place(relx = 0.57, rely = 0.85, anchor ='sw')
+        def validar_prefijo(event, entry_widget,tk):
+            TELEInput.hide_listbox(tk)
+            widget_con_enfoque =TELEInput.focus_get()
+            if isinstance(widget_con_enfoque, Listbox):
+                return
+            entrada = entry_widget.get()
+            if not entrada in prefijos:
+                messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
+                entry_widget.delete(0, END)
+                entry_widget.focus()

@@ -111,13 +111,6 @@ def agregar_aulas(columnas_aula,query,Tipo_aula):
         menu_tipo_texto= ttk.Label(arriba, text="Tipo de aula:")
         menu_tipo_texto.grid(column=0, row=0, padx=5, pady=5)
         
-        
-    
-        
-    
-        
-    
-        
         clicked2 = tk.StringVar()
         clicked2.set("Planta_alta")
         

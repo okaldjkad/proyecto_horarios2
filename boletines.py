@@ -367,6 +367,7 @@ class boletines1():
         noAlumnos = "ERROR: No hay Alumnos"
         noMaterias = "ERROR: No hay Materias"
 
+     
         
         def EditarLista():
             print("Func EditarLista")
@@ -397,6 +398,7 @@ class boletines1():
                 LabelNota1 = Label(FrameEditar,text="1ra Nota", font=fuenteEdit, bg=BG3color)
                 LabelNota1.grid(row=0,column=0,columnspan=1,padx=(0,0),pady=2,sticky="e")
                 EntryNota1 = Entry(FrameEditar,width=4, font=fuenteEdit)
+
                 EntryNota1.grid(row=0,column=1,columnspan=1,pady=2,sticky="ns")
                 
                 LabelNota2 = Label(FrameEditar,text="2da Nota", font=fuenteEdit, bg=BG3color)
