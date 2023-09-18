@@ -431,6 +431,7 @@ class añadir_horario():
     
     def volver(self):
         self.eliminar()
+        ventana_horario2= menu_horarios()
         ventana_horario2.horarios(self.ventana_horario)
     def eliminar(self):
         for elemento in self.ventana_horario.winfo_children():

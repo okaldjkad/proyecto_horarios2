@@ -45,11 +45,10 @@ class menu1:
             alumnosFunc(tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,alumnosFunc)
             return
             #ejecutar modulo del ingreso de alumnos
-        def horarios():
+        def horarios(tk):
             eliminar()
-            tkwindow=Toplevel()
             menu_horarios=FPP.menu_horarios()
-            menu_horarios.horarios(tkwindow)
+            menu_horarios.horarios(tk)
         def administrar_cuentas():
             eliminar()
             def cuentasFunc(tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,cuentasFunc):
@@ -133,7 +132,7 @@ class menu1:
         boton_cuentas.grid(row=5, column=1, padx=(0, 10), pady=(0,0), sticky="E")
 
         #Boton Horarios
-        boton_horarios = Button(tk, text="Horarios",image=self.imagen_administrar_horario,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=horarios, font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Horarios",image=self.imagen_administrar_horario,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=lambda:horarios(tk), font=("Helvetica", 16))
         boton_horarios.grid(row=2, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Materias
@@ -145,7 +144,7 @@ class menu1:
         boton_horarios.grid(row=4, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Aulas
-        boton_horarios = Button(tk, text="Administrar Aulas",image=self.imagen_aula,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=administrar_aulas, font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Administrar Aulas",image=self.imagen_aula,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=lambda:administrar_aulas, font=("Helvetica", 16))
         boton_horarios.grid(row=5, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
 
