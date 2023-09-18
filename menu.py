@@ -93,7 +93,7 @@ class menu1:
         self.imagen_administrar_asistencia = ImageTk.PhotoImage(Image.open("imagenes/administrador_de_asistencia.png").resize((20, 20), Image.ANTIALIAS))
         self.imagen_administrar_alumnos = ImageTk.PhotoImage(Image.open("imagenes/administrar_alumnos.png").resize((25, 25), Image.ANTIALIAS))
         self.imagen_administrar_cuentas = ImageTk.PhotoImage(Image.open("imagenes/administrar_cuentas.png").resize((20, 20), Image.ANTIALIAS))
-        self.imagen_materia = ImageTk.PhotoImage(Image.open("imagenes/materia.png").resize((25, 25), Image.ANTIALIAS))
+        self.imagen_materia = ImageTk.PhotoImage(Image.open("imagenes/materia.png.jpg").resize((25, 25), Image.ANTIALIAS))
         self.imagen_cerrar_sesion = ImageTk.PhotoImage(Image.open("imagenes/cerrar_sesion.png").resize((20, 20),Image.ANTIALIAS))
         self.imagen_aula = ImageTk.PhotoImage(Image.open("imagenes/aulas.png").resize((20, 20), Image.ANTIALIAS))                          
         self.imagen_filtro = ImageTk.PhotoImage(Image.open("imagenes/filtrar.png").resize((20, 20), Image.ANTIALIAS))
@@ -169,7 +169,7 @@ class menu1:
             boton_alumno['state'] = NORMAL
             boton_cuentas['state'] = NORMAL
 
-        boton_cerrar_sesion = Button(tk, text="Cerrar Sesión", width=16, height=1, command=cerrar_sesion, bg="light coral", font=("Helvetica", 12))
+        boton_cerrar_sesion = Button(tk, text="Cerrar Sesión",image=self.imagen_cerrar_sesion,compound="left",borderwidth=1,relief="solid", width=16, height=1, command=cerrar_sesion, bg="light coral", font=("Helvetica", 12))
         boton_cerrar_sesion.place(relx = 0.995, rely = 0.92, anchor ='se')
 
         etiqueta_derecha = Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
