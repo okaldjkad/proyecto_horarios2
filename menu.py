@@ -3,7 +3,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
-
+import Funcionalidad_parte_principal as FPP
 from boletines import boletines1
 from alumnos import alumnos1
 from inasistencias import inasistencias1
@@ -45,7 +45,11 @@ class menu1:
             alumnosFunc(tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,alumnosFunc)
             return
             #ejecutar modulo del ingreso de alumnos
-
+        def horarios():
+            eliminar()
+            tkwindow=Toplevel()
+            menu_horarios=FPP.menu_horarios()
+            menu_horarios.horarios(tkwindow)
         def administrar_cuentas():
             eliminar()
             def cuentasFunc(tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,cuentasFunc):
@@ -53,10 +57,6 @@ class menu1:
             cuentasFunc(tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,cuentasFunc)
             return
             #ejecutar modulo de administracion de cuentas
-
-        def administrar_horarios():
-            return
-            #ejecutar modulo para administrar los horarios
 
         def administrar_materias(tk):
             eliminar()
@@ -94,7 +94,7 @@ class menu1:
         self.imagen_administrar_alumnos = ImageTk.PhotoImage(Image.open("imagenes/administrar_alumnos.png").resize((25, 25), Image.ANTIALIAS))
         self.imagen_administrar_cuentas = ImageTk.PhotoImage(Image.open("imagenes/administrar_cuentas.png").resize((20, 20), Image.ANTIALIAS))
         self.imagen_materia = ImageTk.PhotoImage(Image.open("imagenes/materia.png.jpg").resize((25, 25), Image.ANTIALIAS))
-        self.imagen_cerrar_sesion = ImageTk.PhotoImage(Image.open("imagenes/cerrar_sesion.png").resize((20, 20),Image.ANTIALIAS))
+        self.imagen_cerrar_sesion = ImageTk.PhotoImage(Image.open("imagenes/cerrar_sesion.png.jpg").resize((20, 20),Image.ANTIALIAS))
         self.imagen_aula = ImageTk.PhotoImage(Image.open("imagenes/aulas.png").resize((20, 20), Image.ANTIALIAS))                          
         self.imagen_filtro = ImageTk.PhotoImage(Image.open("imagenes/filtrar.png").resize((20, 20), Image.ANTIALIAS))
 
@@ -133,7 +133,7 @@ class menu1:
         boton_cuentas.grid(row=5, column=1, padx=(0, 10), pady=(0,0), sticky="E")
 
         #Boton Horarios
-        boton_horarios = Button(tk, text="Administrar Horarios",image=self.imagen_administrar_horario,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=administrar_horarios, font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Horarios",image=self.imagen_administrar_horario,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=horarios, font=("Helvetica", 16))
         boton_horarios.grid(row=2, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Materias
@@ -169,7 +169,7 @@ class menu1:
             boton_alumno['state'] = NORMAL
             boton_cuentas['state'] = NORMAL
 
-        boton_cerrar_sesion = Button(tk, text="Cerrar Sesión",image=self.imagen_cerrar_sesion,compound="left",borderwidth=1,relief="solid", width=16, height=1, command=cerrar_sesion, bg="light coral", font=("Helvetica", 12))
+        boton_cerrar_sesion = Button(tk, text="Cerrar Sesión",image=self.imagen_cerrar_sesion,compound="left",borderwidth=1,relief="solid", width=150, height=30, command=cerrar_sesion, bg="light coral", font=("Helvetica", 12))
         boton_cerrar_sesion.place(relx = 0.995, rely = 0.92, anchor ='se')
 
         etiqueta_derecha = Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))

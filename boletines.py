@@ -264,7 +264,9 @@ class boletines1():
                 EntryCalifDef.delete(0, END)
                 EntryCalifDef.insert(0, nuevo_contenido5)
                 messagebox.showerror("Error", "Solo se permiten 2 caracteres")
-
+        
+           
+            
         #tk.grid_columnconfigure(0, weight=1)
 
         FrameTOP = Frame(tk,bg=BGcolor)
@@ -443,6 +445,7 @@ class boletines1():
                 LabelNota1.grid(row=0,column=0,columnspan=1,padx=(0,0),pady=2,sticky="e")
                 EntryNota1 = ttk.Entry(FrameEditar,width=4, font=fuenteEdit)
                 EntryNota1.bind("<KeyRelease>", limite)
+                
                 EntryNota1.config(validate="key",validatecommand=(FrameEditar.register(validar_numeros), "%P"))
 
                 EntryNota1.grid(row=0,column=1,columnspan=1,pady=2,sticky="ns")

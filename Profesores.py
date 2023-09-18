@@ -14,7 +14,7 @@ def eliminar(ventana):
         elemento.destroy()
         
 def botones_docentes(ventana3):
-    global frame_pe,imagen_profesor,imagen_materia_ver,imagen_volver,imagen_materia_añadir,imagen_profesor_añadir
+    global frame_pe,imagen_profesor,imagen_materia_ver,imagen_eliminar,imagen_volver,imagen_materia_añadir,imagen_profesor_añadir
     ventana3.geometry("800x600")
     ventana3.title("Pantalla Principal")
     ventana3.iconbitmap("Imagenes/Colegio_logo.ico")
@@ -40,6 +40,7 @@ def botones_docentes(ventana3):
     imagen_volver = ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20)))
     imagen_materia_añadir = ImageTk.PhotoImage(Image.open("imagenes/agregar_materia.png").resize((20, 20)))
     imagen_profesor_añadir = ImageTk.PhotoImage(Image.open("imagenes/agregar_profesor.png").resize((20, 20)))
+    imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.ANTIALIAS))
 
     tk.Label(ventana3,text="Materia y Profesores",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=5,columnspan=2,padx=2,pady=2)
     tk.Button(ventana3, text="Volver",image=imagen_volver,compound="left",height=49,width=100, command=lambda: volver_al_menu(ventana3)).grid(row=8, column=9, sticky="e")
@@ -48,7 +49,7 @@ def botones_docentes(ventana3):
 
     añadir_profes=tk.Button(ventana3, text="Añadir profesores",image= imagen_profesor_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_profesores(( "Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor,Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3)))
     añadir_profes.grid(row=3, column=6, padx=2, pady=2,sticky="w")
-    tk.Button(ventana3, text="Ver materias",image=imagen_materia_ver,compound="left" ,borderwidth=1,relief="solid",height=30 , width=300,command=lambda:ver_aula(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC""",(ventana3),(True)),).grid(row=3, column=5, padx=2, pady=2,sticky="w")
+    tk.Button(ventana3, text="Ver materias",image=imagen_materia_ver,compound="left" ,borderwidth=1,relief="solid",height=30 , width=300,command=lambda:ver_aula(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC"""),).grid(row=3, column=5, padx=2, pady=2,sticky="w")
         
     añadir_materia_boton=tk.Button(ventana3, text="Añadir materias",image=imagen_materia_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_materias(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC""",(ventana3)))
     añadir_materia_boton.grid(row=4, column=6, padx=2, pady=2,sticky="w")
@@ -374,7 +375,7 @@ def ver_profes(columnas_aula,query,ver_Profesores,eliminar_b):
 def agregar_profesores(columnas_aula,query,ver_Profesores):
     global añadir_nombre, añadir_apellido, entry_telefono,entry_dni,entry_fecha, entry_correo, entry_direccion, entry_Altura, check_var, variable4, arriba3, opciones_documento,tree_Profe, treeview_Profe, tree_Profe,frame_pe
     eliminar(ver_Profesores)
-    frame_pe = ttk.Frame(ventana)
+    frame_pe = ttk.Frame(ver_Profesores)
     frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
     ver_profes(columnas_aula,query,ver_Profesores,0)
     arriba3 = ttk.LabelFrame(frame_pe, text="Añadir")
@@ -386,7 +387,7 @@ def agregar_profesores(columnas_aula,query,ver_Profesores):
     division.grid(column=5, row=1)
     ver_Profesores.protocol("WM_DELETE_WINDOW",lambda: volver_docentes(ver_Profesores))
     ttk.Button(arriba3, text="Agregar", command=lambda:  opciones_docentes(3)).grid(column=7, row=0, sticky="nsew")
-    ttk.Button(arriba3, text="Eliminar", command=lambda:  opciones_docentes(4)).grid(column=7, row=3, sticky="nsew")
+    tk.Button(arriba3, text="Eliminar",image=imagen_eliminar,compound="left",fg="white",bg="#960000", command=lambda:  opciones_docentes(4)).grid(column=7, row=3, sticky="nsew")
     ttk.Button(arriba3, text="Modificar", command=lambda:  opciones_docentes(7)).grid(column=7, row=4, sticky="nsew")
     entrys(ver_Profesores)
     for x in range(7):
@@ -516,7 +517,7 @@ def explicacion():
 def agregar_materias(columnas_aula,query,ver_Materias):
     global materia_nombre,entry_especialidad, tree_materias, año, division, variable2, variable1,opciones_division1, variable3, opciones_año, opciones_division, opciones_division2, opciones_divisionci
     eliminar(ver_Materias)
-    frame_pe = ttk.Frame(ventana)
+    frame_pe = ttk.Frame(ver_Materias)
     frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
     ver_Materias.title("Materias")
     ver_Materias.protocol("WM_DELETE_WINDOW",lambda: volver_docentes(ver_Materias))

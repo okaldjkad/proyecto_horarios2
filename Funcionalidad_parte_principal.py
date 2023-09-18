@@ -2,15 +2,101 @@ import tkinter as tk
 import mysql.connector
 from CompletarAU import AutocompleteEntry
 from tkinter import ttk
+from PDF import PDF
 from datetime import datetime
 from tkinter import messagebox
 from PIL import ImageTk, Image
 #Hecho por Tobias Bonanno
+class menu_horarios():
+    def horarios(self,ventana4):
+        self.ventana4=ventana4
+        self.ventana4.title("Pantalla Principal")
+        self.ventana4.iconbitmap("Imagenes/Colegio_logo.ico")
+        self.ventana4.columnconfigure(0, weight=1)
+        self.ventana4.rowconfigure((0,1,2), weight=1)
+        self.frame_horarios = ttk.LabelFrame(self.ventana4, text="Horarios")
+        self.frame_horarios.grid(sticky="news", pady=2, padx=2,column=0,row=3)
+        self.imagen_PDF = ImageTk.PhotoImage(Image.open("Imagenes/PDF.png").resize((20,20)))
+        self.imagen_agregar =ImageTk.PhotoImage(Image.open("Imagenes/añadir.png").resize((20,20)))
+        self.frame_horarios.columnconfigure((0,1,2), weight=1)
+        self.frame_horarios.rowconfigure((0,1,2), weight=1)
+        ttk.Button(self.ventana4, text="Volver", command=lambda: self.volver_al_menu(self.ventana4)).grid(row=0, column=0, padx=2, pady=2)
+        ttk.Button(self.frame_horarios, text="Ver horarios Laboratorios", command=lambda:self.opcion_ver_horarios("Laboratorio",self.ver_horarios)).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
+        
+        ttk.Button(self.frame_horarios, text="Añadir Horarios Laboratorios",image=self.imagen_agregar,compound="left",command=lambda:self.opcion_ver_horarios("Laboratorio",self.añadir_aula)).grid(row=0, column=1, padx=2, pady=2,sticky="ew")
+        
+        ttk.Button(self.frame_horarios, text="Exportar laboratorio a PDF",image=self.imagen_PDF,compound="left", command=lambda:self.opcion_ver_horarios("Laboratorio",self.exportar_pdf)).grid(row=0, column=3, padx=2, pady=2,sticky="ew")
+        
+        ttk.Button(self.frame_horarios, text="Ver horarios aulas", command=lambda:self.opcion_ver_horarios("Aula",self.ver_horarios)).grid(row=1, column=0, padx=2, pady=2,sticky="ew")
+            
+            
+        ttk.Button(self.frame_horarios, text="Añadir horarios horarios aulas",image=self.imagen_agregar,compound="left",command=lambda:self.opcion_ver_horarios("Aula",self.añadir_aula)).grid(row=1, column=1, padx=2, pady=2,sticky="ew")
+            
+            
+        ttk.Button(self.frame_horarios, text="Exportar aula a PDF", image=self.imagen_PDF,compound="left",command=lambda:self.opcion_ver_horarios("Aula",self.exportar_pdf)).grid(row=1, column=3, padx=2, pady=2,sticky="ew")
+        
+        ttk.Button(self.frame_horarios, text="Ver horarios talleres", command=lambda:self.opcion_ver_horarios("Taller",self.ver_horarios)).grid(row=2, column=0, padx=2, pady=2,sticky="ew")
+            
+            
+        ttk.Button(self.frame_horarios, text="Añadir horarios talleres",image=self.imagen_agregar,compound="left",command=lambda:self.opcion_ver_horarios("Taller",self.añadir_aula)).grid(row=2, column=1, padx=2, pady=2,sticky="ew")
+            
+        # Asignar la función cerrar_ventana al evento de cerrar la ventana principal
+        ttk.Button(self.frame_horarios,text="Exportar taller a PDF",image=self.imagen_PDF,compound="left", command=lambda:self.opcion_ver_horarios("Taller",self.exportar_pdf)).grid(row=2, column=3, padx=2, pady=2,sticky="ew")
+        self.ventana4.protocol("WM_DELETE_WINDOW",lambda: self.volver_al_menu(self.ventana4))
+    def volver_al_menu(self,ventana):
+        print("volver")
+    def exportar_pdf(self,numero_aula2,tipo_de_aula1):
+        pdf1=PDF(tipo_de_aula1,numero_aula2)
+        pdf1.guardar_pdf()
+        messagebox.showinfo("Exportar a PDF","PDF Exportado con exito al directorio de descargas")
+        
+    def conectar_base_de_datos(self):
+        self.cnx = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='proyecto_colegio2'
+        )
+        # Crear un cursor para ejecutar consultas
+        self.cursor = self.cnx.cursor()
+    def cerrar_base_de_datos(self):
+        self.cursor.close()
+        self.cnx.close()
+    def opcion_ver_horarios(self,tipo_aula,segunda_funcion):
+        global aula_ver_horarios
+        aula_ver_horarios= tk.Toplevel()
+        aula_ver_horarios.title("Pantalla Principal")
+        aula_ver_horarios.iconbitmap("Imagenes/Colegio_logo.ico")
+        botones_frame = ttk.LabelFrame(aula_ver_horarios, text="Horarios")
+        botones_frame.pack(padx=10, pady=10)
+        self.conectar_base_de_datos()
+        self.cursor.execute('SELECT Tipo_de_aula, Numero FROM Aulas WHERE Tipo_de_aula = %s ORDER BY Numero ', (tipo_aula,))
+        filas = self.cursor.fetchall()
+        for i, fila in enumerate(filas):
+            boton = ttk.Button(botones_frame, text=f"{tipo_aula} {fila[1]}", command=lambda r=fila[1]: segunda_funcion(r, tipo_aula))
+            boton.grid(row=i // 3, column=i % 3, padx=10, pady=10)
+        
+    def ver_horarios(self,numero,tipo_aula):
+        self.ventana_horario3 = tk.Toplevel()
+        self.ventana_horario2= añadir_horario(self.ventana_horario3,tipo_aula,numero)
+        self.ventana_horario2.treeview(True)
+        self.ventana_horario2.ejecutar()
+
+    def añadir_aula(self,numero,tipo_aula):
+        self.ventana_horario = tk.Toplevel()
+        ventana_horario2= añadir_horario(self.ventana_horario,tipo_aula,numero)
+        ventana_horario2.widgets()
+        ventana_horario2.botones()
+        ventana_horario2.ejecutar()
+        
+        
+        
 class añadir_horario():
     def __init__(self,ventana_horario,tipo_de_aula,numero_de_aula):
         self.numero_de_aula=numero_de_aula
         self.tipo_de_aula=tipo_de_aula
         self.ventana_horario=ventana_horario
+        self.volver_imagen=ImageTk.PhotoImage(Image.open("Imagenes/volver.png").resize((15,15)))
         self.opciones_division=[]
         self.ventana_horario.title("Añadir horario")
         self.ventana_horario.geometry("900x500")
@@ -71,7 +157,6 @@ class añadir_horario():
             
         self.frame_superior.rowconfigure(0, weight=1)
         self.frame_superior.rowconfigure(1, weight=1)
-        self.volver_imagen=ImageTk.PhotoImage(Image.open("Imagenes/volver.png").resize((15,15)))
         
         ttk.Label(self.frame_superior,text="Horario llegada").grid(row=0, column=0,)
         self.entrada_hora_llegada = AutocompleteEntry(self.horarios,self.frame_superior)
@@ -193,13 +278,15 @@ class añadir_horario():
             finally:
                 self.desconectar_de_mysql()
         
-    def treeview(self):
+    def treeview(self,backyesno=False):
         self.frame = self.frame_inferior
         self.scrollbar = ttk.Scrollbar(self.frame)
         self.scrollbar.pack(side="right", fill="y")
         self.my_treeview = ttk.Treeview(self.frame,yscrollcommand=self.scrollbar.set, selectmode="extended")
         self.my_treeview.pack(fill="both", expand=True)
         self.scrollbar.config(command=self.my_treeview.yview)
+        if backyesno==True:
+            ttk.Button(self.frame_superior,text="Volver",image=self.volver_imagen,compound="left",command=self.volver).grid(row=0, column=5,rowspan=1)
         self.my_treeview["columns"] = ("ID","Numero de aula","Tipo de aula","Horario llegada","Horario salida","Espacio Curricular","Año","Division","Grupo","Profesor","Dia")
         self.my_treeview.column("#0", width=0, stretch=0)
         self.my_treeview.column("ID", anchor="center", width=1)
@@ -334,9 +421,9 @@ class añadir_horario():
         self.dia_get = self.dias_a_numeros.get(self.dia_get.capitalize(), 0)
     
     def volver(self):
-        import Parte_principal
         self.ventana_horario.destroy()
-        Parte_principal.horarios()
+        ventana_horario1=tk.Tk()
+        ventana_horario2.horarios(ventana_horario1)
 
     def conectar_a_mysql(self):
         try:
@@ -359,7 +446,6 @@ class añadir_horario():
 
 if __name__ == "__main__":
     ventana_horario = tk.Tk()
-    ventana_horario2= añadir_horario(ventana_horario,"Laboratorio",10)
-    ventana_horario2.widgets()
-    ventana_horario2.botones()
-    ventana_horario2.ejecutar()
+    ventana_horario2= menu_horarios()
+    ventana_horario2.horarios(ventana_horario)
+    ventana_horario.mainloop()

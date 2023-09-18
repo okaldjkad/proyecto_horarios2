@@ -60,17 +60,7 @@ class cuentas1:
             self.registrar.crear(tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,cuentasFunc)
 
 
-        def cerrarojo():
-         eye_open = checkbox_var.get()
-         if eye_open:
-          eye_label.config(image=eye_open_image)
-         else:
-          eye_label.config(image=eye_closed_image)
-        eye_open_image = PhotoImage(file="imagenes/ojo_abierto.png")
-        eye_closed_image = PhotoImage(file="imagenes/ojo_cerrado.png")
-        eye_label = Label( image=eye_closed_image)
-        eye_label.pack()
-
+        
 
         checkbox_var = BooleanVar()
         checkbox_var.set(False)
@@ -145,7 +135,7 @@ class cuentas1:
         BotonCuenta   = Button(FrameBotones, text ="Registrar Cuenta",width=20, command = lambda: funcregistrar())
         BotonEliminar = Button(FrameBotones, text ="Eliminar Cuenta",image=self.imagen_eliminar,compound="left",bg="#960000",fg="white",width=20, command = lambda: eliminarCuenta(lista))
         BotonEditar   = Button(FrameBotones, text ="Editar Cuenta",image=self.imagen_editar,compound="left",width=30, command = lambda: EditarCuenta())
-        BotonContraseña= Checkbutton(FrameBotones, text="Ocultar Contraseñas",width=20,variable=OcultarContraseña,bg=BGcolor,activebackground=BGcolor,command=lambda: [ObtenerLista(UltimoTipo),cerrarojo])
+        BotonContraseña= Checkbutton(FrameBotones, text="Ocultar Contraseñas",width=20,variable=OcultarContraseña,bg=BGcolor,activebackground=BGcolor,command=lambda: ObtenerLista(UltimoTipo))
 
         BotonImprimir["state"] = "disabled"
 
