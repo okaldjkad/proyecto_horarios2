@@ -93,7 +93,10 @@ class menu1:
         self.imagen_administrar_asistencia = ImageTk.PhotoImage(Image.open("imagenes/administrador_de_asistencia.png").resize((20, 20), Image.ANTIALIAS))
         self.imagen_administrar_alumnos = ImageTk.PhotoImage(Image.open("imagenes/administrar_alumnos.png").resize((25, 25), Image.ANTIALIAS))
         self.imagen_administrar_cuentas = ImageTk.PhotoImage(Image.open("imagenes/administrar_cuentas.png").resize((20, 20), Image.ANTIALIAS))
-
+        self.imagen_materia = ImageTk.PhotoImage(Image.open("imagenes/materia.png").resize((25, 25), Image.ANTIALIAS))
+        self.imagen_cerrar_sesion = ImageTk.PhotoImage(Image.open("imagenes/cerrar_sesion.png").resize((20, 20),Image.ANTIALIAS))
+        self.imagen_aula = ImageTk.PhotoImage(Image.open("imagenes/aulas.png").resize((20, 20), Image.ANTIALIAS))                          
+        self.imagen_filtro = ImageTk.PhotoImage(Image.open("imagenes/filtrar.png").resize((20, 20), Image.ANTIALIAS))
 
       
 
@@ -134,16 +137,17 @@ class menu1:
         boton_horarios.grid(row=2, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Materias
-        boton_horarios = Button(tk, text="Materias y profesores",image=self.imagen_administrar_horario,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=lambda:administrar_materias(tk), font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Materias y profesores",image=self.imagen_materia,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=lambda:administrar_materias(tk), font=("Helvetica", 16))
         boton_horarios.grid(row=3, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Filtros
-        boton_horarios = Button(tk, text="Filtros",image=self.imagen_administrar_horario,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=administrar_filtros, font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Filtros",image=self.imagen_filtro,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=administrar_filtros, font=("Helvetica", 16))
         boton_horarios.grid(row=4, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Aulas
-        boton_horarios = Button(tk, text="Administrar Aulas",image=self.imagen_administrar_horario,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=administrar_aulas, font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Administrar Aulas",image=self.imagen_aula,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=administrar_aulas, font=("Helvetica", 16))
         boton_horarios.grid(row=5, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
+
 
 
         if tipoCuenta == 1: #botones Maestro
