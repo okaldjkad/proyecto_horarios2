@@ -13,37 +13,48 @@ def eliminar(ventana):
         elemento.destroy()
         
 def botones_docentes(ventana3):
+    global frame_pe,imagen_profesor,imagen_materia_ver,imagen_volver,imagen_materia_añadir,imagen_profesor_añadir
     ventana3.geometry("800x600")
     ventana3.title("Pantalla Principal")
     ventana3.iconbitmap("Imagenes/Colegio_logo.ico")
-    global frame_pe
+    nuevo_color = "#c9daf8"  # Puedes cambiar esto al color que desees
+    style = ttk.Style()
+    style.configure("TFrame", background=nuevo_color)  # Cambia el fondo del tema TFrame
+
+    
+
+
     frame_pe = ttk.Frame(ventana3)
     frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
     frame_pe.columnconfigure(0, weight=1)
     frame_pe.rowconfigure(0, weight=1)
     frame_pe.rowconfigure(1, weight=1)
-    frame_pe.rowconfigure(2, weight=1)
+    frame_pe.rowconfigure(2, weight=1) 
+    BG2color="#6D9EEB"
+    BG2 = tk.Frame(ventana3, bg=BG2color,width=512,height=32)
+    BG2.place(relx = 0.0, rely = 1.0, anchor ='sw', relwidth=1.0, relheight=0.07)
+
+    imagen_profesor = ImageTk.PhotoImage(Image.open("imagenes/profesor.png").resize((20, 20)))
+    imagen_materia_ver = ImageTk.PhotoImage(Image.open("imagenes/materia_ver.png").resize((20, 20)))
+    imagen_volver = ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20)))
+    imagen_materia_añadir = ImageTk.PhotoImage(Image.open("imagenes/agregar_materia.png").resize((20, 20)))
+    imagen_profesor_añadir = ImageTk.PhotoImage(Image.open("imagenes/agregar_profesor.png").resize((20, 20)))
+
+    tk.Label(ventana3,text="Materia y Profesores",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=5,columnspan=2,padx=2,pady=2)
+    tk.Button(ventana3, text="Volver",image=imagen_volver,compound="left",height=49,width=100, command=lambda: volver_al_menu(ventana3)).grid(row=8, column=9, sticky="e")
+    tk.Button(ventana3, text="Ver profesores",image=imagen_profesor,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:ver_profes(("Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor, Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3),1)).grid(row=4, column=5, padx=2, pady=2,sticky="w")
         
 
-    frame_docentes = ttk.LabelFrame(frame_pe, text="Profesores")
-    frame_docentes.grid(sticky="new", pady=2, padx=2,column=0,row=2)
+    añadir_profes=tk.Button(ventana3, text="Añadir profesores",image= imagen_profesor_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_profesores(( "Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor,Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3)))
+    añadir_profes.grid(row=3, column=6, padx=2, pady=2,sticky="w")
+    tk.Button(ventana3, text="Ver materias",image=imagen_materia_ver,compound="left" ,borderwidth=1,relief="solid",height=30 , width=300,command=lambda:ver_aula(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC""",(ventana3),(True)),).grid(row=3, column=5, padx=2, pady=2,sticky="w")
         
-    frame_docentes.columnconfigure(0, weight=1)
-    frame_docentes.columnconfigure(1, weight=1)
-    frame_docentes.columnconfigure(2, weight=1)
-    frame_docentes.rowconfigure(0, weight=1)
-    frame_docentes.rowconfigure(1, weight=1)
-    frame_docentes.rowconfigure(2, weight=1)
-    ttk.Button(ventana3, text="Volver", command=lambda: volver_al_menu(ventana3)).grid(row=0, column=0, padx=2, pady=2)
-    ttk.Button(frame_docentes, text="Ver profesores", command=lambda:ver_profes(("Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor, Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3),1)).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
-        
+    añadir_materia_boton=tk.Button(ventana3, text="Añadir materias",image=imagen_materia_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_materias(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC""",(ventana3)))
+    añadir_materia_boton.grid(row=4, column=6, padx=2, pady=2,sticky="w")
 
-    añadir_profes=ttk.Button(frame_docentes, text="Añadir profesores", command=lambda:agregar_profesores(( "Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor,Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3)))
-    añadir_profes.grid(row=0, column=1, padx=2, pady=2,sticky="ew")
-    ttk.Button(frame_docentes, text="Ver materias", command=lambda:ver_aula(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC""",(ventana3),(True)),).grid(row=1, column=0, padx=2, pady=2,sticky="ew")
-        
-    añadir_materia_boton=ttk.Button(frame_docentes, text="Añadir materias", command=lambda:agregar_materias(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC""",(ventana3)))
-    añadir_materia_boton.grid(row=1, column=1, padx=2, pady=2,sticky="ew")
+
+    etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
+    etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
         
    
 def capitalize_first_letter(entry_widget):
