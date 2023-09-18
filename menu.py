@@ -169,7 +169,7 @@ class menu1:
             boton_alumno['state'] = NORMAL
             boton_cuentas['state'] = NORMAL
 
-        boton_cerrar_sesion = Button(tk, text="Cerrar Sesión", width=16, height=1, command=cerrar_sesion, bg="light coral", font=("Helvetica", 12))
+        boton_cerrar_sesion = Button(tk, text="Cerrar Sesión",image=self.imagen_cerrar_sesion,compound="left", width=150, height=30, command=cerrar_sesion, bg="light coral", font=("Helvetica", 12))
         boton_cerrar_sesion.place(relx = 0.995, rely = 0.92, anchor ='se')
 
         etiqueta_derecha = Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
