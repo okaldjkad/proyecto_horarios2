@@ -175,8 +175,34 @@ class ingreso1():
             else:
                 messagebox.showerror("Error", "Solo se permiten letras")
                 return False 
+        def limite(event):
+            contenido = NombreInput.get()
+            contenido2 = ApellidoInput.get()
+            contenido3 = entry_telefono2.get()
+            contenido4 = DNIInput.get()
+            
+            if len(contenido) > 30:
+                # Limitar el contenido a 11 caracteres
+                nuevo_contenido = contenido[:0]
+                NombreInput.delete(0, END)
+                NombreInput.insert(0, nuevo_contenido)
+            elif len(contenido2) > 30:
+                # Limitar el contenido a 11 caracteres
+                nuevo_contenido2 = contenido2[:0]
+                ApellidoInput.delete(0, END)
+                ApellidoInput.insert(0, nuevo_contenido2)
+            elif len(contenido3) > 11:
+                # Limitar el contenido a 11 caracteres
+                nuevo_contenido3 = contenido3[:11]
+                entry_telefono2.delete(0, END)
+                entry_telefono2.insert(0, nuevo_contenido3)
+            elif len(contenido4) > 10:
+                # Limitar el contenido a 11 caracteres
+                nuevo_contenido4 = contenido4[:10]
+                DNIInput.delete(0, END)
+                DNIInput.insert(0, nuevo_contenido4)
+                messagebox.showerror("Error", "Solo se permiten 10 caracteres")
         
-
         BG2 = Frame(tk, bg=BG2color,width=512,height=32)
         BG1 = Frame(tk, bg=BG1color,width=80,height=256)
         BG1.place(relx = 0.0, rely = 1.0, anchor ='sw', relwidth=0.1, relheight=1.0)
@@ -205,6 +231,7 @@ class ingreso1():
         NombreLabel.place(relx = 0.2, rely = 0.1, anchor ='sw')
         NombreInput.place(relx = 0.2, rely = 0.15, anchor ='sw')
         NombreInput.bind("<FocusOut>", lambda event: capitalize_first_letter(NombreInput))
+        NombreInput.bind("<KeyRelease>", limite)
         NombreInput.config(validate="key",validatecommand=(tk.register(validar_letras), "%P"))
 
         ApellidoLabel = Label(tk, text="Introduce el Apellido del alumno",font=("arial", 8), bg=BGcolor)
@@ -212,6 +239,7 @@ class ingreso1():
         ApellidoLabel.place(relx = 0.2, rely = 0.2, anchor ='sw')
         ApellidoInput.place(relx = 0.2, rely = 0.25, anchor ='sw')
         ApellidoInput.bind("<FocusOut>", lambda event: capitalize_first_letter(ApellidoInput))
+        ApellidoInput.bind("<KeyRelease>", limite)
         ApellidoInput.config(validate="key",validatecommand=(tk.register(validar_letras), "%P"))
 
 
@@ -293,6 +321,7 @@ class ingreso1():
         ttk.Label(tk, text="Numero de telefono").grid(column=4, row=0)
         entry_telefono2 = ttk.Entry(tk, validate="key")
         entry_telefono2.config(validatecommand=(tk.register(validar_numeros), "%P"))
+        entry_telefono2.bind("<KeyRelease>", limite)
         entry_telefono2.place(relx = 0.5, rely = 0.65, anchor ='sw')
 
         TELELabel = Label(tk, text="Introduzca el Telefono de un Tutor",font=("arial", 8), bg=BGcolor)
@@ -300,7 +329,9 @@ class ingreso1():
         TELEInput.place(relx = 0.3, rely = 0.65, anchor ='sw')
 
         DNILabel = Label(tk, text="Introduce el DNI del Alumno",font=("arial", 8), bg=BGcolor)
-        DNIInput = Entry(tk, width=25)
+        DNIInput = ttk.Entry(tk, width=25)
+        DNIInput.config(validate="key",validatecommand=(tk.register(validar_numeros), "%P"))
+        DNIInput.bind("<KeyRelease>", limite)
         DNILabel.place(relx = 0.66, rely = 0.1, anchor ='sw')
         DNIInput.place(relx = 0.66, rely = 0.15, anchor ='sw')
 
@@ -387,3 +418,4 @@ class ingreso1():
                 messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
                 entry_widget.delete(0, END)
                 entry_widget.focus()
+        
