@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import mysql.connector
+import re
 
 # Definir los colores
 BGcolor = "#c9daf8"
@@ -47,6 +48,11 @@ class registrar1():
                 ventana.bell()
                 return
             
+            if email.count('.') > 3 or email.count('.') == 0 or email.count('@') != 1 or not re.match(r'^[\w-]+@', email):
+                # Si el correo no cumple con el formato o tiene más de una "@", mostramos un mensaje de error
+                tk.messagebox.showerror("Error", "Dirección de correo inválida su correo debe verse asi example@gmail.com")
+                entry_email.delete(0, tk.END)  # Borramos el contenido del Entry
+                return False 
             
             LoginValores = [nombre_usuario,contraseña,email,tipo,confirmar_contraseña]
             SQLmaterias = []
@@ -139,7 +145,43 @@ class registrar1():
                 volver()
                     
 
-
+        def arroba(event):
+            contenido = entry_email.get()
+            # Utilizamos una expresión regular para verificar el formato del correo
+            if contenido.count('.') > 3 or contenido.count('.') == 0 or contenido.count('@') != 1 or not re.match(r'^[\w-]+@', contenido):
+                # Si el correo no cumple con el formato o tiene más de una "@", mostramos un mensaje de error
+                tk.messagebox.showerror("Error", "Dirección de correo inválida su correo debe verse asi example@gmail.com")
+                entry_email.delete(0, tk.END)  # Borramos el contenido del Entry
+                return False
+        def limite(event):
+            contenido = entry_email.get()
+            contenido2 = entry_usuario.get()
+            contenido3 = entry_contraseña.get()
+            contenido4 = entry_confirmar_contraseña.get()
+            
+            if len(contenido) > 100:
+                # Limitar el contenido a 11 caracteres
+                nuevo_contenido = contenido[:100]
+                entry_email.delete(0, tk.END)
+                entry_email.insert(0, nuevo_contenido)
+                tk.messagebox.showerror("Error", "Solo se permiten 100 caracteres")
+            elif len(contenido2) > 50:
+                nuevo_contenido2 = contenido2[:50]
+                entry_usuario.delete(0, tk.END)
+                entry_usuario.insert(0, nuevo_contenido2)
+                tk.messagebox.showerror("Error", "Solo se permiten 50 caracteres")
+            elif len(contenido3) > 20:
+                nuevo_contenido3 = contenido3[:20]
+                entry_contraseña.delete(0, tk.END)
+                entry_contraseña.insert(0, nuevo_contenido3)
+                tk.messagebox.showerror("Error", "Solo se permiten 20 caracteres")
+            elif len(contenido4) > 20:
+                nuevo_contenido4 = contenido4[:20]
+                entry_confirmar_contraseña.delete(0, tk.END)
+                entry_confirmar_contraseña.insert(0, nuevo_contenido4)
+                tk.messagebox.showerror("Error", "Solo se permiten 20 caracteres")
+                
+                
 
         # Obtener la altura de la ventana
         #ventana_height = int(ventana.winfo_height()) #por ahora no se usa para nada esto
@@ -178,12 +220,17 @@ class registrar1():
         
         label_usuario = tk.Label(ventana, text="Nombre de Usuario:", bg=BGcolor, font=("Helvetica", 10))
         entry_usuario = tk.Entry(ventana, font=("Helvetica", 10), width=20)
+        entry_usuario.bind("<KeyRelease>", limite)
         
         label_email = tk.Label(ventana, text="Email:", bg=BGcolor, font=("Helvetica", 10))
-        entry_email = tk.Entry(ventana, font=("Helvetica", 10), width=20)
+        
+        entry_email = ttk.Entry(ventana, font=("Helvetica", 10), width=20)
+        entry_email.bind("<FocusOut>", arroba,)
+        entry_email.bind("KeyRelease", limite)
 
         label_contraseña = tk.Label(ventana, text="Contraseña:", bg=BGcolor, font=("Helvetica", 10))
         entry_contraseña = tk.Entry(ventana, font=("Helvetica", 10), width=20, show="*")
+        entry_contraseña.bind("<KeyRelease>", limite)
 
         label_confirmar_contraseña = tk.Label(ventana, text="Confirmar Contraseña:", bg=BGcolor, font=("Helvetica", 10))
         entry_confirmar_contraseña = tk.Entry(ventana, font=("Helvetica", 10), width=20, show="*")
