@@ -255,7 +255,16 @@ class ingreso1():
                 DNIInput.delete(0, END)
                 DNIInput.insert(0, nuevo_contenido4)
                 messagebox.showerror("Error", "Solo se permiten 10 caracteres")
-        
+        def validar_prefijo(event, entry_widget,tk):
+            TELEInput.hide_listbox(tk)
+            widget_con_enfoque =TELEInput.focus_get()
+            if isinstance(widget_con_enfoque, Listbox):
+                return
+            entrada = entry_widget.get()
+            if not entrada in prefijos:
+                messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
+                entry_widget.delete(0, END)
+                entry_widget.focus()
         BG2 = Frame(tk, bg=BG2color,width=512,height=32)
         BG1 = Frame(tk, bg=BG1color,width=80,height=256)
         BG1.place(relx = 0.0, rely = 1.0, anchor ='sw', relwidth=0.1, relheight=1.0)
@@ -461,14 +470,5 @@ class ingreso1():
 
         VolverBoton = Button(tk, text ="Volver", width=12, command = volver)
         VolverBoton.place(relx = 0.57, rely = 0.85, anchor ='sw')
-        def validar_prefijo(event, entry_widget,tk):
-            TELEInput.hide_listbox(tk)
-            widget_con_enfoque =TELEInput.focus_get()
-            if isinstance(widget_con_enfoque, Listbox):
-                return
-            entrada = entry_widget.get()
-            if not entrada in prefijos:
-                messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
-                entry_widget.delete(0, END)
-                entry_widget.focus()
+        
         
