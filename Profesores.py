@@ -43,7 +43,7 @@ def botones_docentes(ventana3):
     imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.LANCZOS))
 
     tk.Label(ventana3,text="Materia y Profesores",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=5,columnspan=2,padx=2,pady=2)
-    tk.Button(ventana3, text="Volver",image=imagen_volver,compound="left",height=49,width=100, command=lambda: volver_al_menu(ventana3)).grid(row=8, column=9, sticky="e")
+    tk.Button(ventana3, text="Volver",image=imagen_volver,compound="left",height=30 , width=300, command=lambda: volver_al_menu(ventana3)).grid(row=8, column=5,columnspan=2 ,sticky="s")
     tk.Button(ventana3, text="Ver profesores",image=imagen_profesor,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:ver_profes(("Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor, Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3),1)).grid(row=4, column=5, padx=2, pady=2,sticky="w")
         
 
@@ -199,7 +199,7 @@ def entrys(ver_Profesores):
     arriba3.rowconfigure(0, weight=1)
     arriba3.rowconfigure(1, weight=1)
     
-    ttk.Button(arriba3, text="Volver", command=lambda: volver_docentes(ver_Profesores)).grid(row=1, column=7, padx=2, pady=2)
+    ttk.Button(arriba3, text="Volver", image=imagen_volver,compound="left",command=lambda: volver_docentes(ver_Profesores)).grid(row=1, column=7, padx=2, pady=2)
     ttk.Label(arriba3, text="Nombre:").grid(column=0, row=0)
     
     añadir_nombre=ttk.Entry(arriba3)
@@ -669,9 +669,9 @@ def agregar_materias(columnas_aula,query,ver_Materias):
     
     arriba5 = ttk.LabelFrame(frame_pe, text="Añadir")
     arriba5.grid(padx=10, pady=10, row=0, column=0, sticky="nsew")
-    ttk.Button(arriba5, text="Volver", command=lambda: volver_docentes(ver_Materias)).grid(row=2, column=4, padx=2, pady=2)
-    ttk.Button(arriba5, text="Agregar", command=lambda: opciones_docentes(5)).grid(row=1, column=4, padx=2, pady=2)
-    ttk.Button(arriba5, text="Eliminar", command=lambda:  opciones_docentes(6)).grid(column=4, row=3, sticky="ew")
+    ttk.Button(arriba5, text="Volver",image=imagen_volver,compound="left",width=37, command=lambda: volver_docentes(ver_Materias)).grid(row=2, column=4, padx=2, pady=2)
+    ttk.Button(arriba5, text="Agregar",width=41, command=lambda: opciones_docentes(5)).grid(row=1, column=4, padx=2, pady=2)
+    tk.Button(arriba5, text="Eliminar",image=imagen_eliminar,compound="left",width=247,height=30,fg="white",bg="#960000", command=lambda:  opciones_docentes(6)).grid(column=4, row=3)
     ttk.Label(arriba5, text="Nombre de la materia:").grid(column=0, row=0, sticky="nsew")
     opciones_division=[]
     materia_nombre=ttk.Entry(arriba5, width=10)
