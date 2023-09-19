@@ -16,38 +16,42 @@ class menu_horarios():
         self.ventana4.title("Pantalla Principal")
         self.ventana4.iconbitmap("Imagenes/Colegio_logo.ico")
         self.ventana4.geometry("800x600")
-        self.frame_pe = ttk.Frame(ventana4)
-        self.frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
-        self.frame_pe.columnconfigure(0, weight=1)
-        self.frame_pe.rowconfigure((0,1,2), weight=1)
-        self.frame_horarios = ttk.LabelFrame(self.frame_pe, text="Horarios")
-        self.frame_horarios.grid(sticky="news", pady=2, padx=2,column=0,row=3)
+        BG2color="#6D9EEB"
+        BG2 = tk.Frame(ventana4, bg=BG2color,width=512,height=32)
+        BG2.place(relx = 0.0, rely = 1.0, anchor ='sw', relwidth=1.0, relheight=0.07)
+        self.imagen_volver = ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20)))
+        self.imagen_eliminar = ImageTk.PhotoImage(Image.open("Imagenes/eliminar.png").resize((20,20)))
         self.imagen_PDF = ImageTk.PhotoImage(Image.open("Imagenes/PDF.png").resize((20,20)))
-        self.imagen_agregar =ImageTk.PhotoImage(Image.open("Imagenes/añadir.png").resize((20,20)))
-        self.frame_horarios.columnconfigure((0,1,2), weight=1)
-        self.frame_horarios.rowconfigure((0,1,2), weight=1)
-        ttk.Button(self.frame_pe, text="Volver", command=lambda: self.volver_al_menu(self.ventana4)).grid(row=0, column=0, padx=2, pady=2)
-        ttk.Button(self.frame_horarios, text="Ver horarios Laboratorios", command=lambda:self.opcion_ver_horarios("Laboratorio",self.ver_horarios)).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
+        self.imagen_ver_horario= ImageTk.PhotoImage(Image.open("Imagenes/ver_horario.png").resize((20,20)))
+        self.imagen_añadir=ImageTk.PhotoImage(Image.open("Imagenes/añadir.png").resize((20,20)))
         
-        ttk.Button(self.frame_horarios, text="Añadir Horarios Laboratorios",image=self.imagen_agregar,compound="left",command=lambda:self.opcion_ver_horarios("Laboratorio",self.añadir_aula)).grid(row=0, column=1, padx=2, pady=2,sticky="ew")
+        tk.Label(self.ventana4,text="  Pestaña de Horarios",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=3,columnspan=3)
+
+        tk.Button(self.ventana4, text="Volver",image=self.imagen_volver,compound="left",height=30 , width=300, command=lambda: self.volver_al_menu(self.ventana4)).grid(row=8, column=4, sticky="e",padx=(0, 10), pady=(0, 0))
+        tk.Button(self.ventana4, text="Ver horarios Laboratorios",image=self.imagen_ver_horario,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Laboratorio",self.ver_horarios)).grid(row=3, column=3, padx=(0, 10), pady=(0, 0), sticky="E")
         
-        ttk.Button(self.frame_horarios, text="Exportar laboratorio a PDF",image=self.imagen_PDF,compound="left", command=lambda:self.opcion_ver_horarios("Laboratorio",self.exportar_pdf)).grid(row=0, column=3, padx=2, pady=2,sticky="ew")
+        tk.Button(self.ventana4, text="Añadir Horarios Laboratorios",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Laboratorio",self.añadir_aula)).grid(row=3, column=4, padx=(0, 10), pady=(0, 0), sticky="E")
         
-        ttk.Button(self.frame_horarios, text="Ver horarios aulas", command=lambda:self.opcion_ver_horarios("Aula",self.ver_horarios)).grid(row=1, column=0, padx=2, pady=2,sticky="ew")
-            
-            
-        ttk.Button(self.frame_horarios, text="Añadir horarios horarios aulas",image=self.imagen_agregar,compound="left",command=lambda:self.opcion_ver_horarios("Aula",self.añadir_aula)).grid(row=1, column=1, padx=2, pady=2,sticky="ew")
-            
-            
-        ttk.Button(self.frame_horarios, text="Exportar aula a PDF", image=self.imagen_PDF,compound="left",command=lambda:self.opcion_ver_horarios("Aula",self.exportar_pdf)).grid(row=1, column=3, padx=2, pady=2,sticky="ew")
+        tk.Button(self.ventana4, text="Exportar laboratorio a PDF",image=self.imagen_PDF,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Laboratorio",self.exportar_pdf)).grid(row=3, column=5,  padx=(0, 10), pady=(0, 0), sticky="E")
         
-        ttk.Button(self.frame_horarios, text="Ver horarios talleres", command=lambda:self.opcion_ver_horarios("Taller",self.ver_horarios)).grid(row=2, column=0, padx=2, pady=2,sticky="ew")
+        tk.Button(self.ventana4, text="Ver horarios aulas",image=self.imagen_ver_horario,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Aula",self.ver_horarios)).grid(row=4, column=3,  padx=(0, 10), pady=(0, 0), sticky="E")
             
             
-        ttk.Button(self.frame_horarios, text="Añadir horarios talleres",image=self.imagen_agregar,compound="left",command=lambda:self.opcion_ver_horarios("Taller",self.añadir_aula)).grid(row=2, column=1, padx=2, pady=2,sticky="ew")
+        tk.Button(self.ventana4, text="Añadir horarios horarios aulas",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Aula",self.añadir_aula)).grid(row=4, column=4,  padx=(0, 10), pady=(0, 0), sticky="E")
             
-        # Asignar la función cerrar_ventana al evento de cerrar la ventana principal
-        ttk.Button(self.frame_horarios,text="Exportar taller a PDF",image=self.imagen_PDF,compound="left", command=lambda:self.opcion_ver_horarios("Taller",self.exportar_pdf)).grid(row=2, column=3, padx=2, pady=2,sticky="ew")
+            
+        tk.Button(self.ventana4, text="Exportar aula a PDF", image=self.imagen_PDF,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Aula",self.exportar_pdf)).grid(row=4, column=5, padx=(0, 10), pady=(0, 0), sticky="E")
+        
+        tk.Button(self.ventana4, text="Ver horarios talleres",image=self.imagen_ver_horario,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Taller",self.ver_horarios)).grid(row=5, column=3,  padx=(0, 10), pady=(0, 0), sticky="E")
+            
+            
+        tk.Button(self.ventana4, text="Añadir horarios talleres",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Taller",self.añadir_aula)).grid(row=5, column=4,  padx=(0, 10), pady=(0, 0), sticky="E")
+            
+       
+        tk.Button(self.ventana4,text="Exportar taller a PDF",image=self.imagen_PDF,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Taller",self.exportar_pdf)).grid(row=5, column=5,  padx=(0, 10), pady=(0, 0), sticky="E")
+        etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
+        etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
+         # Asignar la función cerrar_ventana al evento de cerrar la ventana principal
         self.ventana4.protocol("WM_DELETE_WINDOW",lambda: self.volver_al_menu(self.ventana4))
     def volver_al_menu(self,ventana):
         print("volver")
