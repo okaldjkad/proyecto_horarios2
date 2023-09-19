@@ -80,7 +80,7 @@ class login1:
         # ---Usuario---
         #loginLabel1 = Label(tk, text="Introdusca su Nombre de Usuario",font=fuente_chica,bg=BGcolor)
         #loginLabel1.place(relx = 0.6, rely = 0.2, anchor ='n')
-        loginInput1 = Entry(tk, width = 25, font=fuente_mediana, fg="gray")
+        loginInput1 = Entry(tk, width = 25, font=fuente_mediana, fg="gray",borderwidth=1,relief="solid")
         loginInput1.place(relx = 0.6, rely = 0.27, anchor ='n')
 
         loginInput1.insert(0, textoDefault1)
@@ -90,7 +90,7 @@ class login1:
         # ---Email---
         #loginLabel2 = Label(tk, text="Introdusca su Email",font=fuente_chica,bg=BGcolor)
         #loginLabel2.place(relx = 0.6, rely = 0.35, anchor ='n')
-        loginInpu = Entry(tk, width = 25, font=fuente_mediana, fg="gray")
+        loginInpu = Entry(tk, width = 25, font=fuente_mediana, fg="gray",borderwidth=1,relief="solid")
         loginInpu.place(relx = 0.6, rely = 0.42, anchor ='n')
 
         loginInpu.insert(0, textoDefaul)
@@ -100,7 +100,7 @@ class login1:
         # ---Contraseña---
         #loginLabel3 = Label(tk, text="Introdusca su Contraseña",font=fuente_chica,bg=BGcolor)
         #loginLabel3.place(relx = 0.6, rely = 0.5, anchor ='n')
-        loginInput3 = Entry(tk, width = 25, font=fuente_mediana, fg="gray")
+        loginInput3 = Entry(tk, width = 25, font=fuente_mediana, fg="gray",borderwidth=1,relief="solid")
         loginInput3.place(relx = 0.6, rely = 0.57, anchor ='n')
 
         loginInput3.insert(0, textoDefault3)
@@ -176,8 +176,10 @@ class login1:
                 else:
                     print("ERROR: tipo de cuenta desconocido")
                     return
-                    
-        loginBoton = Button(tk, text ="Iniciar Sesion", height = 1, width = 11, command = logear)
-        loginBoton.place(relx = 0.6, rely = 0.8, anchor ='n')
+        style = ttk.Style()
+
+        style.configure("TButton", background="black",width=40)         
+        loginBoton = ttk.Button(tk, text ="Iniciar Sesion", width = 25, command = logear)
+        loginBoton.place(relx = 0.6, rely = 0.7, anchor ='n')
         
 
