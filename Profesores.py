@@ -838,7 +838,7 @@ def opciones_docentes(option):
             if var.get() == 1:
                 cursos_seleccionados.append(curso_checkbuttons[i])
         
-        cursos_seleccionados_str = '; '.join(cursos_seleccionados)
+        cursos_seleccionados_str = ';'.join(cursos_seleccionados)
 
             
             
