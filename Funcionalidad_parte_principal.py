@@ -367,6 +367,7 @@ class añadir_horario():
         entrada = entry_widget.get()
         if not entrada in self.opciones_espacio_curricular:
             messagebox.showerror("Error", "La materia no existe")
+
     def validar_profesor(self, event, entry_widget):
         self.entry_profesor.hide_listbox(self.ventana_horario)
         widget_con_enfoque = self.ventana_horario.focus_get()

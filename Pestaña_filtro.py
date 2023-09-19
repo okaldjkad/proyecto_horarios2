@@ -6,11 +6,72 @@ from tkinter import messagebox
 from tkinter import ttk
 from PDF import PDF_filtro
 #Hecho por Tobias Bonanno
+class menu_filtros():
+    def __init__(self,ventana_filtro):
+        self.ventana5 = ventana_filtro
+        self.ventana5.title("Pantalla Principal")
+        self.ventana5.iconbitmap("Imagenes/Colegio_logo.ico")
+        self.frame_fullscreen = ttk.Frame(self.ventana5)
+        self.frame_fullscreen.place(x=0, y=0, relwidth=1, relheight=1)
+        self.frame_fullscreen.columnconfigure(0, weight=1)
+        self.frame_fullscreen.columnconfigure((0,1,2), weight=1)
+        perfiles_frame = ttk.LabelFrame(self.ventana5,text="filtros")
+        perfiles_frame.grid(sticky="ew", pady=2, padx=2,column=0,row=0)
+        ttk.Button(perfiles_frame, text="Volver", command=lambda: self.volver_al_menu(self.ventana5)).grid(row=0, column=0, padx=2, pady=2)
+        ttk.Button(perfiles_frame, text="Filtrar por curso", command=self.curso_botones_filtro).grid(row=1, column=0, padx=2, pady=2)
+        ttk.Button(perfiles_frame, text="Filtrar por profesor", command=self.filtro_profesor).grid(row=2, column=0, padx=2, pady=2)
+        ttk.Button(perfiles_frame, text="Filtrar por dia", command=self.filtro_dia).grid(row=3, column=0, padx=2, pady=2)
+    def eliminar(self):
+        for elemento in self.ventana5.winfo_children():
+            elemento.destroy()
+    def curso_botones_filtro(self):
+        self.ventana6 = tk.Toplevel()
+        self.ventana6.title("Pantalla Principal")
+        self.ventana6.iconbitmap("Imagenes/Colegio_logo.ico")
+        ttk.Button(self.ventana6, text="Ciclo basico", command=lambda: self.filtro_curso(0)).grid(row=1, column=0, padx=2, pady=2)
+        ttk.Button(self.ventana6, text="Ciclo superior", command=lambda: self.filtro_curso(1)).grid(row=2, column=0, padx=2, pady=2)
+    def filtro_curso(self,ciclo):
+        if ciclo==0:
+            self.ventana6.destroy()
+            self.eliminar()
+            ventana_horario2= Pestaña_filtro(self.ventana5)
+            ventana_horario2.widgets()
+            ventana_horario2.agregar_ciclo_basico()
+            ventana_horario2.treeview_filter()
+            ventana_horario2.ejecutar()
+        elif ciclo==1:
+            self.ventana6.destroy()
+            self.eliminar()
+            ventana_horario2= Pestaña_filtro(self.ventana5)
+            ventana_horario2.widgets()
+            ventana_horario2.agregar_ciclo_superior()
+            ventana_horario2.treeview_filter()
+            ventana_horario2.ejecutar()
+    def filtro_profesor(self):
+        self.eliminar()
+        ventana_horario4= Pestaña_filtro(self.ventana5)
+        ventana_horario4.widgets()
+        ventana_horario4.agregar_profesor()
+        ventana_horario4.treeview_filter()
+        ventana_horario4.ejecutar()
+    def filtro_dia(self):
+        self.eliminar()
+        ventana_horario3= Pestaña_filtro(self.ventana5)
+        ventana_horario3.widgets()
+        ventana_horario3.agregar_dia()
+        ventana_horario3.treeview_filter()
+        ventana_horario3.ejecutar()
+    def volver_al_menu(self,ventana):
+        print("volver")
+        
+    
 class Pestaña_filtro():
     def __init__(self,ventana_filtro):
         self.ventana_filtro=ventana_filtro
         self.ventana_filtro.title("Añadir horario")
         self.ventana_filtro.geometry("900x500")
+        self.frame_fullscreen = ttk.Frame(self.ventana_filtro)
+        self.frame_fullscreen.place(x=0, y=0, relwidth=1, relheight=1)
         self.query=""
         self.techer = None
         self.label_dia = None
@@ -18,6 +79,9 @@ class Pestaña_filtro():
         self.division = None
         self.dia = None
         self.configuracion_widgets()
+    def eliminar(self):
+        for elemento in self.ventana_filtro.winfo_children():
+            elemento.destroy()
     def configuracion_widgets(self):
         """
         Configurar los widgets para la interfaz de usuario.
@@ -25,8 +89,8 @@ class Pestaña_filtro():
        También configura el peso de las columnas y filas en los widgets rootmodification y frame_superior.
        Finalmente, llama a la función `widgets` para insertar los widgets.
        """
-        self.frame_superior=ttk.LabelFrame(self.ventana_filtro)
-        self.frame_inferior=ttk.LabelFrame(self.ventana_filtro)
+        self.frame_superior=ttk.LabelFrame(self.frame_fullscreen)
+        self.frame_inferior=ttk.LabelFrame(self.frame_fullscreen)
         self.frame_derecha=ttk.LabelFrame(self.frame_superior)
         self.frame_izquierda=ttk.LabelFrame(self.frame_superior)
         
@@ -35,9 +99,9 @@ class Pestaña_filtro():
         self.frame_inferior.grid(row=1, column=0,sticky="nsew")
         self.frame_derecha.grid(row=0, column=1,sticky="nsew")
         self.frame_izquierda.grid(row=0, column=0,sticky="nsew")
-        self.ventana_filtro.columnconfigure(0, weight=1)
-        self.ventana_filtro.rowconfigure(0, weight=1)
-        self.ventana_filtro.rowconfigure(1, weight=6)
+        self.frame_fullscreen.columnconfigure(0, weight=1)
+        self.frame_fullscreen.rowconfigure(0, weight=1)
+        self.frame_fullscreen.rowconfigure(1, weight=6)
         
         self.frame_superior.columnconfigure(0, weight=10)
         self.frame_superior.columnconfigure(1, weight=2)
@@ -78,9 +142,8 @@ class Pestaña_filtro():
         for x, division in enumerate(divisiones):
             ttk.Button(self.frame_izquierda, text=f"{division}",command=lambda y=division: self.boton_agregar_division(y)).grid(column=x+1, row=1, sticky="ew")
     def volver(self):
-        import Parte_principal
-        self.ventana_filtro.destroy()
-        Parte_principal.filtros()
+        self.eliminar()
+        menu_filtros(self.ventana_filtro)
 
     def agregar_ciclo_superior(self):
         ttk.Button(self.frame_derecha,text="Filtrar",command=self.filtrar_division).grid(column=0, row=2, sticky="news",columnspan=2)
@@ -175,6 +238,7 @@ class Pestaña_filtro():
         self.entry_profesor.bind('<FocusOut>', lambda event: self.validar_profesor(event, self.entry_profesor))
         ttk.Label(self.frame_izquierda, text="Profesor").grid(column=0, row=0)
         ttk.Button(self.frame_izquierda,text="Añadir",command=self.añadir_profesor).grid(column=0, row=2,columnspan=2)
+        
     def añadir_profesor(self):
         if self.techer:
             self.techer.destroy()
@@ -305,9 +369,6 @@ class Pestaña_filtro():
         self.cnx.close()
 
 if __name__ == "__main__":
-    ventana_horario = tk.Toplevel()
-    ventana_horario2= Pestaña_filtro(ventana_horario)
-    ventana_horario2.widgets()
-    ventana_horario2.agregar_profesor()
-    ventana_horario2.treeview_filter()
-    ventana_horario2.ejecutar()
+    ventana_horario = tk.Tk()
+    ventana_horario2= menu_filtros(ventana_horario)
+    ventana_horario.mainloop()
