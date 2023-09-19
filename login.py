@@ -155,19 +155,19 @@ class login1:
                 loginInpu.delete(0,END)
                 loginInput3.delete(0,END)
                 loginError.config(text="")
-                if loginFetch[6]==1:
+                if loginFetch[7]==1:
                     print("tipo de cuenta 1 (maestro)")
                     eliminar()
                     tipoCuenta = 1
                     menuFunc(tipoCuenta,loginFetch[1])
                     return
-                elif loginFetch[6]==2:
+                elif loginFetch[7]==2:
                     print("tipo de cuenta 2 (preceptor)")
                     eliminar()
                     tipoCuenta = 2
                     menuFunc(tipoCuenta,loginFetch[1])
                     return
-                elif loginFetch[6]==3:
+                elif loginFetch[7]==3:
                     print("tipo de cuenta 3 (administrador)")
                     eliminar()
                     tipoCuenta = 3
