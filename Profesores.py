@@ -49,9 +49,9 @@ def botones_docentes(ventana3):
 
     añadir_profes=tk.Button(ventana3, text="Añadir profesores",image= imagen_profesor_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_profesores(( "Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor,Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3)))
     añadir_profes.grid(row=3, column=6, padx=2, pady=2,sticky="w")
-    tk.Button(ventana3, text="Ver materias",image=imagen_materia_ver,compound="left" ,borderwidth=1,relief="solid",height=30 , width=300,command=lambda:ver_aula(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC"""),).grid(row=3, column=5, padx=2, pady=2,sticky="w")
+    tk.Button(ventana3, text="Ver materias",image=imagen_materia_ver,compound="left" ,borderwidth=1,relief="solid",height=30 , width=300,command=lambda:ver_aula(( "Materia","Cursos", "Grupo", "Especialidad"), """SELECT MATERIA, CURSOS, Grupo, Especialidad FROM materias ORDER BY MATERIA ASC"""),).grid(row=3, column=5, padx=2, pady=2,sticky="w")
         
-    añadir_materia_boton=tk.Button(ventana3, text="Añadir materias",image=imagen_materia_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_materias(( "Nombre_materia", "Año", "Division", "Grupo", "Especialidad"), """SELECT nombre_materia, año, division, Grupo, Especialidad FROM espacio_curricular ORDER BY nombre_materia ASC""",(ventana3)))
+    añadir_materia_boton=tk.Button(ventana3, text="Añadir materias",image=imagen_materia_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_materias(( "Materia","Cursos", "Grupo", "Especialidad"), """SELECT MATERIA, CURSOS, Grupo, Especialidad FROM materias ORDER BY MATERIA ASC""",(ventana3)))
     añadir_materia_boton.grid(row=4, column=6, padx=2, pady=2,sticky="w")
 
 
@@ -274,7 +274,7 @@ def entrys(ver_Profesores):
     entry_Altura.config(validate="key", validatecommand=(arriba3.register(validar_numeros), "%P"))
     entry_Altura.grid(row=4, column=2, pady=10)
     check_var = tk.IntVar()
-    altura = ttk.Checkbutton(arriba3, text="Sin altura", variable=check_var, command=toggle_entry_state)
+    altura = ttk.Checkbutton(arriba3, text="Sin Numero", variable=check_var, command=toggle_entry_state)
     altura.grid(row=5, column=2, pady=10)
     
     ttk.Label(arriba3, text="Piso(opcional)").grid(column=3, row=3)
@@ -516,9 +516,132 @@ def funcionamiento():
                         "\nEl boton de volver es para ir a la ventana anterior que seria la de los botones de ver añadir y eliminar")
 def explicacion():
     messagebox.showinfo("Explicación","Lo que se ve en la pantalla son 2 sectores una con la seccion donde se ingresan los datos para modificar y otra con la tabla de datos donde se ve la informacion guardada de cada profesor, para saber su funcionamiento haga click en el boton como funciona")
-  
+
+def ventana_curso():
+    global curso_checkbuttons,curso_vars 
+    def seleccionar_todos_los_primeros():
+        for curso in curso_checkbuttons:
+            if curso.startswith("1ro"):
+                # Obtén el índice de la variable en la lista
+                index = curso_checkbuttons.index(curso)
+                
+                # Establece la variable IntVar en 1 (marcado)
+                curso_vars[index].set(1)
+    def seleccionar_todos_los_segundos():
+        for curso in curso_checkbuttons:
+            if curso.startswith("2do"):
+                index = curso_checkbuttons.index(curso)
+                curso_vars[index].set(1)
+    def seleccionar_todos_los_terceros():
+        for curso in curso_checkbuttons:
+            if curso.startswith("3ro"):
+                index = curso_checkbuttons.index(curso)
+                curso_vars[index].set(1)
+    def seleccionar_todos_los_cuartos():
+        for curso in curso_checkbuttons:
+            if curso.startswith("4to"):
+                index = curso_checkbuttons.index(curso)
+                curso_vars[index].set(1)
+    def seleccionar_todos_los_quintos():
+        for curso in curso_checkbuttons:
+            if curso.startswith("5to"):
+                index = curso_checkbuttons.index(curso)
+                curso_vars[index].set(1)
+    def seleccionar_todos_los_sexto():
+        for curso in curso_checkbuttons:
+            if curso.startswith("6to"):
+                index = curso_checkbuttons.index(curso)
+                curso_vars[index].set(1)
+    def seleccionar_todos_los_septimo():
+        for curso in curso_checkbuttons:
+            if curso.startswith("7mo"):
+                index = curso_checkbuttons.index(curso)
+                curso_vars[index].set(1)
+
+            
+            
+    def ayuda():
+        messagebox.showinfo("Ayuda", "Los botones funcionan de tal manera para que los botones marcados con tilde se le agregue la materia a los cursos seleccionados \npor ejemplo si yo selecciono todos los primeros y apreto guardar para primero va a estar registrada la materia escrita anteriormente")
+    def guardar():
+        
+        cursos_primer_al_tercero = ["1ro_a", "1ro_b", "1ro_c", "1ro_d", "1ro_e", "2do_a", "2do_b", "2do_c", "2do_d", "2do_e", "3ro_a", "3ro_b", "3ro_c", "3ro_d"]
+        cursos_cuarto_al_septimo = ["4to_1ra", "4to_2da", "4to_3ra", "4to_4ta", "4to_5ta", "4to_6ta", "5to_1ra", "5to_2da", "5to_3ra", "5to_4ta", "5to_5ta", "5to_6ta", "6to_1ra", "6to_2da", "6to_3ra", "6to_4ta", "6to_5ta", "6to_6ta", "7mo_1ra", "7mo_3ra", "7mo_4ta"]
+
+        cursos_primer_al_tercero_seleccionados = [curso_checkbuttons[i] for i, var in enumerate(curso_vars) if var.get() == 1 and curso_checkbuttons[i] in cursos_primer_al_tercero]
+        cursos_cuarto_al_septimo_seleccionados = [curso_checkbuttons[i] for i, var in enumerate(curso_vars) if var.get() == 1 and curso_checkbuttons[i] in cursos_cuarto_al_septimo]
+
+        if cursos_primer_al_tercero_seleccionados and cursos_cuarto_al_septimo_seleccionados:
+            # Si al menos un curso del primer al tercer año y al menos un curso del cuarto al séptimo año están seleccionados,
+            # desactivar los cursos del cuarto al séptimo año
+            for j in range(len(curso_vars)):
+                if curso_checkbuttons[j] in cursos_cuarto_al_septimo:
+                    curso_vars[j].set(0)
+            messagebox.showerror("Error", "No puede seleccionar ciclo superior y ciclo básico al mismo tiempo \nDebido a la especialidad")
+            return False
+
+        cursos_seleccionados_ver = [curso_checkbuttons[i] for i, var in enumerate(curso_vars) if var.get() == 1]
+
+        if len(cursos_seleccionados_ver) == len(curso_checkbuttons):
+            cursos_seleccionados_label.config(text="Todos los cursos seleccionados")
+        else:
+            cursos_seleccionados_label.config(text=", ".join(cursos_seleccionados_ver))
+
+        cursos_a_desactivar = ["1ro_a", "1ro_b", "1ro_c", "1ro_d", "1ro_e", "2do_a", "2do_b", "2do_c", "2do_d", "2do_e", "3ro_a", "3ro_b", "3ro_c", "3ro_d"]
+
+        if any(curso in cursos_seleccionados_ver for curso in cursos_a_desactivar):
+            entry_especialidad.config(state="disabled")
+            entry_especialidad.set("")
+        else:
+            entry_especialidad.config(state="readonly")
+                
+
+    curso_vars = []  # Lista para almacenar las variables IntVar
+    
+    cursos = tk.Toplevel()
+    
+    curso_checkbuttons = ["1ro_a", "1ro_b", "1ro_c","1ro_d","1ro_e","2do_a","2do_b","2do_c","2do_d","2do_e","3ro_a","3ro_b","3ro_c","3ro_d","4to_1ra","4to_2da","4to_3ra","4to_4ta","4to_5ta","4to_6ta","5to_1ra","5to_2da","5to_3ra","5to_4ta","5to_5ta","5to_6ta","6to_1ra","6to_2da","6to_3ra","6to_4ta","6to_5ta","6to_6ta","7mo_1ra","7mo_3ra","7mo_4ta"]
+    
+    column = 0  # Inicialmente, comenzamos en la columna 0
+    row = 0  # Inicializamos el contador de fila
+    
+    for curso in curso_checkbuttons:
+        primero = tk.IntVar()
+        checkbutton = ttk.Checkbutton(cursos, text=curso, variable=primero)
+        checkbutton.grid(row=row, column=column,padx=25, pady=8)
+        curso_vars.append(primero)
+        
+        row += 1  # Incrementamos el contador de fila
+        
+        if row >= 10:
+            row = 0  # Reiniciamos el contador de fila a 0
+            column += 1  # Cambiamos a la siguiente columna
+    
+    guardar=ttk.Button(cursos, text="Guardar", command=guardar)
+    guardar.grid(column=4, row=0)
+    seleccionar_primero=ttk.Button(cursos, text="Seleccionar todos los primeros", command=seleccionar_todos_los_primeros)
+    seleccionar_primero.grid(column=4, row=1)
+    seleccionar_segundo=ttk.Button(cursos, text="Seleccionar todos los segundos", command=seleccionar_todos_los_segundos)
+    seleccionar_segundo.grid(column=4, row=2)
+    seleccionar_tercero=ttk.Button(cursos, text="Seleccionar todos los terceros", command=seleccionar_todos_los_terceros)
+    seleccionar_tercero.grid(column=4, row=3)
+    seleccionar_cuarto = ttk.Button(cursos, text="seleccionar todos los cuartos", command=seleccionar_todos_los_cuartos)
+    seleccionar_cuarto.grid(column=4, row=4)
+    seleccionar_quintos = ttk.Button(cursos, text="seleccionar todos los quintos", command=seleccionar_todos_los_quintos)
+    seleccionar_quintos.grid(column=4, row=5)
+    seleccionar_sexto = ttk.Button(cursos, text="seleccionar todos los sexto", command=seleccionar_todos_los_sexto)
+    seleccionar_sexto.grid(column=4, row=6)
+    seleccionar_septimo = ttk.Button(cursos, text="seleccionar todos los septimo", command=seleccionar_todos_los_septimo)
+    seleccionar_septimo.grid(column=4, row=7)
+    ayuda = ttk.Button(cursos, text="Ayuda", command=ayuda)
+    ayuda.grid(column=4, row=9)
+    
+    
+    
+    
+    
+      
 def agregar_materias(columnas_aula,query,ver_Materias):
-    global materia_nombre,entry_especialidad, tree_materias, año, division, variable2, variable1,opciones_division1, variable3, opciones_año, opciones_division, opciones_division2, opciones_divisionci
+    global materia_nombre,entry_especialidad,cursos_seleccionados_label, tree_materias, año, division, variable2, variable1,opciones_division1, variable3, opciones_año, opciones_division, opciones_division2, opciones_divisionci
     eliminar(ver_Materias)
     frame_pe = ttk.Frame(ver_Materias)
     frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
@@ -559,31 +682,24 @@ def agregar_materias(columnas_aula,query,ver_Materias):
     materia_nombre.focus_set()
     
     ttk.Label(arriba5, text="Año:").grid(column=1, row=0, sticky="nsew")
-    variable1 = tk.IntVar(arriba5)
-    variable1.trace("w", actualizar_division)
-    opciones_año = [0,1,2,3,4,5,6,7]
     
-    año = ttk.OptionMenu(arriba5, variable1, opciones_año[0], *opciones_año)
+    año = ttk.Button(arriba5,text="Seleccionar cursos de la materia", command=ventana_curso)
     año.grid(column=1, row=1)
+    cursos_seleccionados_label = tk.Label(arriba5, text="", wraplength=200)
+    cursos_seleccionados_label.grid(row=2, column=1)
     
-    ttk.Label(arriba5, text="Division:").grid(column=2, row=0, sticky="nsew")
-    variable2 = tk.StringVar(arriba5)
-    opciones_division2 =  ["1", "2", "3", "4", "5", "6"] 
-    opciones_division1 = ["A", "B", "C", "D", "E"]
-    division = ttk.OptionMenu(arriba5,variable2, *opciones_division)
-    division.grid(column=2, row=1, sticky="nsew")
     
     ttk.Label(arriba5, text="Grupo:").grid(column=3, row=0, sticky="nsew")
     variable3 = tk.StringVar(arriba5)
     opciones_grupo =  ["Ambos","A", "B", "C", "D", "E", "F", "G"]
     grupo = ttk.OptionMenu(arriba5, variable3, opciones_grupo[0], *opciones_grupo)
     grupo.grid(column=3, row=1, sticky="nsew")
-    lista_especialidad=["Laboratorio programacion", "Maestro mayor de obras", "Informatica", ""]
+    
+    lista_especialidad=["Laboratorio programacion", "Maestro mayor de obras", "Informatica"]
 
     entry_especialidad = ttk.Combobox(arriba5, values=lista_especialidad, state="readonly")
-  
-
     entry_especialidad.grid(column=0, row=3, padx=5, pady=5)
+    entry_especialidad.set("Laboratorio programacion")
         
     
     treeview_Materias.columnconfigure(0, weight=1)
@@ -713,24 +829,29 @@ def opciones_docentes(option):
     elif option == 5:
         conectar_base_de_datos()
         obtenernombre=materia_nombre.get()
-        obteneraño = variable1.get()
-        obtenerdivision = variable2.get()
         obtenergrupo = variable3.get()
         obtenerespecialidad = entry_especialidad.get()
-        if not obtenernombre or not obtenerdivision:
+        
+        cursos_seleccionados = []
+
+        for i, var in enumerate(curso_vars):
+            if var.get() == 1:
+                cursos_seleccionados.append(curso_checkbuttons[i])
+        
+        cursos_seleccionados_str = ', '.join(cursos_seleccionados)
+
+            
+            
+        print("Valor de obtenerespecialidad:", obtenerespecialidad)
+        if not obtenernombre or not cursos_seleccionados_str:
             messagebox.showerror("Error", "Debe ingresar todos los datos.")
             return False
-     
-        if obteneraño in [1,2, 3] and obtenerespecialidad:
-            messagebox.showerror("Error", "La especialidad es solo para opciones de ciclo superior.")
-            return False
-        else:
-            if obteneraño in [4,5,6,7] and not obtenerespecialidad:
-                messagebox.showerror("Error", "La especialidad es obligatoria para opciones de ciclo superior.")
-                return False
+
+
+
         
-        select_query = "SELECT * FROM espacio_curricular WHERE nombre_materia = %s AND año = %s AND division = %s AND Grupo = %s AND Especialidad = %s"
-        data_verificar = (obtenernombre,obteneraño,obtenerdivision,obtenergrupo, obtenerespecialidad)
+        select_query = "SELECT * FROM materias WHERE MATERIA = %s AND CURSOS = %s AND Grupo = %s AND Especialidad = %s"
+        data_verificar = (obtenernombre,cursos_seleccionados_str,obtenergrupo, obtenerespecialidad)
                 
         cursor = cnx.cursor()
         cursor.execute(select_query, data_verificar)
@@ -741,14 +862,15 @@ def opciones_docentes(option):
             return     
                 
                 # Crear la sentencia SQL de inserción
-        insert_query = "INSERT INTO espacio_curricular (nombre_materia, año, division, Grupo, Especialidad) VALUES (%s, %s, %s, %s, %s)"
-        dataagregar = (obtenernombre,obteneraño,obtenerdivision,obtenergrupo, obtenerespecialidad)
+        insert_query = "INSERT INTO materias (MATERIA, CURSOS, Grupo, Especialidad) VALUES (%s, %s, %s, %s)"
+        dataagregar = (obtenernombre,cursos_seleccionados_str,obtenergrupo, obtenerespecialidad)
         cursor = cnx.cursor()
         cursor.execute(insert_query, dataagregar)
         cnx.commit()  # Importante: Confirmar los cambios en la base de datos
         messagebox.showinfo("Aviso", "Materia agregada correctamente") 
-        tree_materias.insert(parent='', index='end', values=(obtenernombre,obteneraño,obtenerdivision,obtenergrupo,obtenerespecialidad))
+        tree_materias.insert(parent='', index='end', values=(obtenernombre,cursos_seleccionados_str,obtenergrupo,obtenerespecialidad))
         materia_nombre.delete(0, tk.END)
+        entry_especialidad.delete(0, tk.END)
         cerrar_base_de_datos()
     elif option == 6:
         respuesta = messagebox.askyesno("Confirmación", "¿Estás seguro de eliminar estos datos?")
@@ -762,7 +884,7 @@ def opciones_docentes(option):
                     cursor = cnx.cursor()
                     for ele in eleccion:
                         obtenernombremateria = tree_materias.item(ele, 'values')[0]
-                        cursor.execute("DELETE FROM espacio_curricular WHERE nombre_materia = %s", (obtenernombremateria,))
+                        cursor.execute("DELETE FROM materias WHERE MATERIA = %s", (obtenernombremateria,))
                         tree_materias.delete(ele)
                     
                     cnx.commit()  # Importante: Confirmar los cambios en la base de datos
