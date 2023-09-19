@@ -118,10 +118,10 @@ class cuentas1:
         FrameBotones.columnconfigure(tuple(range(0,8)), weight=1)
         FrameBotones.rowconfigure((0,1), weight=1)
         #iconos de botones
-        self.imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.ANTIALIAS))
-        self.imagen_volver =ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20), Image.ANTIALIAS))
-        self.imagen_editar =ImageTk.PhotoImage(Image.open("imagenes/editar.png").resize((15, 15), Image.ANTIALIAS))
-        self.imagen_imprimir = ImageTk.PhotoImage(Image.open("imagenes/imprimir.png").resize((20, 20), Image.ANTIALIAS))
+        self.imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.LANCZOS))
+        self.imagen_volver =ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20), Image.LANCZOS))
+        self.imagen_editar =ImageTk.PhotoImage(Image.open("imagenes/editar.png").resize((15, 15), Image.LANCZOS))
+        self.imagen_imprimir = ImageTk.PhotoImage(Image.open("imagenes/imprimir.png").resize((20, 20), Image.LANCZOS))
         
         
         Botones = [(0, BotonTipo0),(1, BotonTipo1),(2, BotonTipo2),(3, BotonTipo3)]

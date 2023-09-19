@@ -149,10 +149,12 @@ class registrar1():
             contenido = entry_email.get()
             # Utilizamos una expresión regular para verificar el formato del correo
             if contenido.count('.') > 3 or contenido.count('.') == 0 or contenido.count('@') != 1 or not re.match(r'^[\w-]+@', contenido):
-                # Si el correo no cumple con el formato o tiene más de una "@", mostramos un mensaje de error
-                tk.messagebox.showerror("Error", "Dirección de correo inválida su correo debe verse asi example@gmail.com")
-                entry_email.delete(0, tk.END)  # Borramos el contenido del Entry
-                return False
+                if len(contenido) >0:
+                    # Si el correo no cumple con el formato o tiene más de una "@", mostramos un mensaje de error
+                    tk.messagebox.showerror("Error", "Dirección de correo inválida su correo debe verse asi example@gmail.com")
+                    entry_email.delete(0, tk.END)  # Borramos el contenido del Entry
+                    return False
+                
         def limite(event):
             contenido = entry_email.get()
             contenido2 = entry_usuario.get()

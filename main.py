@@ -5,6 +5,8 @@
 #pip install datetime
 #pip install tkcalendar
 #pip install Pillow
+#pip install FPDF
+#pip install win10toast
 
 #login.py
 
@@ -34,17 +36,13 @@ with open('database.txt', 'r') as archivo:
 print (database_var)
 
 #conectar con mysql
-try:
-    sql = mysql.connector.connect(user='root',#usuario registrado en el mysql
-                                  password='', #contraseña del usuario
-                                  host='127.0.0.1', #IP del server mysql (en este caso localhost)
-                                  autocommit=True, #automaticamente aplicar cambios
-                                  database=database_var #Base de datos que se usara
-                                  )
-    cursor = sql.cursor()
-except:
-    print("No se pudo conectar con la base de datos, asegurece que XAMPP este abierto junto a MYSQL y Apache y que se haya ingresado un usuario valido.")
-    exit()
+sql = mysql.connector.connect(user='root',#usuario registrado en el mysql
+                              password='', #contraseña del usuario
+                              host='127.0.0.1', #IP del server mysql (en este caso localhost)
+                              autocommit=True, #automaticamente aplicar cambios
+                              database=database_var #Base de datos que se usara
+                              )
+cursor = sql.cursor()
 
 
 
@@ -58,7 +56,8 @@ except:
 #ventana principal
 tk=Tk()
 tk.title("TecBoletines")
-tk.geometry("712x480")
+tk.geometry("1200x680")
+tk.state('zoomed') #abre la ventana como maximizada
 #tk.resizable(0,0)
 tk.minsize(tk.winfo_width(), tk.winfo_height())
 
