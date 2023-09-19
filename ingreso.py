@@ -198,20 +198,32 @@ class ingreso1():
                     ErrorLabel.config(text = f"Alumno {Cnombre} Cargado Exitosamente", bg=BGcolor)
                     return
                 
-        def capitalize_first_letter(entry_widget):
+        #def capitalize_first_letter(entry_widget):
         # Obtenemos el contenido actual del Entry
-                current_text = entry_widget.get()
-                # Capitalizamos la primera letra de cada palabra si el contenido no está vacío
-                if current_text:
-                    capitalized_words = [word.capitalize() for word in current_text.split()]
-                    capitalized_text = " ".join(capitalized_words)
-                    entry_widget.delete(0, END)  # Borramos el contenido actual
-                    entry_widget.insert(0, capitalized_text) 
-                    return True
-                messagebox.showerror("Error", "No tiene mayuscula el inicio de los nombres")
-                return False 
+        #        current_text = entry_widget.get()
+        #        # Capitalizamos la primera letra de cada palabra si el contenido no está vacío
+        #        if current_text:
+        #            capitalized_words = [word.capitalize() for word in current_text.split()]
+        #            capitalized_text = " ".join(capitalized_words)
+        #            entry_widget.delete(0, END)  # Borramos el contenido actual
+        #            entry_widget.insert(0, capitalized_text) 
+        #            return True
+        #        messagebox.showerror("Error", "No tiene mayuscula el inicio de los nombres")
+        #        return False 
+        def validar_nombres(nombre):
+            print("nombre")
+            print(type(nombre))
+            Lnombre = nombre.get().split(" ")
+            print(Lnombre)
+            for i in range(0,len(Lnombre)):
+                print(i)
+                Lnombre[i] = Lnombre[i].capitalize()
+                print(Lnombre[i])
+            print(Lnombre)
+            nombre.set(" ".join(Lnombre))
+
         def validar_numeros(P):
-    # Función de validación para permitir solo caracteres numéricos
+        # Función de validación para permitir solo caracteres numéricos
             if all(c.isdigit() for c in P):
                 return True
             else:
@@ -262,9 +274,11 @@ class ingreso1():
                 return
             entrada = entry_widget.get()
             if not entrada in prefijos:
-                messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
-                entry_widget.delete(0, END)
-                entry_widget.focus()
+                print(entrada)
+                if len(entrada) > 0:
+                    messagebox.showerror("Error", "Por favor seleccionar la opcion del menu")
+                    entry_widget.delete(0, END)
+                    entry_widget.focus()
         BG2 = Frame(tk, bg=BG2color,width=512,height=32)
         BG1 = Frame(tk, bg=BG1color,width=80,height=256)
         BG1.place(relx = 0.0, rely = 1.0, anchor ='sw', relwidth=0.1, relheight=1.0)
@@ -288,23 +302,27 @@ class ingreso1():
         Titulo = Label(tk, text="Cargar Alumno",font=("arial", 16, "bold"), bg=BGcolor)
         Titulo.place(relx=0.55, rely=0.0, anchor='n')
 
+        global NombreString #trace no parece funcionar si variable no es global
+        NombreString = StringVar()
+        NombreString.trace_add('write', lambda *args: validar_nombres(NombreString))
         NombreLabel = Label(tk, text="Introduce el Nombre del alumno",font=("arial", 8), bg=BGcolor)
-        NombreInput = ttk.Entry(tk, width=25)
+        NombreInput = ttk.Entry(tk, width=25, textvariable=NombreString)
         NombreLabel.place(relx = 0.2, rely = 0.1, anchor ='sw')
         NombreInput.place(relx = 0.2, rely = 0.15, anchor ='sw')
-        NombreInput.bind("<FocusOut>", lambda event: capitalize_first_letter(NombreInput))
+        #NombreInput.bind("<FocusOut>", lambda event: capitalize_first_letter(NombreInput))
         NombreInput.bind("<KeyRelease>", limite)
         NombreInput.config(validate="key",validatecommand=(tk.register(validar_letras), "%P"))
 
+        global ApellidoString #trace no parece funcionar si variable no es global
+        ApellidoString = StringVar()
+        ApellidoString.trace_add('write', lambda *args: validar_nombres(ApellidoString))
         ApellidoLabel = Label(tk, text="Introduce el Apellido del alumno",font=("arial", 8), bg=BGcolor)
-        ApellidoInput = ttk.Entry(tk, width=25)
+        ApellidoInput = ttk.Entry(tk, width=25, textvariable=ApellidoString)
         ApellidoLabel.place(relx = 0.2, rely = 0.2, anchor ='sw')
         ApellidoInput.place(relx = 0.2, rely = 0.25, anchor ='sw')
-        ApellidoInput.bind("<FocusOut>", lambda event: capitalize_first_letter(ApellidoInput))
+        #ApellidoInput.bind("<FocusOut>", lambda event: capitalize_first_letter(ApellidoInput))
         ApellidoInput.bind("<KeyRelease>", limite)
         ApellidoInput.config(validate="key",validatecommand=(tk.register(validar_letras), "%P"))
-
-
         
 
         cursoLabel = Label(tk, text="Seleccione el Curso del Alumno",font=("arial", 8), bg=BGcolor)
@@ -391,7 +409,7 @@ class ingreso1():
         TELEInput.place(relx = 0.3, rely = 0.65, anchor ='sw')
 
         DNILabel = Label(tk, text="Introduce el DNI del Alumno",font=("arial", 8), bg=BGcolor)
-        DNIInput = ttk.Entry(tk, width=25)
+        DNIInput = Entry(tk, width=25)
         DNIInput.config(validate="key",validatecommand=(tk.register(validar_numeros), "%P"))
         DNIInput.bind("<KeyRelease>", limite)
         DNILabel.place(relx = 0.66, rely = 0.1, anchor ='sw')
@@ -470,5 +488,3 @@ class ingreso1():
 
         VolverBoton = Button(tk, text ="Volver", width=12, command = volver)
         VolverBoton.place(relx = 0.57, rely = 0.85, anchor ='sw')
-        
-        

@@ -48,7 +48,7 @@ class menu1:
         def horarios(tk):
             eliminar()
             menu_horarios=FPP.menu_horarios()
-            menu_horarios.horarios(tk)
+            menu_horarios.horarios(tk,menuFunc,tipoCuenta,nombreCuenta)
         def administrar_cuentas():
             eliminar()
             def cuentasFunc(tk,sql,cursor,tipoCuenta,nombreCuenta,menuFunc,cuentasFunc):
@@ -59,7 +59,7 @@ class menu1:
 
         def administrar_materias(tk):
             eliminar()
-            Profesores.botones_docentes(tk)
+            Profesores.botones_docentes(tk,menuFunc,tipoCuenta,nombreCuenta)
             #ejecutar modulo de administracion de cuentas
 
         def administrar_filtros():

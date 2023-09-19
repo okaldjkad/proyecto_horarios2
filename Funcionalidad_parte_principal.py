@@ -11,7 +11,7 @@ class menu_horarios():
     def eliminar(self):
         for elemento in self.ventana4.winfo_children():
             elemento.destroy()
-    def horarios(self,ventana4):
+    def horarios(self,ventana4,tipoCuenta,nombreCuenta,menuFunc):
         self.ventana4=ventana4
         self.ventana4.title("Pantalla Principal")
         self.ventana4.iconbitmap("Imagenes/Colegio_logo.ico")
@@ -27,7 +27,7 @@ class menu_horarios():
         
         tk.Label(self.ventana4,text="  Pestaña de Horarios",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=3,columnspan=3)
 
-        tk.Button(self.ventana4, text="Volver",image=self.imagen_volver,compound="left",height=30 , width=300, command=lambda: self.volver_al_menu(self.ventana4)).grid(row=8, column=4, sticky="e",padx=(0, 10), pady=(0, 0))
+        tk.Button(self.ventana4, text="Volver",image=self.imagen_volver,compound="left",height=30 , width=300, command=lambda: self.volver_al_menu(self.ventana4,tipoCuenta,nombreCuenta,menuFunc)).grid(row=8, column=4, sticky="e",padx=(0, 10), pady=(0, 0))
         tk.Button(self.ventana4, text="Ver horarios Laboratorios",image=self.imagen_ver_horario,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Laboratorio",self.ver_horarios)).grid(row=3, column=3, padx=(0, 10), pady=(0, 0), sticky="E")
         
         tk.Button(self.ventana4, text="Añadir Horarios Laboratorios",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Laboratorio",self.añadir_aula)).grid(row=3, column=4, padx=(0, 10), pady=(0, 0), sticky="E")
@@ -52,9 +52,12 @@ class menu_horarios():
         etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
         etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
          # Asignar la función cerrar_ventana al evento de cerrar la ventana principal
-        self.ventana4.protocol("WM_DELETE_WINDOW",lambda: self.volver_al_menu(self.ventana4))
-    def volver_al_menu(self,ventana):
+         #self.ventana4.protocol("WM_DELETE_WINDOW",lambda: self.volver_al_menu(self.ventana4))
+    def volver_al_menu(self,ventana,menuFunc,tipoCuenta,nombreCuenta):
         print("volver")
+        for elemento in ventana.winfo_children():
+            elemento.destroy()
+        menuFunc(tipoCuenta,nombreCuenta)
     def exportar_pdf(self,numero_aula2,tipo_de_aula1):
         pdf1=PDF(tipo_de_aula1,numero_aula2)
         pdf1.guardar_pdf()

@@ -13,7 +13,7 @@ def eliminar(ventana):
     for elemento in ventana.winfo_children():
         elemento.destroy()
         
-def botones_docentes(ventana3):
+def botones_docentes(ventana3,menuFunc,tipoCuenta,nombreCuenta):
     global frame_pe,imagen_profesor,imagen_materia_ver,imagen_eliminar,imagen_volver,imagen_materia_añadir,imagen_profesor_añadir
     ventana3.geometry("800x600")
     ventana3.title("Pantalla Principal")
@@ -43,7 +43,7 @@ def botones_docentes(ventana3):
     imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.LANCZOS))
 
     tk.Label(ventana3,text="Materia y Profesores",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=5,columnspan=2,padx=2,pady=2)
-    tk.Button(ventana3, text="Volver",image=imagen_volver,compound="left",height=30 , width=300, command=lambda: volver_al_menu(ventana3)).grid(row=8, column=5,columnspan=2 ,sticky="s")
+    tk.Button(ventana3, text="Volver",image=imagen_volver,compound="left",height=30 , width=300, command=lambda: volver_al_menu(ventana3,menuFunc,tipoCuenta,nombreCuenta)).grid(row=8, column=5,columnspan=2 ,sticky="s")
     tk.Button(ventana3, text="Ver profesores",image=imagen_profesor,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:ver_profes(("Id_profesor","Nombre", "Apellido", "Telefono", "Tipo_documento","Nro_de_documento", "Correo","Direccion","Altura","Departamento","Fecha_nacimiento"), ("""SELECT Id_profesor, Nombre, Apellido, Telefono, Tipo_documento,Nro_de_documento, Correo,Direccion,Altura,Departamento,Fecha_nacimiento FROM profesores ORDER BY Nombre ASC, Apellido ASC"""),(ventana3),1)).grid(row=4, column=5, padx=2, pady=2,sticky="w")
         
 
@@ -991,8 +991,11 @@ def cerrar_base_de_datos():
     cursor.close()
     cnx.close()    
     
-def volver_al_menu(ventana):
+def volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta):
     print("volver")
+    for elemento in ventana.winfo_children():
+        elemento.destroy()
+    menuFunc(tipoCuenta,nombreCuenta)
 def volver_docentes(ventana):
     eliminar(ventana)
     botones_docentes(ventana)
