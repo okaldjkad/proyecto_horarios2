@@ -93,9 +93,12 @@ class menu_horarios():
         self.conectar_base_de_datos()
         self.cursor.execute('SELECT Tipo_de_aula, Numero FROM Aulas WHERE Tipo_de_aula = %s ORDER BY Numero ', (tipo_aula,))
         filas = self.cursor.fetchall()
-        for i, fila in enumerate(filas):
-            boton = ttk.Button(botones_frame, text=f"{tipo_aula} {fila[1]}", command=lambda r=fila[1]: segunda_funcion(r, tipo_aula))
-            boton.grid(row=i // 3, column=i % 3, padx=10, pady=10)
+        if filas:
+            for i, fila in enumerate(filas):
+                boton = ttk.Button(botones_frame, text=f"{tipo_aula} {fila[1]}", command=lambda r=fila[1]: segunda_funcion(r, tipo_aula))
+                boton.grid(row=i // 3, column=i % 3, padx=10, pady=10)
+        else:
+            tk.Label(botones_frame, text="No hay aulas agregadas").pack()
         
     def ver_horarios(self,numero,tipo_aula):
         self.eliminar()
