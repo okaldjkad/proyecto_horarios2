@@ -17,19 +17,17 @@ class menu_filtros():
         BG2color="#c9daf8"
         self.frame_fullscreen = tk.Frame(self.ventana5, bg=BG2color)
         self.frame_fullscreen.place(x=0, y=0, relwidth=1, relheight=1)
-        self.frame_fullscreen.columnconfigure((0,1), weight=1)
-        self.frame_fullscreen.columnconfigure((0,1,2,3), weight=1)
+       
         self.imagen_filtro_curso = ImageTk.PhotoImage(Image.open("imagenes/filtro_curso.png").resize((20, 20)))
         self.imagen_filtro_dia = ImageTk.PhotoImage(Image.open("imagenes/filtro_dia.png").resize((20, 20)))
         self.imagen_filtro_profe = ImageTk.PhotoImage(Image.open("imagenes/filtro_profe.png").resize((20, 20)))
         self.imagen_volver = ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20)))
-        perfiles_frame = ttk.LabelFrame(self.frame_fullscreen,text="filtros")
-        perfiles_frame.grid(sticky="ew", pady=2, padx=2,column=0,row=0)
-        tk.Label(self.frame_fullscreen,text="Pestaña de filtros",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
-        tk.Button(self.frame_fullscreen, text="Volver",image=self.imagen_volver,compound="left",height=30,width=200,borderwidth=1,relief="solid",command=lambda: self.volver_al_menu(menuFunc,tipoCuenta,nombreCuenta)).grid(row=10, column=1, padx=2, pady=2)
-        tk.Button(self.frame_fullscreen, text="Filtrar por curso",image=self.imagen_filtro_curso,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.curso_botones_filtro).grid(row=11, column=1, padx=2, pady=2)
-        tk.Button(self.frame_fullscreen, text="Filtrar por profesor", image=self.imagen_filtro_profe,borderwidth=1,relief="solid",compound="left",height=30 , width=300,command=self.filtro_profesor).grid(row=12, column=1, padx=2, pady=2)
-        tk.Button(self.frame_fullscreen, text="Filtrar por día",image=self.imagen_filtro_dia,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.filtro_dia).grid(row=13, column=1, padx=2, pady=2)
+        
+        tk.Label(self.frame_fullscreen,text="Pestaña de filtros",bg="#c9daf8",font=("Monaco", 24, "bold")).place(relx = 0.5, rely = 0.1, anchor ='n')
+        tk.Button(self.frame_fullscreen, text="Volver",image=self.imagen_volver,compound="left",height=30,width=200,borderwidth=1,relief="solid",command=lambda: self.volver_al_menu(menuFunc,tipoCuenta,nombreCuenta)).place(relx = 0.5, rely = 0.8, anchor ='n')
+        tk.Button(self.frame_fullscreen, text="Filtrar por curso",image=self.imagen_filtro_curso,borderwidth=1,relief="solid",compound="left",height=30 , width=400, command=self.curso_botones_filtro).place(relx = 0.5, rely = 0.3, anchor ='n')
+        tk.Button(self.frame_fullscreen, text="Filtrar por profesor", image=self.imagen_filtro_profe,borderwidth=1,relief="solid",compound="left",height=30 , width=400,command=self.filtro_profesor).place(relx = 0.5, rely = 0.5, anchor ='n')
+        tk.Button(self.frame_fullscreen, text="Filtrar por día",image=self.imagen_filtro_dia,borderwidth=1,relief="solid",compound="left",height=30 , width=400, command=self.filtro_dia).place(relx = 0.5, rely = 0.7, anchor ='n')
         BG2color = "#6D9EEB"
         BG2 = tk.Frame(self.ventana5, bg=BG2color, width=512, height=32)
         BG2.place(relx=0.0, rely=1.0, anchor='sw', relwidth=1.0, relheight=0.07)
