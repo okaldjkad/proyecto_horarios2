@@ -31,16 +31,18 @@ def botones_aulas(ventana,menuFunc,tipoCuenta,nombreCuenta):
     frame_pe.rowconfigure(2, weight=1)
         # Crear un frame para contener los perfiles de usuario
     frame_lab = tk.LabelFrame(frame_pe, text="Aulas",bg="#c9daf8")
-    frame_lab.grid(sticky="new", pady=2, padx=2,column=0,row=0)
+    frame_lab.grid(sticky="nsew", pady=2, padx=2,column=0,row=1)
 
 
     frame_lab.columnconfigure(0, weight=1)
     frame_lab.columnconfigure(1, weight=1)
-    frame_lab.columnconfigure(2, weight=1)
     frame_lab.rowconfigure(0, weight=1)
     frame_lab.rowconfigure(1, weight=1)
-    frame_lab.rowconfigure(2, weight=1)  
-    tk.Button(frame_pe, text="Volver",image=imagen_volver,compound="left",borderwidth=1,relief="solid",height=30,width=150, command=lambda: volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta)).grid(row=0, column=0, padx=2, pady=2)
+    frame_lab.rowconfigure(2, weight=1)
+
+    tk.Label(frame_pe,text="  Pestaña de Horarios",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=0,column=0,columnspan=3)
+  
+    tk.Button(frame_pe, text="Volver",image=imagen_volver,compound="left",borderwidth=1,relief="solid",height=30,width=200, command=lambda: volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta)).grid(row=2, column=0, padx=2, pady=2)
         
     tk.Button(frame_lab, text="Ver laboratorios",image=imagen_lab_ver,borderwidth=1,relief="solid",compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """))).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
             
@@ -115,8 +117,8 @@ def agregar_aulas(columnas_aula,query,Tipo_aula,ver_aula):
         tree_aula.pack()
         arriba = ttk.LabelFrame(frame_pe, text="Añadir")
         arriba.grid(padx=10, pady=10, row=0, column=0, sticky="nsew")
-        ttk.Button(arriba, text="Volver", command=lambda: volver_aulas(ver_aula)).grid(row=1, column=3, padx=2, pady=2)
-        boton_de_eliminaraulas = ttk.Button(arriba, text="Eliminar", command=lambda: opciones_aula(2)).grid(row=2, column=3, padx=2, pady=2)
+        ttk.Button(arriba,  text="Volver",image=imagen_volver,compound="left",width=36, command=lambda: volver_aulas(ver_aula)).grid(row=1, column=3, padx=2, pady=2)
+        boton_de_eliminaraulas = tk.Button(arriba, text="Eliminar",width=250,image=imagen_eliminar,compound="left",fg="white",bg="#960000", command=lambda: opciones_aula(2)).grid(row=2, column=3, padx=2, pady=2)       
         clicked = tk.StringVar()
         
     
