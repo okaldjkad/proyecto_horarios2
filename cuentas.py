@@ -344,7 +344,7 @@ if __name__=="__main__":
     #ventana principal
     tk = Tk()
     tk.title("pyNotas")
-    tk.geometry("712x480")
+    tk.geometry("1200x680")
     #tk.resizable(0,0)
     tk.configure(bg=BGcolor)
 

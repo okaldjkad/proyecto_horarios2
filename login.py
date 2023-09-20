@@ -26,6 +26,8 @@ class login1:
         BG2color="#6D9EEB" #Celeste
  
         fuente_grande = ('Arial', 30, "bold")
+        fuente_grande1 = ('Arial', 32, "bold")
+        fuente_grande2 = ('Arial', 20)
         fuente_mediana = ('Arial', 16)
         fuente_chica = ('Arial', 12)
 
@@ -51,22 +53,36 @@ class login1:
         image_label = Label(BG1, image=photo,borderwidth=0, highlightthickness=0)
         image_label.image = photo  
         image_label.pack()
-        image_label.grid(row=0, column=0)  # Grid para la imagen
+        #image_label.grid(row=0, column=0)  # Grid para la imagen
 
        
+        BG1.columnconfigure(0,weight=1)
 
+        
+        frame_label1 = Frame(BG1, bg='black')
+        frame_label1.place(relx=0.0, rely=0.4, anchor="nw")
+        mayus_label1 = Label(frame_label1, text="E", fg="white", bg='black', font=fuente_grande1).grid(row=0, column=0, sticky='nes',pady=5)
+        text_label1 = Label(frame_label1, text="scuela de", fg="white", bg='black', font=fuente_grande2).grid(row=0, column=1, sticky='nws',pady=5)
 
-        text_label1 = Label(BG1, text="Escuela de", fg="white", bg='black', font=fuente_grande)
-        text_label2 = Label(BG1, text="Educacion", fg="white", bg='black', font=fuente_grande)
-        text_label3 = Label(BG1, text="Secundaria", fg="white", bg='black', font=fuente_grande)
-        text_label4 = Label(BG1, text="Tecnica", fg="white", bg='black', font=fuente_grande)
-        text_label5 = Label(BG1, text="Nº1", fg="white", bg='black', font=fuente_grande)
+        frame_label2 = Frame(BG1, bg='black')
+        frame_label2.place(relx=0.0, rely=0.5, anchor="nw")
+        mayus_label2 = Label(frame_label2, text="E", fg="white", bg='black', font=fuente_grande1).grid(row=0, column=0, sticky='nes',pady=5)
+        text_label2 = Label(frame_label2, text="ducacion", fg="white", bg='black', font=fuente_grande2).grid(row=0, column=1, sticky='nws',pady=5)
 
-        text_label1.grid(row=10, column=0, sticky='w',pady=20)
-        text_label2.grid(row=11, column=0, sticky='w',pady=20)
-        text_label3.grid(row=12, column=0, sticky='w',pady=20)
-        text_label4.grid(row=13, column=0, sticky='w',pady=20)
-        text_label5.grid(row=14, column=0, sticky='w',pady=20)
+        frame_label3 = Frame(BG1, bg='black')
+        frame_label3.place(relx=0.0, rely=0.6, anchor="nw")
+        mayus_label3 = Label(frame_label3, text="S", fg="white", bg='black', font=fuente_grande1).grid(row=0, column=0, sticky='nes',pady=5)
+        text_label3 = Label(frame_label3, text="ecundaria", fg="white", bg='black', font=fuente_grande2).grid(row=0, column=1, sticky='nws',pady=5)
+
+        frame_label4 = Frame(BG1, bg='black')
+        frame_label4.place(relx=0.0, rely=0.7, anchor="nw")
+        mayus_label4 = Label(frame_label4, text="T", fg="white", bg='black', font=fuente_grande1).grid(row=0, column=0, sticky='nes',pady=5)
+        text_label4 = Label(frame_label4, text="ecnica", fg="white", bg='black', font=fuente_grande2).grid(row=0, column=1, sticky='nws',pady=5)
+
+        frame_label5 = Frame(BG1, bg='black')
+        frame_label5.place(relx=0.0, rely=0.8, anchor="nw")
+        mayus_label5 = Label(frame_label5, text="Nº1", fg="white", bg='black', font=fuente_grande1).grid(row=0, column=0, sticky='nes',pady=5)
+        #text_label5 = Label(frame_label5, text="Nº1", fg="white", bg='black', font=fuente_mediana).grid(row=0, column=1, sticky='nws',pady=5)
         
 
 

@@ -383,11 +383,10 @@ class ingreso1():
         string_var.set(valor_predeterminado)
 
         # Crea el Entry y enlaza su textvariabl
-        ttk.Label(tk, text="Codigo de area:").grid(column=2, row=0)
         c_a = Entry(tk, textvariable=string_var, state=DISABLED, width=len(valor_predeterminado))
-        c_a.place(relx = 0.2, rely = 0.65, anchor ='sw')
+        c_a.place(relx = 0.2, rely = 0.65, anchor ='sw', relwidth=0.05)
         
-        ttk.Label(tk, text="Prefijos:").grid(column=3, row=0)
+        
         global prefijos
         prefijos=[]
         with open('numero_codigo.txt', 'r') as archivo:
@@ -395,18 +394,23 @@ class ingreso1():
                 numero = linea.strip()
                 prefijos.append(numero)
         TELEInput = AutocompleteEntry(prefijos,tk)
-        TELEInput.grid(row=1, column=3)
+        TELEInput.config(width=4)
         TELEInput.bind("<FocusOut>", lambda event: validar_prefijo(event, TELEInput,tk))
         
-        ttk.Label(tk, text="Numero de telefono").grid(column=4, row=0)
         entry_telefono2 = ttk.Entry(tk, validate="key")
         entry_telefono2.config(validatecommand=(tk.register(validar_numeros), "%P"))
         entry_telefono2.bind("<KeyRelease>", limite)
-        entry_telefono2.place(relx = 0.5, rely = 0.65, anchor ='sw')
+        entry_telefono2.place(relx = 0.32, rely = 0.65, anchor ='sw', relwidth=0.12)
+        
 
         TELELabel = Label(tk, text="Introduzca el Telefono de un Tutor",font=("arial", 8), bg=BGcolor)
         TELELabel.place(relx = 0.2, rely = 0.6, anchor ='sw')
-        TELEInput.place(relx = 0.3, rely = 0.65, anchor ='sw')
+        TELEInput.place(relx = 0.26, rely = 0.65, anchor ='sw', relwidth=0.05)
+
+        ttk.Label(tk, text="Numero de telefono",font=("arial", 8)).place(relx = 0.32, rely = 0.655, anchor ='nw', relwidth=0.15)
+        ttk.Label(tk, text="Codigo de area:",font=("arial", 8)).place(relx = 0.26, rely = 0.655, anchor ='nw', relwidth=0.05)
+        ttk.Label(tk, text="Prefijos:",font=("arial", 8)).place(relx = 0.2, rely = 0.655, anchor ='nw', relwidth=0.05)
+
 
         DNILabel = Label(tk, text="Introduce el DNI del Alumno",font=("arial", 8), bg=BGcolor)
         DNIInput = Entry(tk, width=25)

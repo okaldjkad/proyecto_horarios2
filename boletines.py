@@ -606,11 +606,14 @@ class boletines1():
 
             if tipoCuenta==1: # si la cuenta es maestro
 
-                cursor.execute(f"SELECT MATERIAS FROM usuarios WHERE usuario='{nombreCuenta}' ")
-                materias2 = cursor.fetchone()
-                if materias1 == []:
+                #Obtiene la lista de materias del profesor
+                cursor.execute(f"SELECT MATERIAS FROM usuarios WHERE usuario='{nombreCuenta}' AND tipo={tipoCuenta} ")
+                materias2 = cursor.fetchall()
+
+                if materias1 == [] or materias2 == []: #en el caso que no se encontraron materias antes
                     print("ERROR: no se encontraron materias en "+SQLcurso)
                     alumnos = [noMaterias]
+
                 else:
                     materiasCursoActual = []
                     materiasAdmitidas = []
@@ -852,7 +855,7 @@ if __name__ == "__main__":
     #ventana principal
     tk = Tk()
     tk.title("pyNotas")
-    tk.geometry("712x480")
+    tk.geometry("1200x680")
     #tk.resizable(0,0)
     with open('database.txt', 'r') as archivo:
         database_var = archivo.read()

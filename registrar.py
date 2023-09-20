@@ -58,8 +58,10 @@ class registrar1():
             SQLmaterias = []
             if tipo == 1:
                 for materia in seleccionM:
-                    materia = str(materia[0]+","+materia[1]+","+materia[2])
+                    materia = ",".join(materia)
                     SQLmaterias.append(materia)
+                    print(materia)
+                SQLmaterias = list(set(SQLmaterias)) #remover materias duplicadas si por cualquier razon las hay
                 SQLmaterias = ";".join(SQLmaterias)
                 print(SQLmaterias)
 
@@ -121,8 +123,17 @@ class registrar1():
                     queryContraseña = f", contraseña='{LoginValores[1]}'"
                 else:
                     queryContraseña = ""
+
+                print(LoginValores)
+                print(queryContraseña)
+                print(queryMaterias3)
+                print(valores[6])
                 
-                cursor.execute(f"UPDATE Usuarios SET usuario='{LoginValores[0]}', email='{LoginValores[2]}'{queryContraseña}, tipo='{LoginValores[3]}'{queryMaterias3} WHERE ID={valores[6]}")
+                cursor.execute(f"""UPDATE Usuarios SET
+                               usuario='{LoginValores[0]}',
+                               email='{LoginValores[2]}'{queryContraseña},
+                               tipo='{LoginValores[3]}'{queryMaterias3}
+                               WHERE ID={valores[6]}""")
                 print("Usuario Actualizado")
                 
 
@@ -346,12 +357,13 @@ class registrar1():
         def accionMaterias(var,boton,materia,curso,division):
             print(str(var.get()))
             print(materia,curso,division)
+            seleccion=(materia,str(curso+"_"+division))
             if var.get() is True:
-                if not (materia,curso,division) in seleccionM:
-                    seleccionM.append((materia,curso,division))
+                if not seleccion in seleccionM:
+                    seleccionM.append(seleccion)
             else:
                 try:
-                    seleccionM.remove((materia,curso,division))
+                    seleccionM.remove(seleccion)
                 except:
                     pass
             
@@ -369,7 +381,7 @@ class registrar1():
                 elemento.destroy()
             for i in range(0,len(listaMaterias)):
                 materia=listaMaterias[i].replace(" ","_")
-                if (materia,curso,division) in seleccionM:
+                if (materia,str(curso,"_",division)) in seleccionM:
                     var = tk.BooleanVar(value=True)
                 else:
                     var = tk.BooleanVar(value=False)
