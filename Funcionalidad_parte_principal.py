@@ -11,7 +11,7 @@ class menu_horarios():
     def eliminar(self):
         for elemento in self.ventana4.winfo_children():
             elemento.destroy()
-    def horarios(self,ventana4,tipoCuenta,nombreCuenta,menuFunc):
+    def horarios(self,ventana4,menuFunc,tipoCuenta,nombreCuenta):
         self.tipocuenta=tipoCuenta
         self.nombrecuenta=nombreCuenta
         self.menuFunc=menuFunc
@@ -30,17 +30,18 @@ class menu_horarios():
         
         tk.Label(self.ventana4,text="  Pestaña de Horarios",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=1,column=3,columnspan=3)
 
-        tk.Button(self.ventana4, text="Volver",image=self.imagen_volver,compound="left",height=30 , width=300, command=lambda: self.volver_al_menu(tipoCuenta,nombreCuenta,menuFunc)).grid(row=8, column=4, sticky="e",padx=(0, 10), pady=(0, 0))
+        tk.Button(self.ventana4, text="Volver",image=self.imagen_volver,compound="left",height=30 , width=300, command=lambda: self.volver_al_menu(menuFunc,tipoCuenta,nombreCuenta)).grid(row=8, column=4, sticky="e",padx=(0, 10), pady=(0, 0))
         tk.Button(self.ventana4, text="Ver horarios Laboratorios",image=self.imagen_ver_horario,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Laboratorio",self.ver_horarios)).grid(row=3, column=3, padx=(0, 10), pady=(0, 0), sticky="E")
         
-        tk.Button(self.ventana4, text="Añadir Horarios Laboratorios",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Laboratorio",self.añadir_aula)).grid(row=3, column=4, padx=(0, 10), pady=(0, 0), sticky="E")
-        
+        self.añadir_lab=tk.Button(self.ventana4, text="Añadir Horarios Laboratorios",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Laboratorio",self.añadir_aula))
+        self.añadir_lab.grid(row=3, column=4, padx=(0, 10), pady=(0, 0), sticky="E")
         tk.Button(self.ventana4, text="Exportar laboratorio a PDF",image=self.imagen_PDF,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Laboratorio",self.exportar_pdf)).grid(row=3, column=5,  padx=(0, 10), pady=(0, 0), sticky="E")
         
         tk.Button(self.ventana4, text="Ver horarios aulas",image=self.imagen_ver_horario,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Aula",self.ver_horarios)).grid(row=4, column=3,  padx=(0, 10), pady=(0, 0), sticky="E")
             
             
-        tk.Button(self.ventana4, text="Añadir horarios horarios aulas",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Aula",self.añadir_aula)).grid(row=4, column=4,  padx=(0, 10), pady=(0, 0), sticky="E")
+        self.añadir_aula_b=tk.Button(self.ventana4, text="Añadir horarios horarios aulas",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Aula",self.añadir_aula))
+        self.añadir_aula_b.grid(row=4, column=4,  padx=(0, 10), pady=(0, 0), sticky="E")
             
             
         tk.Button(self.ventana4, text="Exportar aula a PDF", image=self.imagen_PDF,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Aula",self.exportar_pdf)).grid(row=4, column=5, padx=(0, 10), pady=(0, 0), sticky="E")
@@ -48,12 +49,19 @@ class menu_horarios():
         tk.Button(self.ventana4, text="Ver horarios talleres",image=self.imagen_ver_horario,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Taller",self.ver_horarios)).grid(row=5, column=3,  padx=(0, 10), pady=(0, 0), sticky="E")
             
             
-        tk.Button(self.ventana4, text="Añadir horarios talleres",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Taller",self.añadir_aula)).grid(row=5, column=4,  padx=(0, 10), pady=(0, 0), sticky="E")
+        self.añadir_taller=tk.Button(self.ventana4, text="Añadir horarios talleres",image=self.imagen_añadir,compound="left",height=30 , width=300,command=lambda:self.opcion_ver_horarios("Taller",self.añadir_aula))
+        self.añadir_taller.grid(row=5, column=4,  padx=(0, 10), pady=(0, 0), sticky="E")
             
        
         tk.Button(self.ventana4,text="Exportar taller a PDF",image=self.imagen_PDF,compound="left",height=30 , width=300, command=lambda:self.opcion_ver_horarios("Taller",self.exportar_pdf)).grid(row=5, column=5,  padx=(0, 10), pady=(0, 0), sticky="E")
         etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
         etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
+        print("Valor de self.tipocuenta:", self.tipocuenta)
+        
+        if self.tipocuenta==1:
+            self.añadir_lab.config(state=tk.DISABLED)
+            self.añadir_aula_b.config(state=tk.DISABLED)
+            self.añadir_taller.config(state=tk.DISABLED)
          # Asignar la función cerrar_ventana al evento de cerrar la ventana principal
          #self.ventana4.protocol("WM_DELETE_WINDOW",lambda: self.volver_al_menu(self.ventana4))
     def volver_al_menu(self,menuFunc,tipoCuenta,nombreCuenta):
@@ -92,14 +100,14 @@ class menu_horarios():
     def ver_horarios(self,numero,tipo_aula):
         self.eliminar()
         self.aula_ver_horarios.destroy()
-        self.ventana_horario2= añadir_horario(self.ventana4,tipo_aula,numero,self.tipocuenta,self.nombrecuenta,self.menuFunc)
+        self.ventana_horario2= añadir_horario(self.ventana4,tipo_aula,numero,self.menuFunc,self.tipocuenta,self.nombrecuenta)
         self.ventana_horario2.treeview(True)
         self.ventana_horario2.ejecutar()
 
     def añadir_aula(self,numero,tipo_aula):
         self.eliminar()
         self.aula_ver_horarios.destroy()
-        ventana_horario2= añadir_horario(self.ventana4,tipo_aula,numero,self.tipocuenta,self.nombrecuenta,self.menuFunc)
+        ventana_horario2= añadir_horario(self.ventana4,tipo_aula,numero,self.menuFunc,self.tipocuenta,self.nombrecuenta)
         ventana_horario2.widgets()
         ventana_horario2.botones()
         ventana_horario2.ejecutar()
@@ -107,7 +115,7 @@ class menu_horarios():
         
         
 class añadir_horario():
-    def __init__(self,ventana_horario,tipo_de_aula,numero_de_aula,tipoCuenta,nombreCuenta,menuFunc):
+    def __init__(self,ventana_horario,tipo_de_aula,numero_de_aula,menuFunc,tipoCuenta,nombreCuenta):
         self.tipocuenta=tipoCuenta
         self.nombrecuenta=nombreCuenta
         self.menuFunc=menuFunc
@@ -443,7 +451,8 @@ class añadir_horario():
     def volver(self):
         self.eliminar()
         ventana_horario2= menu_horarios()
-        ventana_horario2.horarios(self.ventana_horario,self.tipocuenta,self.nombrecuenta,self.menuFunc)
+        print(self.menuFunc,self.tipocuenta,self.nombrecuenta)
+        ventana_horario2.horarios(self.ventana_horario,self.menuFunc,self.tipocuenta,self.nombrecuenta)
     def eliminar(self):
         for elemento in self.ventana_horario.winfo_children():
             elemento.destroy()

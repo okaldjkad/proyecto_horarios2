@@ -308,10 +308,10 @@ INSERT INTO `cursos` (`ID`, `CURSO`, `MATERIAS`) VALUES
 (3, '1ro_C','matematicas;Literatura;Programacion'),
 (4, '1ro_D','matematicas;Literatura;Programacion'),
 (5, '1ro_E','matematicas;Literatura;Programacion;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect'),
-(6, '2do_A','Historia;Geografía;Ingles'),
-(7, '2do_B','Historia;Geografía;Ingles'),
-(8, '2do_C','Historia;Geografía;Ingles'),
-(9, '2do_D','Historia;Geografía;Ingles'),
+(6, '2do_A','Historia;Geografia;Ingles'),
+(7, '2do_B','Historia;Geografia;Ingles'),
+(8, '2do_C','Historia;Geografia;Ingles'),
+(9, '2do_D','Historia;Geografia;Ingles'),
 (10, '3ro_A','Historia;Literatura;Ciudadania'),
 (11, '3ro_B','Historia;Literatura;Ciudadania'),
 (12, '3ro_C','Historia;Literatura;Ciudadania'),
@@ -341,23 +341,6 @@ INSERT INTO `cursos` (`ID`, `CURSO`, `MATERIAS`) VALUES
 --
 -- Table structure for table `espacio_curricular`
 --
-
-CREATE TABLE `espacio_curricular` (
-  `nombre_materia` varchar(255) DEFAULT NULL,
-  `año` int(2) NOT NULL,
-  `division` varchar(2) NOT NULL,
-  `Grupo` varchar(6) NOT NULL,
-  `Especialidad` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `espacio_curricular`
---
-
-INSERT INTO `espacio_curricular` (`nombre_materia`, `año`, `division`, `Grupo`, `Especialidad`) VALUES
-('Ghjghhhhj', 2, 'D', 'Ambos', ''),
-('Fghfgh', 5, '2', 'Ambos', 'Jhhhxfh'),
-('A', 5, '2', 'Ambos', 'A');
 
 -- --------------------------------------------------------
 

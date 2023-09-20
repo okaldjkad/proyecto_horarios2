@@ -63,6 +63,10 @@ def botones_aulas(ventana,menuFunc,tipoCuenta,nombreCuenta):
             
     añadir_taller= ttk.Button(frame_lab, text="Añadir talleres",image=imagen_taller_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Taller" """, "Taller",(ventana)))
     añadir_taller.grid(row=2, column=1, padx=2, pady=2,sticky="ew")
+    if tipodecuenta==1:
+        añadir_aula.configure(state="disabled")
+        añadir_taller.configure(state="disabled")
+        añadir_lab.configure(state="disabled")
     
 def volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta):
     eliminar(ventana)

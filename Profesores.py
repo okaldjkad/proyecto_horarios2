@@ -56,7 +56,9 @@ def botones_docentes(ventana3,menuFunc,tipoCuenta,nombreCuenta):
     añadir_materia_boton=tk.Button(ventana3, text="Añadir materias",image=imagen_materia_añadir,compound="left",borderwidth=1,relief="solid",height=30 , width=300, command=lambda:agregar_materias(( "Materia","Cursos", "Grupo", "Especialidad"), """SELECT MATERIA, CURSOS, Grupo, Especialidad FROM materias ORDER BY MATERIA ASC""",(ventana3)))
     añadir_materia_boton.grid(row=4, column=6, padx=2, pady=2,sticky="w")
 
-
+    if tipodecuenta==1:
+        añadir_profes.configure(state="disabled")
+        añadir_materia_boton.configure(state="disabled")
     etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
     etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
         
