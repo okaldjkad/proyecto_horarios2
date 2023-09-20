@@ -15,6 +15,10 @@ def botones_aulas(ventana,menuFunc,tipoCuenta,nombreCuenta):
     menufunc=menuFunc
     tipodecuenta=tipoCuenta
     nombrecuenta=nombreCuenta
+    
+    nuevo_color = "#c9daf8"  # Puedes cambiar esto al color que desees
+    style = ttk.Style()
+    style.configure("TFrame", background=nuevo_color)  # Cambia el fondo del tema TFrame
     imagen_eliminar = ImageTk.PhotoImage(Image.open("Imagenes/eliminar.png").resize((15,15)))
     imagen_lab_ver=ImageTk.PhotoImage(Image.open("Imagenes/lab_ver.png").resize((20,20)))
     imagen_aula_ver=ImageTk.PhotoImage(Image.open("Imagenes/aula_ver.png").resize((20,20)))
@@ -25,44 +29,33 @@ def botones_aulas(ventana,menuFunc,tipoCuenta,nombreCuenta):
     imagen_volver=ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20,20)))
     frame_pe = ttk.Frame(ventana)
     frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
-    frame_pe.columnconfigure(0, weight=1)
-    frame_pe.rowconfigure(0, weight=1)
-    frame_pe.rowconfigure(1, weight=1)
-    frame_pe.rowconfigure(2, weight=1)
-        # Crear un frame para contener los perfiles de usuario
-        
-    frame_lab = ttk.LabelFrame(frame_pe, text="Aulas")
-    frame_lab.grid(sticky="new", pady=2, padx=2,column=0,row=0)
+    
+    # Configurar filas y columnas para centrar los botones en el medio
+    ventana.columnconfigure(0, weight=1)
+    ventana.columnconfigure(1, weight=1)
+    ventana.rowconfigure(0, weight=1)
+    ventana.rowconfigure(1, weight=1)
+    ventana.rowconfigure(2, weight=1)
+    ventana.rowconfigure(3, weight=1)
+    tk.Label(ventana,text="Pestaña de aulas",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
+
+    tk.Button(ventana, text="Volver",borderwidth=1,relief="solid",height=30,width=150,image=imagen_volver, compound="left", command=lambda: volver_al_menu(ventana)).grid(row=0, column=0,columnspan=2, padx=5, pady=5,sticky="nw" )
+    tk.Button(ventana, text="Ver laboratorios",borderwidth=1,relief="solid", image=imagen_lab_ver, compound="left", command=lambda: ver_aula(("Tipo de aula", "Ubicacion", "Numero"), ("""SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """))).grid(row=1, column=0, padx=5, pady=5, sticky="ew")
+    añadir_lab = tk.Button(ventana, text="Añadir laboratorios",borderwidth=1,relief="solid", image=imagen_lab_añadir, compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """, "Laboratorio", (ventana)))
+    añadir_lab.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+    tk.Button(ventana, text="Ver aulas", image=imagen_aula_ver,borderwidth=1,relief="solid", compound="left", command=lambda: ver_aula(("Tipo de aula", "Ubicacion", "Numero"), ("""SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """))).grid(row=2, column=0, padx=5, pady=5, sticky="ew")
+    añadir_aula = tk.Button(ventana, text="Añadir aulas",borderwidth=1,relief="solid", image=imagen_aula_añadir, compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """, "Aula", (ventana)))
+    añadir_aula.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+    tk.Button(ventana, text="Ver talleres", image=imagen_taller_ver,borderwidth=1,relief="solid", compound="left", command=lambda: ver_aula(("Tipo de aula", "Ubicacion", "Numero"), ("""SELECT * FROM aulas WHERE tipo_de_aula = "taller" """))).grid(row=3, column=0, padx=5, pady=5, sticky="ew")
+    añadir_taller = tk.Button(ventana, text="Añadir talleres",borderwidth=1,relief="solid", image=imagen_taller_añadir, compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Taller" """, "Taller", (ventana)))
+    añadir_taller.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 
 
-    frame_lab.columnconfigure(0, weight=1)
-    frame_lab.columnconfigure(1, weight=1)
-    frame_lab.columnconfigure(2, weight=1)
-    frame_lab.rowconfigure(0, weight=1)
-    frame_lab.rowconfigure(1, weight=1)
-    frame_lab.rowconfigure(2, weight=1)  
-    ttk.Button(frame_pe, text="Volver",image=imagen_volver,compound="left", command=lambda: volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta)).grid(row=0, column=0, padx=2, pady=2)
-        
-    ttk.Button(frame_lab, text="Ver laboratorios",image=imagen_lab_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """))).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
-            
-
-    añadir_lab = ttk.Button(frame_lab, text="Añadir laboratorios",image=imagen_lab_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """, "Laboratorio",(ventana)))
-    añadir_lab.grid(row=0, column=1, padx=2, pady=2, sticky="ew")
-
-        
-    ttk.Button(frame_lab, text="Ver aulas",image=imagen_aula_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """))).grid(row=1, column=0, padx=2, pady=2,sticky="ew")
-            
-            
-    añadir_aula=ttk.Button(frame_lab, text="Añadir aulas",image=imagen_aula_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """, "Aula",(ventana)))
-    añadir_aula.grid(row=1, column=1, padx=2, pady=2,sticky="ew")            
-        
-
-            
-    ttk.Button(frame_lab, text="Ver talleres",image=imagen_taller_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "taller" """))).grid(row=2, column=0, padx=2, pady=2,sticky="ew")
-            
-            
-    añadir_taller= ttk.Button(frame_lab, text="Añadir talleres",image=imagen_taller_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Taller" """, "Taller",(ventana)))
-    añadir_taller.grid(row=2, column=1, padx=2, pady=2,sticky="ew")
+    BG2color = "#6D9EEB"
+    BG2 = tk.Frame(ventana, bg=BG2color, width=512, height=32)
+    BG2.place(relx=0.0, rely=1.0, anchor='sw', relwidth=1.0, relheight=0.07)
+    etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
+    etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
     if tipodecuenta==1:
         añadir_aula.configure(state="disabled")
         añadir_taller.configure(state="disabled")
@@ -116,8 +109,12 @@ def agregar_aulas(columnas_aula,query,Tipo_aula,ver_aula):
         tree_aula.pack()
         arriba = ttk.LabelFrame(frame_pe, text="Añadir")
         arriba.grid(padx=10, pady=10, row=0, column=0, sticky="nsew")
-        ttk.Button(arriba, text="Volver", command=lambda: volver_aulas(ver_aula)).grid(row=1, column=3, padx=2, pady=2)
-        boton_de_eliminaraulas = ttk.Button(arriba, text="Eliminar", command=lambda: opciones_aula(2)).grid(row=2, column=3, padx=2, pady=2)
+        imagen_eliminar =ImageTk.PhotoImage(Image.open("imagenes/eliminar.png").resize((20, 20), Image.LANCZOS))
+        imagen_volver=ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20,20)))
+        style = ttk.Style()
+        style.configure("TButton", background="black",width=40)         
+        ttk.Button(arriba, text="Volver",image=imagen_volver,compound="left",width=21, command=lambda: volver_aulas(ver_aula)).grid(row=1, column=3, padx=2, pady=2)
+        boton_de_eliminaraulas = tk.Button(arriba, text="Eliminar",width=150,image=imagen_eliminar,compound="left",fg="white",bg="#960000", command=lambda: opciones_aula(2)).grid(row=2, column=3, padx=2, pady=2)
         clicked = tk.StringVar()
         
     
