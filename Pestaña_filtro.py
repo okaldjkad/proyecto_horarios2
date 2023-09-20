@@ -7,34 +7,51 @@ from tkinter import ttk
 from PDF import PDF_filtro
 #Hecho por Tobias Bonanno
 class menu_filtros():
-    def __init__(self,ventana_filtro):
+    def __init__(self,ventana_filtro,menuFunc,tipoCuenta,nombreCuenta):
+        self.menuFunc=menuFunc
+        self.tipoCuenta=tipoCuenta
+        self.nombreCuenta=nombreCuenta
         self.ventana5 = ventana_filtro
         self.ventana5.title("Pantalla Principal")
         self.ventana5.iconbitmap("Imagenes/Colegio_logo.ico")
-        self.frame_fullscreen = ttk.Frame(self.ventana5)
+        BG2color="#c9daf8"
+        self.frame_fullscreen = tk.Frame(self.ventana5, bg=BG2color)
         self.frame_fullscreen.place(x=0, y=0, relwidth=1, relheight=1)
-        self.frame_fullscreen.columnconfigure(0, weight=1)
-        self.frame_fullscreen.columnconfigure((0,1,2), weight=1)
-        perfiles_frame = ttk.LabelFrame(self.ventana5,text="filtros")
+        self.frame_fullscreen.columnconfigure((0,1), weight=1)
+        self.frame_fullscreen.columnconfigure((0,1,2,3), weight=1)
+        self.imagen_filtro_curso = ImageTk.PhotoImage(Image.open("imagenes/filtro_curso.png").resize((20, 20)))
+        self.imagen_filtro_dia = ImageTk.PhotoImage(Image.open("imagenes/filtro_dia.png").resize((20, 20)))
+        self.imagen_filtro_profe = ImageTk.PhotoImage(Image.open("imagenes/filtro_profe.png").resize((20, 20)))
+        self.imagen_volver = ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20)))
+        perfiles_frame = ttk.LabelFrame(self.frame_fullscreen,text="filtros")
         perfiles_frame.grid(sticky="ew", pady=2, padx=2,column=0,row=0)
-        ttk.Button(perfiles_frame, text="Volver", command=lambda: self.volver_al_menu(self.ventana5)).grid(row=0, column=0, padx=2, pady=2)
-        ttk.Button(perfiles_frame, text="Filtrar por curso", command=self.curso_botones_filtro).grid(row=1, column=0, padx=2, pady=2)
-        ttk.Button(perfiles_frame, text="Filtrar por profesor", command=self.filtro_profesor).grid(row=2, column=0, padx=2, pady=2)
-        ttk.Button(perfiles_frame, text="Filtrar por dia", command=self.filtro_dia).grid(row=3, column=0, padx=2, pady=2)
+        tk.Label(self.frame_fullscreen,text="Pestaña de filtros",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
+        tk.Button(self.frame_fullscreen, text="Volver",image=self.imagen_volver,compound="left",height=30,width=200,borderwidth=1,relief="solid",command=lambda: self.volver_al_menu(menuFunc,tipoCuenta,nombreCuenta)).grid(row=10, column=1, padx=2, pady=2)
+        tk.Button(self.frame_fullscreen, text="Filtrar por curso",image=self.imagen_filtro_curso,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.curso_botones_filtro).grid(row=11, column=1, padx=2, pady=2)
+        tk.Button(self.frame_fullscreen, text="Filtrar por profesor", image=self.imagen_filtro_profe,borderwidth=1,relief="solid",compound="left",height=30 , width=300,command=self.filtro_profesor).grid(row=12, column=1, padx=2, pady=2)
+        tk.Button(self.frame_fullscreen, text="Filtrar por día",image=self.imagen_filtro_dia,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.filtro_dia).grid(row=13, column=1, padx=2, pady=2)
+        BG2color = "#6D9EEB"
+        BG2 = tk.Frame(self.ventana5, bg=BG2color, width=512, height=32)
+        BG2.place(relx=0.0, rely=1.0, anchor='sw', relwidth=1.0, relheight=0.07)
+        etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
+        etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
     def eliminar(self):
         for elemento in self.ventana5.winfo_children():
             elemento.destroy()
+    def volver_al_menu(self,menuFunc,tipoCuenta,nombreCuenta):
+        self.eliminar()
+        menuFunc(tipoCuenta,nombreCuenta)
     def curso_botones_filtro(self):
         self.ventana6 = tk.Toplevel()
         self.ventana6.title("Pantalla Principal")
         self.ventana6.iconbitmap("Imagenes/Colegio_logo.ico")
-        ttk.Button(self.ventana6, text="Ciclo basico", command=lambda: self.filtro_curso(0)).grid(row=1, column=0, padx=2, pady=2)
-        ttk.Button(self.ventana6, text="Ciclo superior", command=lambda: self.filtro_curso(1)).grid(row=2, column=0, padx=2, pady=2)
+        tk.Button(self.ventana6, text="Ciclo basico",borderwidth=1,relief="solid", command=lambda: self.filtro_curso(0)).grid(row=1, column=0, padx=2, pady=2)
+        tk.Button(self.ventana6, text="Ciclo superior",borderwidth=1,relief="solid", command=lambda: self.filtro_curso(1)).grid(row=2, column=0, padx=2, pady=2)
     def filtro_curso(self,ciclo):
         if ciclo==0:
             self.ventana6.destroy()
             self.eliminar()
-            ventana_horario2= Pestaña_filtro(self.ventana5)
+            ventana_horario2= Pestaña_filtro(self.ventana5,self.menuFunc,self.tipoCuenta,self.nombreCuenta)
             ventana_horario2.widgets()
             ventana_horario2.agregar_ciclo_basico()
             ventana_horario2.treeview_filter()
@@ -42,14 +59,14 @@ class menu_filtros():
         elif ciclo==1:
             self.ventana6.destroy()
             self.eliminar()
-            ventana_horario2= Pestaña_filtro(self.ventana5)
+            ventana_horario2= Pestaña_filtro(self.ventana5,self.menuFunc,self.tipoCuenta,self.nombreCuenta)
             ventana_horario2.widgets()
             ventana_horario2.agregar_ciclo_superior()
             ventana_horario2.treeview_filter()
             ventana_horario2.ejecutar()
     def filtro_profesor(self):
         self.eliminar()
-        ventana_horario4= Pestaña_filtro(self.ventana5)
+        ventana_horario4= Pestaña_filtro(self.ventana5,self.menuFunc,self.tipoCuenta,self.nombreCuenta)
         ventana_horario4.widgets()
         ventana_horario4.agregar_profesor()
         ventana_horario4.treeview_filter()
@@ -61,12 +78,13 @@ class menu_filtros():
         ventana_horario3.agregar_dia()
         ventana_horario3.treeview_filter()
         ventana_horario3.ejecutar()
-    def volver_al_menu(self,ventana):
-        print("volver")
         
     
 class Pestaña_filtro():
-    def __init__(self,ventana_filtro):
+    def __init__(self,ventana_filtro,menuFunc,tipoCuenta,nombreCuenta):
+        self.menuFunc=menuFunc
+        self.tipoCuenta=tipoCuenta
+        self.nombreCuenta=nombreCuenta
         self.ventana_filtro=ventana_filtro
         self.ventana_filtro.title("Añadir horario")
         self.ventana_filtro.geometry("900x500")
@@ -114,19 +132,21 @@ class Pestaña_filtro():
         self.frame_derecha.rowconfigure(3, weight=1)
     def widgets(self):
         self.variable_check = tk.StringVar()
+        self.imagen_volver = ImageTk.PhotoImage(Image.open("Imagenes/volver.png").resize((20, 20)))
+        self.imagen_pdf = ImageTk.PhotoImage(Image.open("Imagenes/PDF.png").resize((20,20)))
         self.variable_check.set("")
         style = ttk.Style()
         style.configure("Frame.TFrame", background="white")
         ttk.Label(self.frame_derecha, text="Filtros",anchor="w").grid(column=0, row=0,sticky="news")
-        ttk.Button(self.frame_derecha,text="Volver",command=self.volver).grid(column=1, row=0, sticky="news",padx=(10,0))
+        ttk.Button(self.frame_derecha,text="Volver",image=self.imagen_volver,compound="left",command=self.volver).grid(column=1, row=0, sticky="news",padx=(10,0))
         self.frame_variables=ttk.LabelFrame(self.frame_derecha)
         self.frame_variables.grid(column=0, row=1,columnspan=2,sticky="news")
         self.frame_variables.columnconfigure(0, weight=1)
         self.frame_variables.rowconfigure(0, weight=1)
         self.frame_variables.rowconfigure(1, weight=1)
-        ttk.Button(self.frame_derecha,text="Exportar a PDF",command=self.exportar_a_pdf).grid(column=0, row=3, sticky="news",columnspan=2)
+        ttk.Button(self.frame_derecha,text="Exportar a PDF",image=self.imagen_pdf,compound="left",command=self.exportar_a_pdf).grid(column=0, row=3, sticky="news",columnspan=2)
     def agregar_ciclo_basico(self):
-        ttk.Button(self.frame_derecha,text="Filtrar",command=self.filtrar_division).grid(column=0, row=2, sticky="news",columnspan=2)
+        ttk.Button(self.frame_derecha,text="Filtrar",command=self.filtrar_division).grid(column=0, row=2, sticky="news",columnspan=2)   
         ttk.Label(self.frame_izquierda, text="Curso").grid(column=0, row=0)
         ttk.Label(self.frame_izquierda, text="Division").grid(column=0, row=1)
         self.frame_izquierda.rowconfigure(0, weight=1)
@@ -143,7 +163,7 @@ class Pestaña_filtro():
             ttk.Button(self.frame_izquierda, text=f"{division}",command=lambda y=division: self.boton_agregar_division(y)).grid(column=x+1, row=1, sticky="ew")
     def volver(self):
         self.eliminar()
-        menu_filtros(self.ventana_filtro)
+        menu_filtros(self.ventana_filtro,self.menuFunc,self.tipoCuenta,self.nombreCuenta)
 
     def agregar_ciclo_superior(self):
         ttk.Button(self.frame_derecha,text="Filtrar",command=self.filtrar_division).grid(column=0, row=2, sticky="news",columnspan=2)

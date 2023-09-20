@@ -303,61 +303,44 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`ID`, `CURSO`, `MATERIAS`) VALUES
-(1, '1ro_A', 'Matemáticas;Literatura;Programación'),
-(2, '1ro_B', 'Matemáticas;Literatura;Programación'),
-(3, '1ro_C', 'Matemáticas;Literatura;Programación'),
-(4, '1ro_D', 'Matemáticas;Literatura;Programación'),
-(5, '1ro_E', 'Matemáticas;Literatura;Programación;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect'),
-(6, '2do_A', 'Historia;Geografía;Inglés'),
-(7, '2do_B', 'Historia;Geografía;Inglés'),
-(8, '2do_C', 'Historia;Geografía;Inglés'),
-(9, '2do_D', 'Historia;Geografía;Inglés'),
-(10, '3ro_A', 'Historia;Literatura;Ciudadania'),
-(11, '3ro_B', 'Historia;Literatura;Ciudadania'),
-(12, '3ro_C', 'Historia;Literatura;Ciudadania'),
-(13, '3ro_D', 'Historia;Literatura;Ciudadania'),
-(14, '4to_1ra', 'Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
-(15, '4to_2da', 'Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
-(16, '4to_3ra', 'Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
-(17, '4to_4ta', 'Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
-(18, '4to_5ta', 'Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
-(19, '4to_6ta', 'Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
-(20, '5to_1ra', 'Hardware;Programacion;TeleInformatica'),
-(21, '5to_2da', 'Hardware;Programacion;TeleInformatica'),
-(22, '5to_3ra', 'Hardware;Programacion;TeleInformatica'),
-(23, '5to_4ta', 'Hardware;Programacion;TeleInformatica'),
-(24, '5to_5ta', 'Hardware;Programacion;TeleInformatica'),
-(25, '6to_1ra', 'Programacion;Analisis_Matematico;Artistica'),
-(26, '6to_2da', 'Programacion;Analisis_Matematico;Artistica'),
-(27, '6to_3ra', 'Programacion;Analisis_Matematico;Artistica'),
-(28, '6to_4ta', 'Programacion;Analisis_Matematico;Artistica'),
-(29, '6to_5ta', 'Programacion;Analisis_Matematico;Artistica'),
-(30, '7mo_1ra', 'Pasantias;Programacion;Hardware'),
-(31, '7mo_3ra', 'Pasantias;Programacion;Hardware'),
-(32, '7mo_4ta', 'Pasantias;Programacion;Hardware');
+(1, '1ro_A','matematicas;Literatura;Programacion'),
+(2, '1ro_B','matematicas;Literatura;Programacion'),
+(3, '1ro_C','matematicas;Literatura;Programacion'),
+(4, '1ro_D','matematicas;Literatura;Programacion'),
+(5, '1ro_E','matematicas;Literatura;Programacion;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect;ect'),
+(6, '2do_A','Historia;Geografia;Ingles'),
+(7, '2do_B','Historia;Geografia;Ingles'),
+(8, '2do_C','Historia;Geografia;Ingles'),
+(9, '2do_D','Historia;Geografia;Ingles'),
+(10, '3ro_A','Historia;Literatura;Ciudadania'),
+(11, '3ro_B','Historia;Literatura;Ciudadania'),
+(12, '3ro_C','Historia;Literatura;Ciudadania'),
+(13, '3ro_D','Historia;Literatura;Ciudadania'),
+(14, '4to_1ra','Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
+(15, '4to_2da','Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
+(16, '4to_3ra','Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
+(17, '4to_4ta','Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
+(18, '4to_5ta','Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
+(19, '4to_6ta','Hardware;Salud_y_Adolescencia;Sistemas_Operativos'),
+(20, '5to_1ra','Hardware;Programacion;TeleInformatica'),
+(21, '5to_2da','Hardware;Programacion;TeleInformatica'),
+(22, '5to_3ra','Hardware;Programacion;TeleInformatica'),
+(23, '5to_4ta','Hardware;Programacion;TeleInformatica'),
+(24, '5to_5ta','Hardware;Programacion;TeleInformatica'),
+(25, '6to_1ra','Programacion;Analisis_Matematico;Artistica'),
+(26, '6to_2da','Programacion;Analisis_Matematico;Artistica'),
+(27, '6to_3ra','Programacion;Analisis_Matematico;Artistica'),
+(28, '6to_4ta','Programacion;Analisis_Matematico;Artistica'),
+(29, '6to_5ta','Programacion;Analisis_Matematico;Artistica'),
+(30, '7mo_1ra','Pasantias;Programacion;Hardware'),
+(31, '7mo_3ra','Pasantias;Programacion;Hardware'),
+(32, '7mo_4ta','Pasantias;Programacion;Hardware');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `espacio_curricular`
 --
-
-CREATE TABLE `espacio_curricular` (
-  `nombre_materia` varchar(255) DEFAULT NULL,
-  `año` int(2) NOT NULL,
-  `division` varchar(2) NOT NULL,
-  `Grupo` varchar(6) NOT NULL,
-  `Especialidad` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `espacio_curricular`
---
-
-INSERT INTO `espacio_curricular` (`nombre_materia`, `año`, `division`, `Grupo`, `Especialidad`) VALUES
-('Ghjghhhhj', 2, 'D', 'Ambos', ''),
-('Fghfgh', 5, '2', 'Ambos', 'Jhhhxfh'),
-('A', 5, '2', 'Ambos', 'A');
 
 -- --------------------------------------------------------
 

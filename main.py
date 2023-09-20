@@ -26,6 +26,7 @@ from tkinter import ttk
 #from tkcalendar import Calendar
 from login import login1
 from menu import menu1
+import Comprobacion
 import mysql.connector
 from datetime import datetime
 #Importar Modulos
@@ -34,6 +35,7 @@ with open('database.txt', 'r') as archivo:
     database_var = archivo.read()
 
 print (database_var)
+Comprobacion.comprobacion()
 
 #conectar con mysql
 sql = mysql.connector.connect(user='root',#usuario registrado en el mysql
