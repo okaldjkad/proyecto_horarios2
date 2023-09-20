@@ -158,10 +158,10 @@ class inasistencias1():
         #desaprobados.pack(side='right', expand=False)
         #aprobados.pack(side='right', expand=False)
 
-        lista.column("#1",anchor=CENTER, stretch=YES, width=140, minwidth=140)
+        lista.column("#1",anchor=CENTER, stretch=YES, width=180, minwidth=180)
         lista.column("#2",anchor=CENTER, stretch=YES, width=200, minwidth=200)
-        lista.column("#3",anchor=CENTER, stretch=YES, width=150, minwidth=150)
-        lista.column("#4",anchor=CENTER, stretch=YES, width=150, minwidth=150)
+        lista.column("#3",anchor=CENTER, stretch=YES, width=160, minwidth=160)
+        lista.column("#4",anchor=CENTER, stretch=YES, width=170, minwidth=170)
         lista.heading('#1', text='Fecha')
         lista.heading('#2', text='Inasistencia o Llegada Tarde')
         lista.heading('#3', text='Faltas')
@@ -207,7 +207,7 @@ class inasistencias1():
                         print(listaSeleccion)
                         alumnoID = cursor.fetchone()
                         print(alumnoID)
-                        cursor.execute(f"DELETE FROM `inasistencias__{ultimoCurso[1]}_{ultimoCurso[0]['text']}` WHERE ID={listaSeleccion['tags'][0]}")
+                        cursor.execute(f"DELETE FROM `inasistencias` WHERE CURSO='{ultimoCurso[1]}_{ultimoCurso[0]['text']}' AND ID={listaSeleccion['tags'][0]}")
                 ObtenerLista(ultimoCurso[0],ultimoCurso[1],True)
 
 
@@ -218,7 +218,10 @@ class inasistencias1():
                 messagebox.showinfo(message="No se ha seleccionado\nninguna Inasistencia", title="Error")
             elif len(filaSeleccion)>1 and nuevo==False:
                 messagebox.showinfo(message="Selecciona solo 1 Inasistencia", title="Error")
+            elif ComboboxAlumno["values"][0]==noAlumnos:
+                messagebox.showinfo(message="No se encontraron Alumnos", title="Error")
             else:
+                print(ComboboxAlumno["values"])
                 FrameEditar = Frame(FrameTOP,bg=BG3color)
                 FrameEditar.place(relx = 0.0, rely = 0.5, anchor ='w', relwidth=1.0, relheight=0.8)
                 FrameEditar.columnconfigure(tuple(range(0,6)), weight=1)
@@ -247,8 +250,8 @@ class inasistencias1():
                 ComboboxTipo = ttk.Combobox(FrameEditar, values=["Llegada Tarde", "Inasistencia"], state="readonly")
                 ComboboxTipo.grid(row=0, column=5, columnspan=1, padx=(16, 0), pady=2, sticky="news")
 
-                ErrorLabel = Label(FrameEditar, text="",font=fuenteEdit, bg=BG3color, anchor="center")
-                ErrorLabel.grid(row=1,column=0,columnspan=3,padx=(0,0),pady=2,sticky="e")
+                ErrorLabel = Label(FrameEditar, text="",font=fuenteEdit, bg=BG3color, fg='#C80000', anchor="w")
+                ErrorLabel.place(relx = 0.1, rely = 0.75, anchor ='w', relwidth=0.5, relheight=0.3)
 
                 BotonConfirmar = Button(FrameEditar, text="Confirmar", command=lambda:Confirmar())
                 BotonConfirmar.grid(row=0,column=6,columnspan=1,padx=(32,0),pady=2,sticky="news")
@@ -263,6 +266,8 @@ class inasistencias1():
                     print(seleccion)
                     EntryFecha.insert(0,seleccion[0])
                     ComboboxTipo.current(listaSeleccion['tags'][1])
+                else:
+                    ComboboxTipo.current(0)
                 
                 def BotonCalendario():
                     calendarioWin=Toplevel(tk)
@@ -312,11 +317,13 @@ class inasistencias1():
                     
                     falta = ComboboxTipo.current()
                     
-                    cursor.execute(f"SELECT NOMBRE, APELLIDO FROM alumnos WHERE CURSO='{SQLcurso}' ")
+                    cursor.execute(f"SELECT NOMBRE, APELLIDO, ID FROM alumnos WHERE CURSO='{SQLcurso}' ")
                     alumnos = cursor.fetchall()
 
-                    alumno = ComboboxAlumno.current()
-                    alumno = alumnos[alumno]
+
+                    alumnoC = ComboboxAlumno.current()
+                    alumno = [alumnos[alumnoC][0],alumnos[alumnoC][1]]
+                    alumnoID = alumnos[alumnoC][2]
 
                     Ifecha = EntryFecha.get().strip()
                     Sfechas = Ifecha.replace('/','.').replace('-','.')
@@ -325,16 +332,16 @@ class inasistencias1():
                     try:
                         Cfecha = datetime(int(Lfechas[0]), int(Lfechas[1]), int(Lfechas[2]))
                     except ValueError:
-                        ErrorLabel.config(text = "Ingrese una Fecha de Nacimiento Válida.", bg=BGcolor)
+                        ErrorLabel.config(text = "Ingrese una Fecha de Nacimiento Válida.")
                         print("Fecha Invalida")
                         tk.bell()
                         return
 
                     if nuevo == False:
-                        cursor.execute(f"UPDATE inasistencias__{ultimoCurso[1]}_{ultimoCurso[0]['text']} SET FECHA='{Cfecha}', TIPO='{falta}' WHERE ID={listaSeleccion['tags'][0]};")
+                        cursor.execute(f"UPDATE inasistencias SET FECHA='{Cfecha}', TIPO='{falta}' WHERE ID={listaSeleccion['tags'][0]} AND ID_ALUMNO={alumnoID} AND CURSO='{ultimoCurso[1]}_{ultimoCurso[0]['text']}'; ")
                         Terminar()
                     elif nuevo == True:
-                        cursor.execute(f"INSERT INTO inasistencias__{ultimoCurso[1]}_{ultimoCurso[0]['text']}(NOMBRE,APELLIDO,FECHA,TIPO) VALUES('{alumno[0]}','{alumno[1]}','{EntryFecha.get()}','{falta}');")
+                        cursor.execute(f"INSERT INTO inasistencias (ID_ALUMNO,CURSO,FECHA,TIPO) VALUES({alumnoID},'{ultimoCurso[1]}_{ultimoCurso[0]['text']}','{EntryFecha.get()}','{falta}');")
                         Terminar()
 
         #lista.bind('<Double-Button-1>',lambda event: EditarLista(event))
@@ -345,12 +352,17 @@ class inasistencias1():
             ultimoCurso = [div,strAÑO]
             SQLcurso = str((strAÑO+"_"+div["text"]).lower())
             print(SQLcurso)
-            cursor.execute(f"SELECT NOMBRE, APELLIDO FROM alumnos WHERE CURSO='{SQLcurso}' ")
+            cursor.execute(f"SELECT NOMBRE, APELLIDO, ID FROM alumnos WHERE CURSO='{SQLcurso}' ")
             alumnos = cursor.fetchall()
             if alumnos == []:
                 print("ERROR: no se encontraron alumnos en "+SQLcurso)
                 alumnos = [noAlumnos]
-            ComboboxAlumno['values'] = alumnos
+                ComboboxAlumno["values"] = alumnos
+            else:
+                CAvalues = []
+                for i in alumnos:
+                    CAvalues.append(str(i[0]+" "+i[1]))
+                ComboboxAlumno['values'] = CAvalues
             
             if ComboboxAlumno.get()=="" or recarga==False:
                 try:
@@ -358,21 +370,22 @@ class inasistencias1():
                 except:
                     ComboboxAlumno['values'] = [""]
                     ComboboxAlumno.current(0)
-                
-            alumno = ComboboxAlumno.current()
-            alumno = alumnos[alumno]
+            
+            Calumno = ComboboxAlumno.current()
+            alumno = [alumnos[Calumno][0],alumnos[Calumno][1]]
+            alumnoID = alumnos[Calumno][2]
 
             lista.delete(*lista.get_children()) #Limpiar lista antes de insertar nuevos elementos
 
             
             if alumnos != [noAlumnos]:
-                cursor.execute(f"SELECT ID, NOMBRE, APELLIDO, GRUPO FROM alumnos WHERE CURSO='{SQLcurso}' AND NOMBRE='{alumno[0]}' AND APELLIDO='{alumno[1]}' ")
+                cursor.execute(f"SELECT ID, NOMBRE, APELLIDO, GRUPO FROM alumnos WHERE CURSO='{SQLcurso}' AND ID='{alumnoID}' ")
                 INalumno = cursor.fetchall()
                 INalumno = list(INalumno[0])
                 print(INalumno)
 
 
-                cursor.execute(f"SELECT FECHA, TIPO, ID FROM inasistencias__{SQLcurso} WHERE NOMBRE='{alumno[0]}' AND APELLIDO='{alumno[1]}' ")
+                cursor.execute(f"SELECT FECHA, TIPO, ID FROM inasistencias WHERE ID_ALUMNO={alumnoID} ")
                 ausencias = cursor.fetchall()
 
                 TOTALausencia = float(0)
@@ -476,7 +489,7 @@ if __name__ == "__main__":
     #ventana principal
     tk = Tk()
     tk.title("pyNotas")
-    tk.geometry("712x480")
+    tk.geometry("1200x680")
     #tk.resizable(0,0)
 
     #conectar con mysql

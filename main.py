@@ -61,7 +61,7 @@ tk.title("TecBoletines")
 tk.geometry("1200x680")
 tk.state('zoomed') #abre la ventana como maximizada
 #tk.resizable(0,0)
-tk.minsize(tk.winfo_width(), tk.winfo_height())
+tk.minsize(1024, 600)
 
 #--ARREGLO BUG DE TKINTER--
 def fixed_map(option):
