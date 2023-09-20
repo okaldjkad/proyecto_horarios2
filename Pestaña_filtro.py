@@ -14,21 +14,34 @@ class menu_filtros():
         self.ventana5 = ventana_filtro
         self.ventana5.title("Pantalla Principal")
         self.ventana5.iconbitmap("Imagenes/Colegio_logo.ico")
-        BG2color="#c9daf8"
-        self.frame_fullscreen = tk.Frame(self.ventana5, bg=BG2color)
-        self.frame_fullscreen.place(x=0, y=0, relwidth=1, relheight=1)
-        self.frame_fullscreen.columnconfigure(0, weight=1)
-        self.frame_fullscreen.columnconfigure((0,1,2), weight=1)
+        self.ventana5.geometry("800x600")
+        self.ventana5.configure(bg="#c9daf8")
+
+
+        self.ventana5.columnconfigure(0, weight=1)
+        self.ventana5.columnconfigure(1, weight=1)
+        self.ventana5.rowconfigure(0, weight=1)
+        self. ventana5.rowconfigure(1, weight=1)
+        self.ventana5.rowconfigure(2, weight=1)
+        self.ventana5.rowconfigure(3, weight=1)
+        
         self.imagen_filtro_curso = ImageTk.PhotoImage(Image.open("imagenes/filtro_curso.png").resize((20, 20)))
         self.imagen_filtro_dia = ImageTk.PhotoImage(Image.open("imagenes/filtro_dia.png").resize((20, 20)))
         self.imagen_filtro_profe = ImageTk.PhotoImage(Image.open("imagenes/filtro_profe.png").resize((20, 20)))
         self.imagen_volver = ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20, 20)))
-        perfiles_frame = ttk.LabelFrame(self.frame_fullscreen,text="filtros")
-        perfiles_frame.grid(sticky="ew", pady=2, padx=2,column=0,row=0)
-        tk.Button(self.frame_fullscreen, text="Volver",image=self.imagen_volver,compound="left",height=30,width=200,borderwidth=1,relief="solid",command=lambda: self.volver_al_menu(menuFunc,tipoCuenta,nombreCuenta)).grid(row=10, column=1, padx=2, pady=2)
-        tk.Button(self.frame_fullscreen, text="Filtrar por curso",image=self.imagen_filtro_curso,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.curso_botones_filtro).grid(row=11, column=1, padx=2, pady=2)
-        tk.Button(self.frame_fullscreen, text="Filtrar por profesor", image=self.imagen_filtro_profe,borderwidth=1,relief="solid",compound="left",height=30 , width=300,command=self.filtro_profesor).grid(row=12, column=1, padx=2, pady=2)
-        tk.Button(self.frame_fullscreen, text="Filtrar por día",image=self.imagen_filtro_dia,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.filtro_dia).grid(row=13, column=1, padx=2, pady=2)
+        tk.Label(self.ventana5,text="Pestaña de filtros",bg="#c9daf8",font=("Monaco", 24, "bold")).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
+
+        tk.Button(self.ventana5, text="Volver",image=self.imagen_volver,compound="left",height=30,width=200,borderwidth=1,relief="solid",command=lambda: self.volver_al_menu(self.ventana5)).grid(row=0, column=0, padx=2, pady=2,sticky="se")
+        tk.Button(self.ventana5, text="Filtrar por curso",image=self.imagen_filtro_curso,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.curso_botones_filtro).grid(row=3,columnspan=2, column=0, padx=2, pady=2)
+        tk.Button(self.ventana5, text="Filtrar por profesor", image=self.imagen_filtro_profe,borderwidth=1,relief="solid",compound="left",height=30 , width=300,command=self.filtro_profesor).grid(row=2, column=0,columnspan=2, padx=2, pady=2)
+        tk.Button(self.ventana5, text="Filtrar por día",image=self.imagen_filtro_dia,borderwidth=1,relief="solid",compound="left",height=30 , width=300, command=self.filtro_dia).grid(row=1, column=0,columnspan=2, padx=2, pady=2)
+
+        BG2color = "#6D9EEB"
+        BG2 = tk.Frame(self.ventana5, bg=BG2color, width=512, height=32)
+        BG2.place(relx=0.0, rely=1.0, anchor='sw', relwidth=1.0, relheight=0.07)
+        etiqueta_derecha = tk.Label(BG2, text="©5to1ra & 5to3ra - 2023", bg=BG2color,font=("Helvetica", 16))
+        etiqueta_derecha.place(relx = 1.0, rely = 0.5, anchor ='e')
+        
     def eliminar(self):
         for elemento in self.ventana5.winfo_children():
             elemento.destroy()
@@ -130,7 +143,9 @@ class Pestaña_filtro():
         self.imagen_pdf = ImageTk.PhotoImage(Image.open("Imagenes/PDF.png").resize((20,20)))
         self.variable_check.set("")
         style = ttk.Style()
-        style.configure("Frame.TFrame", background="white")
+        style.configure("Frame.TFrame", background="#c9daf8")
+        style = ttk.Style()
+        style.configure("TButton", background="black",width=40)  
         ttk.Label(self.frame_derecha, text="Filtros",anchor="w").grid(column=0, row=0,sticky="news")
         ttk.Button(self.frame_derecha,text="Volver",image=self.imagen_volver,compound="left",command=self.volver).grid(column=1, row=0, sticky="news",padx=(10,0))
         self.frame_variables=ttk.LabelFrame(self.frame_derecha)
