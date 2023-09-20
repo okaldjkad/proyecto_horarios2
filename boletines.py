@@ -606,7 +606,7 @@ class boletines1():
 
             if tipoCuenta==1: # si la cuenta es maestro
 
-                cursor.execute(f"SELECT MATERIAS FROM usuarios WHERE usuario='{nombreCuenta}' ")
+                cursor.execute(f"SELECT materias FROM usuarios WHERE Usuario='{nombreCuenta}' ")
                 materias2 = cursor.fetchone()
                 if materias1 == []:
                     print("ERROR: no se encontraron materias en "+SQLcurso)

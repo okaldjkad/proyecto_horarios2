@@ -303,7 +303,7 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`ID`, `CURSO`, `MATERIAS`) VALUES
-(1, '1ro_A','matematicasnashe;Literatura;Programacion'),
+(1, '1ro_A','matematicas;Literatura;Programacion'),
 (2, '1ro_B','matematicas;Literatura;Programacion'),
 (3, '1ro_C','matematicas;Literatura;Programacion'),
 (4, '1ro_D','matematicas;Literatura;Programacion'),

@@ -23,15 +23,14 @@ def botones_aulas(ventana,menuFunc,tipoCuenta,nombreCuenta):
     imagen_aula_añadir=ImageTk.PhotoImage(Image.open("Imagenes/prueba.png").resize((20,20)))
     imagen_taller_añadir=ImageTk.PhotoImage(Image.open("Imagenes/taller_agregar_prueba.png").resize((20,20)))
     imagen_volver=ImageTk.PhotoImage(Image.open("imagenes/volver.png").resize((20,20)))
-    frame_pe = ttk.Frame(ventana)
+    frame_pe = tk.Frame(ventana,bg="#c9daf8")
     frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
     frame_pe.columnconfigure(0, weight=1)
     frame_pe.rowconfigure(0, weight=1)
     frame_pe.rowconfigure(1, weight=1)
     frame_pe.rowconfigure(2, weight=1)
         # Crear un frame para contener los perfiles de usuario
-        
-    frame_lab = ttk.LabelFrame(frame_pe, text="Aulas")
+    frame_lab = tk.LabelFrame(frame_pe, text="Aulas",bg="#c9daf8")
     frame_lab.grid(sticky="new", pady=2, padx=2,column=0,row=0)
 
 
@@ -41,27 +40,27 @@ def botones_aulas(ventana,menuFunc,tipoCuenta,nombreCuenta):
     frame_lab.rowconfigure(0, weight=1)
     frame_lab.rowconfigure(1, weight=1)
     frame_lab.rowconfigure(2, weight=1)  
-    ttk.Button(frame_pe, text="Volver",image=imagen_volver,compound="left", command=lambda: volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta)).grid(row=0, column=0, padx=2, pady=2)
+    tk.Button(frame_pe, text="Volver",image=imagen_volver,compound="left",borderwidth=1,relief="solid",height=30,width=150, command=lambda: volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta)).grid(row=0, column=0, padx=2, pady=2)
         
-    ttk.Button(frame_lab, text="Ver laboratorios",image=imagen_lab_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """))).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
+    tk.Button(frame_lab, text="Ver laboratorios",image=imagen_lab_ver,borderwidth=1,relief="solid",compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """))).grid(row=0, column=0, padx=2, pady=2,sticky="ew")
             
 
-    añadir_lab = ttk.Button(frame_lab, text="Añadir laboratorios",image=imagen_lab_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """, "Laboratorio",(ventana)))
+    añadir_lab = tk.Button(frame_lab, text="Añadir laboratorios",borderwidth=1,relief="solid",image=imagen_lab_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Laboratorio" """, "Laboratorio",(ventana)))
     añadir_lab.grid(row=0, column=1, padx=2, pady=2, sticky="ew")
 
         
-    ttk.Button(frame_lab, text="Ver aulas",image=imagen_aula_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """))).grid(row=1, column=0, padx=2, pady=2,sticky="ew")
+    tk.Button(frame_lab, text="Ver aulas",borderwidth=1,relief="solid",image=imagen_aula_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """))).grid(row=1, column=0, padx=2, pady=2,sticky="ew")
             
             
-    añadir_aula=ttk.Button(frame_lab, text="Añadir aulas",image=imagen_aula_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """, "Aula",(ventana)))
+    añadir_aula=tk.Button(frame_lab, text="Añadir aulas",image=imagen_aula_añadir,borderwidth=1,relief="solid",compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Aula" """, "Aula",(ventana)))
     añadir_aula.grid(row=1, column=1, padx=2, pady=2,sticky="ew")            
         
 
             
-    ttk.Button(frame_lab, text="Ver talleres",image=imagen_taller_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "taller" """))).grid(row=2, column=0, padx=2, pady=2,sticky="ew")
+    tk.Button(frame_lab,borderwidth=1,relief="solid", text="Ver talleres",image=imagen_taller_ver,compound="left", command=lambda:ver_aula(("Tipo de aula","Ubicacion","Numero"),("""SELECT * FROM aulas WHERE tipo_de_aula = "taller" """))).grid(row=2, column=0, padx=2, pady=2,sticky="ew")
             
             
-    añadir_taller= ttk.Button(frame_lab, text="Añadir talleres",image=imagen_taller_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Taller" """, "Taller",(ventana)))
+    añadir_taller= tk.Button(frame_lab, text="Añadir talleres",borderwidth=1,relief="solid",image=imagen_taller_añadir,compound="left", command=lambda: agregar_aulas(("Tipo de aula", "Ubicacion", "Numero"), """SELECT * FROM aulas WHERE tipo_de_aula = "Taller" """, "Taller",(ventana)))
     añadir_taller.grid(row=2, column=1, padx=2, pady=2,sticky="ew")
     if tipodecuenta==1:
         añadir_aula.configure(state="disabled")
