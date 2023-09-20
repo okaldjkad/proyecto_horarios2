@@ -7,7 +7,7 @@ from tkinter import ttk
 from PDF import PDF_filtro
 #Hecho por Tobias Bonanno
 class menu_filtros():
-    def __init__(self,ventana_filtro):
+    def __init__(self,ventana_filtro,menuFunc,tipoCuenta,nombreCuenta):
         self.ventana5 = ventana_filtro
         self.ventana5.title("Pantalla Principal")
         self.ventana5.iconbitmap("Imagenes/Colegio_logo.ico")
@@ -17,13 +17,16 @@ class menu_filtros():
         self.frame_fullscreen.columnconfigure((0,1,2), weight=1)
         perfiles_frame = ttk.LabelFrame(self.ventana5,text="filtros")
         perfiles_frame.grid(sticky="ew", pady=2, padx=2,column=0,row=0)
-        ttk.Button(perfiles_frame, text="Volver", command=lambda: self.volver_al_menu(self.ventana5)).grid(row=0, column=0, padx=2, pady=2)
+        ttk.Button(perfiles_frame, text="Volver", command=lambda: self.volver_al_menu(menuFunc,tipoCuenta,nombreCuenta)).grid(row=0, column=0, padx=2, pady=2)
         ttk.Button(perfiles_frame, text="Filtrar por curso", command=self.curso_botones_filtro).grid(row=1, column=0, padx=2, pady=2)
         ttk.Button(perfiles_frame, text="Filtrar por profesor", command=self.filtro_profesor).grid(row=2, column=0, padx=2, pady=2)
         ttk.Button(perfiles_frame, text="Filtrar por dia", command=self.filtro_dia).grid(row=3, column=0, padx=2, pady=2)
     def eliminar(self):
         for elemento in self.ventana5.winfo_children():
             elemento.destroy()
+    def volver_al_menu(self,menuFunc,tipoCuenta,nombreCuenta):
+        self.eliminar()
+        menuFunc(tipoCuenta,nombreCuenta)
     def curso_botones_filtro(self):
         self.ventana6 = tk.Toplevel()
         self.ventana6.title("Pantalla Principal")
@@ -61,8 +64,6 @@ class menu_filtros():
         ventana_horario3.agregar_dia()
         ventana_horario3.treeview_filter()
         ventana_horario3.ejecutar()
-    def volver_al_menu(self,ventana):
-        print("volver")
         
     
 class Pestaña_filtro():

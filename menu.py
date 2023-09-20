@@ -5,10 +5,11 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import Funcionalidad_parte_principal as FPP
 from boletines import boletines1
+import Pestaña_filtro as PF
+import Aulas
 from alumnos import alumnos1
 from inasistencias import inasistencias1
 from cuentas import cuentas1
-
 import Profesores
 
 
@@ -62,12 +63,14 @@ class menu1:
             Profesores.botones_docentes(tk,menuFunc,tipoCuenta,nombreCuenta)
             #ejecutar modulo de administracion de cuentas
 
-        def administrar_filtros():
-            return
+        def administrar_filtros(tk):
+            eliminar()
+            PF.menu_filtros(tk,menuFunc,tipoCuenta,nombreCuenta)
             #ejecutar modulo de administracion de cuentas
 
-        def administrar_aulas():
-            return
+        def administrar_aulas(tk):
+            eliminar()
+            Aulas.botones_aulas(tk,menuFunc,tipoCuenta,nombreCuenta)
             #ejecutar modulo de administracion de cuentas
 
         def cerrar_sesion():
@@ -140,11 +143,11 @@ class menu1:
         boton_horarios.grid(row=3, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Filtros
-        boton_horarios = Button(tk, text="Filtros",image=self.imagen_filtro,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=administrar_filtros, font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Filtros",image=self.imagen_filtro,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=lambda:administrar_filtros(tk), font=("Helvetica", 16))
         boton_horarios.grid(row=4, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
         #Boton Aulas
-        boton_horarios = Button(tk, text="Administrar Aulas",image=self.imagen_aula,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=lambda:administrar_aulas, font=("Helvetica", 16))
+        boton_horarios = Button(tk, text="Administrar Aulas",image=self.imagen_aula,compound="left",borderwidth=1,relief="solid",  height=30 , width=300, command=lambda:administrar_aulas(tk), font=("Helvetica", 16))
         boton_horarios.grid(row=5, column=2, padx=(10, 0), pady=(0, 0), sticky="W")
 
 

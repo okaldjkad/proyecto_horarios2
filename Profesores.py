@@ -14,8 +14,10 @@ def eliminar(ventana):
         elemento.destroy()
         
 def botones_docentes(ventana3,menuFunc,tipoCuenta,nombreCuenta):
-    global frame_pe,imagen_profesor,imagen_materia_ver,imagen_eliminar,imagen_volver,imagen_materia_añadir,imagen_profesor_añadir
-    ventana3.geometry("800x600")
+    global frame_pe,imagen_profesor,imagen_materia_ver,imagen_eliminar,imagen_volver,imagen_materia_añadir,imagen_profesor_añadir,tipodecuenta,nombrecuenta,menufunc
+    menufunc=menuFunc
+    tipodecuenta=tipoCuenta
+    nombrecuenta=nombreCuenta
     ventana3.title("Pantalla Principal")
     ventana3.iconbitmap("Imagenes/Colegio_logo.ico")
     nuevo_color = "#c9daf8"  # Puedes cambiar esto al color que desees
@@ -335,7 +337,6 @@ def ver_profes(columnas_aula,query,ver_Profesores,eliminar_b):
         frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
         
     ver_Profesores.title("Profesores")
-    ver_Profesores.minsize(1000, 400)
     conectar_base_de_datos()
     cursor = cnx.cursor()
     treeview_Profe=ttk.Labelframe(frame_pe, text="Profesores")
@@ -388,7 +389,6 @@ def agregar_profesores(columnas_aula,query,ver_Profesores):
     opciones_documento =  ["DU","DNI","Libreta de enrolamiento", "Libreta civica", "Pasaporte", "Cedula de identidad"]
     division = ttk.OptionMenu(arriba3, variable4, opciones_documento[0], *opciones_documento)
     division.grid(column=5, row=1)
-    ver_Profesores.protocol("WM_DELETE_WINDOW",lambda: volver_docentes(ver_Profesores))
     ttk.Button(arriba3, text="Agregar", command=lambda:  opciones_docentes(3)).grid(column=7, row=0, sticky="nsew")
     tk.Button(arriba3, text="Eliminar",image=imagen_eliminar,compound="left",fg="white",bg="#960000", command=lambda:  opciones_docentes(4)).grid(column=7, row=3, sticky="nsew")
     ttk.Button(arriba3, text="Modificar", command=lambda:  opciones_docentes(7)).grid(column=7, row=4, sticky="nsew")
@@ -646,7 +646,6 @@ def agregar_materias(columnas_aula,query,ver_Materias):
     frame_pe = ttk.Frame(ver_Materias)
     frame_pe.place(x=0, y=0, relwidth=1, relheight=1)
     ver_Materias.title("Materias")
-    ver_Materias.protocol("WM_DELETE_WINDOW",lambda: volver_docentes(ver_Materias))
     conectar_base_de_datos()
     treeview_Materias=ttk.Labelframe(frame_pe, text="Materias")
     treeview_Materias.grid(padx=10, pady=10, row=1, column=0, sticky="nsew")
@@ -801,7 +800,7 @@ def opciones_docentes(option):
         tree_Profe.insert(parent='', index='end', values=(last_id,obtenernombre, obtenerapellido, obtenertelefono, obtenertipodni, obtenerdni,obtenercorreo, obtenerdireccion,obteneraltura, obtenerdpto, obtenerfecha)) 
         borrar_entrys()
         division.set(opciones_documento[0])
-        cerrar_base_de_datos()       
+        cerrar_base_de_datos()
     elif option == 4:
         respuesta = messagebox.askyesno("Confirmación", "¿Estás seguro de eliminar estos datos?")
         if respuesta:
@@ -998,7 +997,7 @@ def volver_al_menu(ventana,menuFunc,tipoCuenta,nombreCuenta):
     menuFunc(tipoCuenta,nombreCuenta)
 def volver_docentes(ventana):
     eliminar(ventana)
-    botones_docentes(ventana)
+    botones_docentes(ventana,menufunc,tipodecuenta,nombrecuenta)
 def flecha_arriba(event, anterior_entry): 
     anterior_entry.focus_set()
 def procesar_enter(event, next_entry):
