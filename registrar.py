@@ -374,14 +374,16 @@ class registrar1():
         def actualizarMaterias():
             curso=cursoInput.get()
             division=divisionInput.get()
-            cursor.execute(f"SELECT MATERIAS FROM cursos WHERE CURSO='{curso}_{division}' ")
-            listaMaterias = cursor.fetchone()
-            listaMaterias = listaMaterias[0].replace("_"," ").split(";")
-            for elemento in Frame3.winfo_children():
+            cursor.execute(f"SELECT MATERIA FROM materias WHERE CURSOS LIKE '%1ro_A%' ")
+            listaMaterias = cursor.fetchall()
+            
+            for elemento in Frame3.winfo_children(): #borra lista de materias anterior
                 elemento.destroy()
+                
             for i in range(0,len(listaMaterias)):
-                materia=listaMaterias[i].replace(" ","_")
-                if (materia,str(curso,"_",division)) in seleccionM:
+                listaMaterias[i] = listaMaterias[i].replace("_"," ") #.split(";")
+                materia = listaMaterias[i].replace(" ","_")
+                if (materia,str(curso+"_"+division)) in seleccionM:
                     var = tk.BooleanVar(value=True)
                 else:
                     var = tk.BooleanVar(value=False)

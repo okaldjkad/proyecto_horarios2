@@ -35,7 +35,7 @@ class login1:
 
         textoDefault1 = 'Introdusca su Usuario'
         textoDefaul = 'Introdusca su Email'
-        textoDefault3 = 'Introdusca su Contraseña'
+        textoDefault3 = 'Introduzca su Contraseña'
 
 
         BG2 = Frame(tk, bg='#6D9EEB',width=512,height=32)

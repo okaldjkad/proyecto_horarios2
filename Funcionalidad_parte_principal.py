@@ -174,7 +174,7 @@ class añadir_horario():
         self.opciones_aula=[self.numero_de_aula] + [numero[0] for numero in self.aula]
         self.opciones_tipo_de_aula=[self.tipo_de_aula,"Laboratorio","Aula","Taller"]
         self.opciones_espacio_curricular = [nombre[0] for nombre in self.materia]
-        self.opciones_profesor = [""] + [f"{nombre} {apellido}" for nombre, apellido in self.profesor]
+        self.opciones_profesor = [f"{nombre} {apellido}" for nombre, apellido in self.profesor]
         self.desconectar_de_mysql()
         
     def widgets(self):

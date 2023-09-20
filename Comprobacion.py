@@ -5,7 +5,7 @@ class comprobacion:
     def __init__(self):
         with open('database.txt', 'r') as archivo:
             self.database_var = archivo.read()
-        with open("tecnica_2023.sql", "r") as archivo_sql:
+        with open("tecnica_2023.sql", "r", encoding='utf-8') as archivo_sql:
             self.consulta_sql = archivo_sql.read()
         try:
             self.cnx = mysql.connector.connect(
@@ -33,8 +33,6 @@ class comprobacion:
 
                 for statement in consultas:
                     self.cursor.execute(statement)
-            self.cursor.execute("ALTER TABLE usuarios CHANGE ContraseÃ±a Contraseña VARCHAR(30);")
-            self.cursor.execute("ALTER TABLE horarios CHANGE AÃ±o Año int(11);")
             self.cnx.commit()
             self.cursor.close()
             self.cnx.close()

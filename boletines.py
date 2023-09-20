@@ -179,8 +179,8 @@ class boletines1():
         #    cursor.execute("INSERT IGNORE INTO maestrias (ID, MAESTRIA) VALUES (%s, %s)", (maestria[0], maestria[1]))
 
         #crear cursos default con materias de ejemplo
-        for curso in cursos:
-            cursor.execute("INSERT IGNORE INTO Cursos (CURSO, MATERIAS) VALUES (%s, %s)", (curso[2],curso[3]))
+        #for curso in cursos:
+        #    cursor.execute("INSERT IGNORE INTO Cursos (CURSO, MATERIAS) VALUES (%s, %s)", (curso[2],curso[3]))
 
 
 
